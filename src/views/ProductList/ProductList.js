@@ -65,15 +65,53 @@
 
 
 
-import React from 'react';
-import { Inject, ScheduleComponent, Day, Week, WorkWeek, Month, Agenda } from '@syncfusion/ej2-react-schedule';
+// import React from 'react';
+// import { Inject, ScheduleComponent, Day, Week, WorkWeek, Month, Agenda } from '@syncfusion/ej2-react-schedule';
 
-class ProductList extends React.Component {
+// class ProductList extends React.Component {
+//   render() {
+//     return <ScheduleComponent>
+//       <Inject services={[Day, Week, WorkWeek, Month, Agenda]}/>
+//     </ScheduleComponent>
+//   }
+// }
+
+
+import React, { Component } from 'react';
+// import { Calendar } from '@fullcalendar/core';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+
+class ProductList extends Component{
   render() {
-    return <ScheduleComponent>
-      <Inject services={[Day, Week, WorkWeek, Month, Agenda]} />
-    </ScheduleComponent>
+    return(
+      <FullCalendar
+        dateClick={this.handleDateClick}
+        defaultView="dayGridMonth"
+        events={[
+          { title: 'event 1', date: '2020-03-03' },
+          { title: 'event 1', date: '2020-03-03' },
+          { title: 'event 1', date: '2020-03-03' },
+          { title: 'event 2', date: '2020-03-04' }
+        ]}
+        plugins={[ dayGridPlugin, interactionPlugin  ]}
+        selectable={true}
+      />
+    )
+
+    // const Calendar = new Calendar(calendarEl, {
+    //   defaultView: 'timeGrid',
+    //   visibleRange: {
+    //     start: '2020-03-22',
+    //     end: '2020-03-25'
+    //   }
+    // });
+
+  }
+
+  handleDateClick = (arg) => { // bind with an arrow function
+    console.log(arg);
   }
 }
-
 export default ProductList;
