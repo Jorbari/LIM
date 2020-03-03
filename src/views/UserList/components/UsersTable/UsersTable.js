@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import Modals from '../../../../helpers/modal';
 import { makeStyles } from '@material-ui/styles';
 import 'font-awesome/css/font-awesome.min.css';
 import {
@@ -44,6 +45,9 @@ const useStyles = makeStyles(theme => ({
 
 const UsersTable = props => {
   const { className, users, ...rest } = props;
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const classes = useStyles();
 
@@ -169,8 +173,7 @@ const UsersTable = props => {
                       <TableCell>
                         <button
                           className="btn btn-warning"
-                          data-target="#myModal"
-                          data-toggle="modal"
+                          onClick={handleShow}
                         >
                           <i className="fa fa-pencil" />
                         </button>
@@ -196,38 +199,13 @@ const UsersTable = props => {
       </Card>
   
 
-      <div
-        className="modal"
-        id="myModal"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
+      <Modals
+        onHide={handleClose}
+        show={show}
+        title="Modal heading"
+        text=" Woohoo, you're reading this text in a modal!"
+      />
 
-            <div className="modal-header">
-              <h4 className="modal-title">Modal Heading</h4>
-              <button
-                className="close"
-                data-dismiss="modal"
-                type="button"
-              >&times;</button>
-            </div>
-
-            <div className="modal-body">
-        Modal body..
-            </div>
-
-            <div className="modal-footer">
-              <button
-                className="btn btn-danger"
-                data-dismiss="modal"
-                type="button"
-              >Close</button>
-            </div>
-
-          </div>
-        </div>
-      </div>
-  
     </div>
     
   );

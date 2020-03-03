@@ -22,7 +22,10 @@ a {
 #root {
   height: 100%;
 }
-
+.modal{
+  top: 20% !important;
+}
+// @import 'bootstrap/dist/css/bootstrap.min.css';
 @import '../partials/interviewer.scss';
 @import '../partials/calendar.scss';
 
