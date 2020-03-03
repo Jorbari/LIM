@@ -11,8 +11,8 @@
     ],
     "jsx-quotes": 1,
     "linebreak-style": [
-      2,
-      "unix"
+      0,
+      "windows"
     ],
     "quotes": [
       2,
