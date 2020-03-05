@@ -55,40 +55,6 @@ const UsersTable = props => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
 
-  // const handleSelectAll = event => {
-  //   const { users } = props;
-
-  //   let selectedUsers;
-
-  //   if (event.target.checked) {
-  //     selectedUsers = users.map(user => user.id);
-  //   } else {
-  //     selectedUsers = [];
-  //   }
-
-  //   setSelectedUsers(selectedUsers);
-  // };
-
-  // const handleSelectOne = (event, id) => {
-  //   const selectedIndex = selectedUsers.indexOf(id);
-  //   let newSelectedUsers = [];
-
-  //   if (selectedIndex === -1) {
-  //     newSelectedUsers = newSelectedUsers.concat(selectedUsers, id);
-  //   } else if (selectedIndex === 0) {
-  //     newSelectedUsers = newSelectedUsers.concat(selectedUsers.slice(1));
-  //   } else if (selectedIndex === selectedUsers.length - 1) {
-  //     newSelectedUsers = newSelectedUsers.concat(selectedUsers.slice(0, -1));
-  //   } else if (selectedIndex > 0) {
-  //     newSelectedUsers = newSelectedUsers.concat(
-  //       selectedUsers.slice(0, selectedIndex),
-  //       selectedUsers.slice(selectedIndex + 1)
-  //     );
-  //   }
-
-  //   setSelectedUsers(newSelectedUsers);
-  // };
-
   const handlePageChange = (event, page) => {
     setPage(page);
   };
@@ -110,22 +76,10 @@ const UsersTable = props => {
               <Table>
                 <TableHead>
                   <TableRow>
-                    {/* <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedUsers.length === users.length}
-                      color="primary"
-                      indeterminate={
-                        selectedUsers.length > 0 &&
-                        selectedUsers.length < users.length
-                      }
-                      onChange={handleSelectAll}
-                    />
-                  </TableCell> */}
                     <TableCell>Name</TableCell>
                     <TableCell>Email</TableCell>
                     <TableCell>Registration date</TableCell>
                     <TableCell>Active</TableCell>
-                    {/* <TableCell>Registration date</TableCell> */}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -135,21 +89,6 @@ const UsersTable = props => {
                       hover
                       key={user.id}
                     >
-                      {/* <TableRow
-                    className={classes.tableRow}
-                    hover
-                    key={user.id}
-                    selected={selectedUsers.indexOf(user.id) !== -1
-                    }
-                  > */}
-                      {/* <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={selectedUsers.indexOf(user.id) !== -1}
-                        color="primary"
-                        onChange={event => handleSelectOne(event, user.id)}
-                        value="true"
-                      />
-                    </TableCell> */}
                       <TableCell>
                         <div className={classes.nameContainer}>
                           <Avatar
@@ -202,8 +141,8 @@ const UsersTable = props => {
       <Modals
         onHide={handleClose}
         show={show}
-        title="Modal heading"
         text=" Woohoo, you're reading this text in a modal!"
+        title="Modal heading"
       />
 
     </div>

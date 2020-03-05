@@ -63,8 +63,8 @@ const Sidebar = props => {
       icon: <LockOpenIcon />
     },
     {
-      title: 'Icons',
-      href: '/icons',
+      title: 'Apllicants',
+      href: '/applicants',
       icon: <ImageIcon />
     },
     {

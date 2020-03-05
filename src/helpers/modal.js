@@ -1,24 +1,23 @@
 import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
-import {
-  Card
-} from '@material-ui/core';
+import { Modal } from 'react-bootstrap';
 
 const modals = props => {
   return (
+    
     <Modal
       onHide={props.onHide}
       show={props.show}
       size="lg"
     >
-      <Card>
+      <div  >
+      
         <Modal.Header closeButton>
           <Modal.Title>{props.title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {props.text}
+          {props.children}
         </Modal.Body>
-        <Modal.Footer>
+        {/* <Modal.Footer>
           <Button
             onClick={props.onHide}
             variant="secondary"
@@ -31,9 +30,11 @@ const modals = props => {
           >
             Save Changes
           </Button>
-        </Modal.Footer>
-      </Card>
+        </Modal.Footer> */}
+        </div>
+      
     </Modal>
+    
   )
 }
 

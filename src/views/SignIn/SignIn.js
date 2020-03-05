@@ -1,8 +1,10 @@
+/* eslint-disable no-undef */
 import React, { useState, useEffect } from 'react';
-import { Link as RouterLink, withRouter } from 'react-router-dom';
+import { Link as RouterLink, withRouter, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
 import { makeStyles } from '@material-ui/styles';
+import ErrorHandler from '../../helpers/error';
 import {
   Grid,
   Button,
@@ -11,6 +13,7 @@ import {
   Link,
   Typography
 } from '@material-ui/core';
+import API from '../../services/axios';
 // import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 // import { Facebook as FacebookIcon, Google as GoogleIcon } from 'icons';
@@ -140,6 +143,7 @@ const SignIn = props => {
   useEffect(() => {
     const errors = validate(formState.values, schema);
 
+
     setFormState(formState => ({
       ...formState,
       isValid: errors ? false : true,
@@ -170,9 +174,42 @@ const SignIn = props => {
     }));
   };
 
-  const handleSignIn = event => {
-    event.preventDefault();
-    history.push('/');
+  const [errorMsg, setErrorMsg] = useState('');
+  const [show, setShow] = useState(false);
+  const showError = () => {
+    setShow(false);
+  }
+
+  // eslint-disable-next-line react/no-multi-comp
+  const handleSignIn = e => {
+    e.preventDefault();
+
+    const loginModel = {
+      email:formState.values.email,
+      password:formState.values.password
+    }
+
+    // history.push('/');
+    // return <Redirect to="/dashboard" />
+    API.post('api/AuthLogin',loginModel)
+    .then(res => {
+      if(res.data.status != 200){
+        console.log(res);
+        setShow(true);
+        setErrorMsg(res.data.message)
+      }
+      else{
+        console.log(res);
+        localStorage.setItem('userProfile', res.data.data);
+        history.push("/dashboard");
+      }
+      
+    }).catch(err => {
+      
+      console.log(err);
+      setShow(true);
+      
+    })
   };
 
   const hasError = field =>
@@ -222,11 +259,12 @@ const SignIn = props => {
           xs={12}
         >
           <div className={classes.content}>
-            {/* <div className={classes.contentHeader}>
-              <IconButton onClick={handleBack}>
-                <ArrowBackIcon />
-              </IconButton>
-            </div> */}
+            <ErrorHandler
+              close={showError}
+              message={errorMsg}
+              show={show}
+              title="Error"
+            />
             <div className={classes.contentBody}>
               <form
                 className={classes.form}
@@ -238,47 +276,6 @@ const SignIn = props => {
                 >
                   Sign in
                 </Typography>
-                {/* <Typography
-                  color="textSecondary"
-                  gutterBottom
-                >
-                  Sign in with social media
-                </Typography> */}
-                {/* <Grid
-                  className={classes.socialButtons}
-                  container
-                  spacing={2}
-                >
-                  <Grid item>
-                    <Button
-                      color="primary"
-                      onClick={handleSignIn}
-                      size="large"
-                      variant="contained"
-                    >
-                      <FacebookIcon className={classes.socialIcon} />
-                      Login with Facebook
-                    </Button>
-                  </Grid>
-                  <Grid item>
-                    <Button
-                      onClick={handleSignIn}
-                      size="large"
-                      variant="contained"
-                    >
-                      <GoogleIcon className={classes.socialIcon} />
-                      Login with Google
-                    </Button>
-                  </Grid>
-                </Grid> */}
-                {/* <Typography
-                  align="center"
-                  className={classes.sugestion}
-                  color="textSecondary"
-                  variant="body1"
-                >
-                  or login with email address
-                </Typography> */}
                 <TextField
                   className={classes.textField}
                   error={hasError('email')}
@@ -340,8 +337,8 @@ const SignIn = props => {
   );
 };
 
-SignIn.propTypes = {
-  history: PropTypes.object
-};
+// SignIn.propTypes = {
+//   history: PropTypes.object
+// };
 
 export default withRouter(SignIn);
