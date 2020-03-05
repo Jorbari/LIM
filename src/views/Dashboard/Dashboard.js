@@ -71,7 +71,7 @@ const Dashboard = () => {
           xl={9}
           xs={12}
         >
-          <LatestSales />
+          {/* <LatestSales /> */}
         </Grid>
         <Grid
           item
@@ -80,7 +80,7 @@ const Dashboard = () => {
           xl={3}
           xs={12}
         >
-          <UsersByDevice />
+          {/* <UsersByDevice /> */}
         </Grid>
         <Grid
           item
@@ -89,7 +89,7 @@ const Dashboard = () => {
           xl={3}
           xs={12}
         >
-          <LatestProducts />
+          {/* <LatestProducts /> */}
         </Grid>
         <Grid
           item
@@ -98,7 +98,7 @@ const Dashboard = () => {
           xl={9}
           xs={12}
         >
-          <LatestOrders />
+          {/* <LatestOrders /> */}
         </Grid>
       </Grid>
     </div>

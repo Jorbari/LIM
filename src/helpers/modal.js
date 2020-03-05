@@ -9,7 +9,6 @@ const modals = props => {
       show={props.show}
       size="lg"
     >
-      <div  >
       
         <Modal.Header closeButton>
           <Modal.Title>{props.title}</Modal.Title>
@@ -31,7 +30,6 @@ const modals = props => {
             Save Changes
           </Button>
         </Modal.Footer> */}
-        </div>
       
     </Modal>
     

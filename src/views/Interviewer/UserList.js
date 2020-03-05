@@ -1,31 +1,54 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/styles';
-
+/* eslint-disable react/no-set-state */
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/styles';
+import API from '../../services/interviewer';
 import { UsersToolbar, UsersTable } from './components';
-import mockData from './data';
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     padding: theme.spacing(3)
   },
   content: {
     marginTop: theme.spacing(2)
   }
-}));
+});
 
-const UserList = () => {
-  const classes = useStyles();
+class UserList extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      interviewData: []
+    };
+    this.loadData = this.loadData.bind(this);
+    this.loadData();
+  }
 
-  const [users] = useState(mockData);
+  render(){
+    
+    const { classes } = this.props;
+    return(
+      <div className={classes.root}>
+       <UsersToolbar />
+       <div className={classes.content}>
+         <UsersTable users={this.state.interviewData} />
+       </div>
+     </div>
+    )
+  }
 
-  return (
-    <div className={classes.root}>
-      <UsersToolbar />
-      <div className={classes.content}>
-        <UsersTable users={users} />
-      </div>
-    </div>
-  );
+  loadData(){
+    let interviewData = [];
+    API.get('api/showAllInterviewer').then(res => {
+      console.log(res);
+      interviewData = res.data.data;
+      this.setState({interviewData: interviewData});
+    }).catch(err => console.log(err));
+  }
+}
+
+UserList.propTypes = {
+  classes: PropTypes.object.isRequired,
 };
 
-export default UserList;
+export default withStyles(styles)(UserList);

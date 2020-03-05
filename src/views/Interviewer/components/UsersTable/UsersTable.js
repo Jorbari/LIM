@@ -3,9 +3,10 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import Modals from '../../../../helpers/modal';
 import { makeStyles } from '@material-ui/styles';
+import Switch from '@material-ui/core/Switch';
 import 'font-awesome/css/font-awesome.min.css';
+import Modals from '../../../../helpers/modal';
 import {
   Card,
   CardActions,
@@ -44,14 +45,36 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const UsersTable = props => {
+  const [state, setState] = useState({
+    checkedA: true
+  });
   const { className, users, ...rest } = props;
   const [show, setShow] = useState(false);
-  const [clickedUser, SetclickedUser] = useState({});
+  const [firstName, setfirstName] = useState();
+  const [lastName, setlastName] = useState('');
+  const [email, setEmail] = useState('');
   const handleClose = () => setShow(false);
   const handleShow = (user) => {
+    console.log(user);
     setShow(true);
-    SetclickedUser(user);
+    setfirstName(user.first_name);
+    setlastName(user.last_name);
+    setEmail(user.email);
   };
+
+  const handleChange = name => event => {
+    setState({ ...state, [name]: event.target.checked });
+  };
+
+  const modalFirstNameInputChange = (event) => {
+    setfirstName(event.target.value);
+  }
+  const modalLastNameInputChange = (event) => {
+    setlastName(event.target.value);
+  }
+  const modalEmailInputChange = (event) => {
+    setEmail(event.target.value);
+  }
 
   const classes = useStyles();
 
@@ -157,17 +180,17 @@ const UsersTable = props => {
                       <TableCell>
                         <div className={classes.nameContainer}>
                           <Avatar
-                            className={classes.avatar}
+                            className={classes.first_name}
                             src={user.avatarUrl}
                           >
-                            {getInitials(user.name)}
+                            {getInitials(user.first_name)}
                           </Avatar>
-                          <Typography variant="body1">{user.name}</Typography>
+                          <Typography variant="body1">{user.first_name} {user.last_name}</Typography>
                         </div>
                       </TableCell>
                       <TableCell>{user.email}</TableCell>
                       <TableCell>
-                        {moment(user.createdAt).format('DD/MM/YYYY')}
+                        {moment(user.created_dAt).format('DD/MM/YYYY')}
                       </TableCell>
                       <TableCell>
                         <div className="user_active_state" >
@@ -206,36 +229,70 @@ const UsersTable = props => {
       <Modals
         onHide={handleClose}
         show={show}
-        title={'Edit ' + clickedUser.name}
+        title={`Edit Account`}
       >
         <form action="/action_page.php">
           <div className="form-group">
-            <label htmlFor="email">Name:</label>
+            <label htmlFor="email">First Name:</label>
             <input
               className="form-control"
-              id="text"
-              placeholder="users email"
+              onChange={modalFirstNameInputChange}
+              placeholder="Enter First Name"
               type="text"
+              value={firstName}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email">Last Name:</label>
+            <input
+              className="form-control"
+              onChange={modalLastNameInputChange}
+              placeholder="Enter Last Name"
+              type="text"
+              value={lastName}
             />
           </div>
           <div className="form-group">
             <label htmlFor="email">Email:</label>
             <input
               className="form-control"
-              id="email"
+              onChange={modalEmailInputChange}
               placeholder="Enter email"
               type="email"
+              value={email}
             />
           </div>
 
+
+
           <div className="form-group form-check">
+            <label
+              className="form-check-label"
+              data-toggle="tooltip"
+              title="Toggle the switch to either activate or di-activate a user"
+            >
+              <Switch
+                checked={state.checkedA}
+                inputProps={{ 'aria-label': 'secondary checkbox' }}
+                onChange={handleChange('checkedA')}
+                value="checkedA"
+              />
+              Di-activate user
+            </label>
+          </div>
+
+          {/* <div className="form-group form-check">
             <label className="form-check-label">
               <input
                 className="form-check-input"
                 type="checkbox"
               /> User Diactivated
             </label>
-          </div>
+          </div> */}
+
+
+
+
           <div className="Edit_user_" >
              <button
                className="btn btn-primary ml-auto"

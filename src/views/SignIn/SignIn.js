@@ -4,6 +4,7 @@ import { Link as RouterLink, withRouter, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
 import { makeStyles } from '@material-ui/styles';
+import {reactLocalStorage} from 'reactjs-localstorage';
 import ErrorHandler from '../../helpers/error';
 import {
   Grid,
@@ -13,7 +14,7 @@ import {
   Link,
   Typography
 } from '@material-ui/core';
-import API from '../../services/axios';
+import API from '../../services/login';
 // import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 // import { Facebook as FacebookIcon, Google as GoogleIcon } from 'icons';
@@ -195,18 +196,20 @@ const SignIn = props => {
     .then(res => {
       if(res.data.status != 200){
         console.log(res);
-        setShow(true);
         setErrorMsg(res.data.message)
+        setShow(true);
       }
       else{
-        console.log(res);
-        localStorage.setItem('userProfile', res.data.data);
+        console.log(res.data.data.User);
+        reactLocalStorage.setObject('userProfile', res.data.data.User);
+        reactLocalStorage.set('token', res.data.data.User.token);
         history.push("/dashboard");
       }
       
     }).catch(err => {
       
       console.log(err);
+      setErrorMsg('An error occurred, Pls try again!')
       setShow(true);
       
     })
