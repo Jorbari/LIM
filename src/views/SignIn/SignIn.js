@@ -54,7 +54,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundImage: 'url(/images/auth.jpg)',
+    backgroundImage: 'linear-gradient(rgba(63, 81, 181, 0.49), rgba(63, 81, 181, 0)), url(/images/login.jpg)',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center'
