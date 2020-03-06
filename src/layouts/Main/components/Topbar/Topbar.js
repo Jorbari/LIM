@@ -27,6 +27,12 @@ const Topbar = props => {
 
   const [notifications] = useState([]);
 
+  const clearStorage = () => {
+    localStorage.clear();
+    // history.pushState('/sign-in');
+    // alert('this is me')
+  }
+
   return (
     <AppBar
       {...rest}
@@ -53,6 +59,7 @@ const Topbar = props => {
           <IconButton
             className={classes.signOutButton}
             color="inherit"
+            onClick={clearStorage}
           >
             <InputIcon />
           </IconButton>

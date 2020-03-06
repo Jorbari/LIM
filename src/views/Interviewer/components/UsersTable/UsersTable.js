@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/styles';
 import Switch from '@material-ui/core/Switch';
 import 'font-awesome/css/font-awesome.min.css';
 import Modals from '../../../../helpers/modal';
+import API from '../../../../services/interviewer';
 import {
   Card,
   CardActions,
@@ -45,25 +46,33 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const UsersTable = props => {
-  const [state, setState] = useState({
-    checkedA: true
-  });
+  const [state, setState] = useState(false);
   const { className, users, ...rest } = props;
   const [show, setShow] = useState(false);
-  const [firstName, setfirstName] = useState();
+  const [id, setId] = useState();
+  const [firstName, setfirstName] = useState('');
   const [lastName, setlastName] = useState('');
-  const [email, setEmail] = useState('');
   const handleClose = () => setShow(false);
   const handleShow = (user) => {
     console.log(user);
+    if(user.is_active == 1){
+      setState(true);
+    }
     setShow(true);
+    setId(user.id);
     setfirstName(user.first_name);
     setlastName(user.last_name);
-    setEmail(user.email);
   };
 
-  const handleChange = name => event => {
-    setState({ ...state, [name]: event.target.checked });
+  const handleChange = () => {
+    setState(!state);
+    if(state == true){
+      API.post(`api/activateInterviewer/${id}`).then(
+        res => {
+          console.log('successfully changed');
+        }
+      ).catch(err => console.log(err))
+    }
   };
 
   const modalFirstNameInputChange = (event) => {
@@ -72,49 +81,13 @@ const UsersTable = props => {
   const modalLastNameInputChange = (event) => {
     setlastName(event.target.value);
   }
-  const modalEmailInputChange = (event) => {
-    setEmail(event.target.value);
-  }
-
   const classes = useStyles();
 
   // const [selectedUsers, setSelectedUsers] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
 
-  // const handleSelectAll = event => {
-  //   const { users } = props;
-
-  //   let selectedUsers;
-
-  //   if (event.target.checked) {
-  //     selectedUsers = users.map(user => user.id);
-  //   } else {
-  //     selectedUsers = [];
-  //   }
-
-  //   setSelectedUsers(selectedUsers);
-  // };
-
-  // const handleSelectOne = (event, id) => {
-  //   const selectedIndex = selectedUsers.indexOf(id);
-  //   let newSelectedUsers = [];
-
-  //   if (selectedIndex === -1) {
-  //     newSelectedUsers = newSelectedUsers.concat(selectedUsers, id);
-  //   } else if (selectedIndex === 0) {
-  //     newSelectedUsers = newSelectedUsers.concat(selectedUsers.slice(1));
-  //   } else if (selectedIndex === selectedUsers.length - 1) {
-  //     newSelectedUsers = newSelectedUsers.concat(selectedUsers.slice(0, -1));
-  //   } else if (selectedIndex > 0) {
-  //     newSelectedUsers = newSelectedUsers.concat(
-  //       selectedUsers.slice(0, selectedIndex),
-  //       selectedUsers.slice(selectedIndex + 1)
-  //     );
-  //   }
-
-  //   setSelectedUsers(newSelectedUsers);
-  // };
+ 
 
   const handlePageChange = (event, page) => {
     setPage(page);
@@ -123,6 +96,24 @@ const UsersTable = props => {
   const handleRowsPerPageChange = event => {
     setRowsPerPage(event.target.value);
   };
+
+  const updateInterviewerProfile = () => {
+    const updateProfile = {
+      first_name: firstName,
+      last_name: lastName
+    }
+    API.put(`api/updateApplicant/${id}`, updateProfile ).then(
+      res => {
+        users.find(r => {
+          if(r.id == id){
+            r.first_name = firstName;
+            r.last_name = lastName
+          }
+          handleClose();
+        })
+      }
+    ).catch(err => console.log(err))
+  }
 
   return (
 
@@ -137,22 +128,10 @@ const UsersTable = props => {
               <Table>
                 <TableHead>
                   <TableRow>
-                    {/* <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedUsers.length === users.length}
-                      color="primary"
-                      indeterminate={
-                        selectedUsers.length > 0 &&
-                        selectedUsers.length < users.length
-                      }
-                      onChange={handleSelectAll}
-                    />
-                  </TableCell> */}
                     <TableCell>Name</TableCell>
                     <TableCell>Email</TableCell>
                     <TableCell>Registration date</TableCell>
                     <TableCell>Active</TableCell>
-                    {/* <TableCell>Registration date</TableCell> */}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -162,21 +141,6 @@ const UsersTable = props => {
                       hover
                       key={user.id}
                     >
-                      {/* <TableRow
-                    className={classes.tableRow}
-                    hover
-                    key={user.id}
-                    selected={selectedUsers.indexOf(user.id) !== -1
-                    }
-                  > */}
-                      {/* <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={selectedUsers.indexOf(user.id) !== -1}
-                        color="primary"
-                        onChange={event => handleSelectOne(event, user.id)}
-                        value="true"
-                      />
-                    </TableCell> */}
                       <TableCell>
                         <div className={classes.nameContainer}>
                           <Avatar
@@ -193,8 +157,8 @@ const UsersTable = props => {
                         {moment(user.created_dAt).format('DD/MM/YYYY')}
                       </TableCell>
                       <TableCell>
-                        <div className="user_active_state" >
-                        true
+                        <div className={(user.is_active == 1) ? 'user_active' : 'user_inactive'} >
+                        {user.is_active ? 'true' : 'false'}
                         </div>
                       </TableCell>
                       <TableCell>
@@ -231,7 +195,7 @@ const UsersTable = props => {
         show={show}
         title={`Edit Account`}
       >
-        <form action="/action_page.php">
+        <div>
           <div className="form-group">
             <label htmlFor="email">First Name:</label>
             <input
@@ -241,6 +205,12 @@ const UsersTable = props => {
               type="text"
               value={firstName}
             />
+            {
+              firstName.length == 0 && 
+              <p className="err_sm_" >
+                Field cannot be left blank
+              </p>
+            }
           </div>
           <div className="form-group">
             <label htmlFor="email">Last Name:</label>
@@ -251,19 +221,13 @@ const UsersTable = props => {
               type="text"
               value={lastName}
             />
+            {
+              lastName.length == 0 && 
+              <p className="err_sm_" >
+                Field cannot be left blank
+              </p>
+            }
           </div>
-          <div className="form-group">
-            <label htmlFor="email">Email:</label>
-            <input
-              className="form-control"
-              onChange={modalEmailInputChange}
-              placeholder="Enter email"
-              type="email"
-              value={email}
-            />
-          </div>
-
-
 
           <div className="form-group form-check">
             <label
@@ -272,38 +236,24 @@ const UsersTable = props => {
               title="Toggle the switch to either activate or di-activate a user"
             >
               <Switch
-                checked={state.checkedA}
+                checked={state}
                 inputProps={{ 'aria-label': 'secondary checkbox' }}
-                onChange={handleChange('checkedA')}
+                onChange={handleChange}
                 value="checkedA"
               />
               Di-activate user
             </label>
           </div>
-
-          {/* <div className="form-group form-check">
-            <label className="form-check-label">
-              <input
-                className="form-check-input"
-                type="checkbox"
-              /> User Diactivated
-            </label>
-          </div> */}
-
-
-
-
           <div className="Edit_user_" >
              <button
                className="btn btn-primary ml-auto"
-               type="submit"
+               onClick={updateInterviewerProfile}
              >Edit Details
           </button>
           </div>
          
-        </form>
+        </div>
       </Modals>
-
     </div>
     
   );

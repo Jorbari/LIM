@@ -3,3 +3,16 @@
     border-radius: 25px;
     padding: 2%;
 }
+.calendar_container{
+    display: flex !important;
+    padding: 2%;
+}
+.calendar-area{
+    flex:5;
+}
+.update_calendar_container{
+    flex: 1;
+    padding-left: 2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
