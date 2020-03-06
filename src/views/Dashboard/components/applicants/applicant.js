@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import MoneyIcon from '@material-ui/icons/Money';
+import PeopleIcon from '@material-ui/icons/PeopleOutlined';
+import API from '../../../../services/interviewer';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 700
   },
   avatar: {
-    backgroundColor: theme.palette.error.main,
+    backgroundColor: theme.palette.success.main,
     height: 56,
     width: 56
   },
@@ -32,24 +32,41 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center'
   },
   differenceIcon: {
-    color: theme.palette.error.dark
+    color: theme.palette.success.dark
   },
   differenceValue: {
-    color: theme.palette.error.dark,
+    color: theme.palette.success.dark,
     marginRight: theme.spacing(1)
   }
 }));
 
-const Budget = props => {
+const TotalUsers = props => {
   const { className, ...rest } = props;
+  const [applicant, setApplicant]  = useState(0);
 
   const classes = useStyles();
+
+  const getApplicant = () => {
+    API.get('api/sumOfApplicant')
+    .then(
+      res => {
+        setApplicant(res.data.data);
+      }
+    )
+    .catch(
+      err => {
+        console.log('an error occurred');
+        console.log(err);
+      }
+    )
+  }
 
   return (
     <Card
       {...rest}
       className={clsx(classes.root, className)}
     >
+      {getApplicant()}
       <CardContent>
         <Grid
           container
@@ -62,38 +79,23 @@ const Budget = props => {
               gutterBottom
               variant="body2"
             >
-              BUDGET
+              APPLICANTS
             </Typography>
-            <Typography variant="h3">$24,000</Typography>
+            <Typography variant="h3">{applicant} <span>user(s)</span> </Typography>
           </Grid>
           <Grid item>
             <Avatar className={classes.avatar}>
-              <MoneyIcon className={classes.icon} />
+              <PeopleIcon className={classes.icon} />
             </Avatar>
           </Grid>
         </Grid>
-        <div className={classes.difference}>
-          <ArrowDownwardIcon className={classes.differenceIcon} />
-          <Typography
-            className={classes.differenceValue}
-            variant="body2"
-          >
-            12%
-          </Typography>
-          <Typography
-            className={classes.caption}
-            variant="caption"
-          >
-            Since last month
-          </Typography>
-        </div>
       </CardContent>
     </Card>
   );
 };
 
-Budget.propTypes = {
+TotalUsers.propTypes = {
   className: PropTypes.string
 };
 
-export default Budget;
+export default TotalUsers;

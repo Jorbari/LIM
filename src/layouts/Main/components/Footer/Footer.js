@@ -27,13 +27,12 @@ const Footer = props => {
           href="https://devias.io/"
           target="_blank"
         >
-          Devias IO
+          LIM
         </Link>
-        . 2019
+        . 2020
       </Typography>
       <Typography variant="caption">
-        Created with love for the environment. By designers and developers who
-        love to work together in offices!
+        develeopment mode activated
       </Typography>
     </div>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
@@ -8,9 +8,9 @@ import {
   Grid,
   Typography,
   Avatar,
-  LinearProgress
 } from '@material-ui/core';
 import InsertChartIcon from '@material-ui/icons/InsertChartOutlined';
+import API from '../../../../services/interviewer';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -40,14 +40,30 @@ const useStyles = makeStyles(theme => ({
 
 const TasksProgress = props => {
   const { className, ...rest } = props;
+  const [booked, setBooked]  = useState(0);
 
   const classes = useStyles();
 
+  const getBookedInterviews = () => {
+    API.get('api/sumOfBookedInterview')
+    .then(
+      res => {
+        setBooked(res.data.data);
+      }
+    )
+    .catch(
+      err => {
+        console.log('an error occurred');
+        console.log(err);
+      }
+    )
+  }
   return (
     <Card
       {...rest}
       className={clsx(classes.root, className)}
     >
+      {getBookedInterviews()}
       <CardContent>
         <Grid
           container
@@ -60,9 +76,9 @@ const TasksProgress = props => {
               gutterBottom
               variant="body2"
             >
-              TASKS PROGRESS
+              BOOKED INTERVIEWS
             </Typography>
-            <Typography variant="h3">75.5%</Typography>
+            <Typography variant="h3">{booked}</Typography>
           </Grid>
           <Grid item>
             <Avatar className={classes.avatar}>
@@ -70,11 +86,6 @@ const TasksProgress = props => {
             </Avatar>
           </Grid>
         </Grid>
-        <LinearProgress
-          className={classes.progress}
-          value={75.5}
-          variant="determinate"
-        />
       </CardContent>
     </Card>
   );
