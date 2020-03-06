@@ -54,7 +54,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundImage: 'url(/images/auth.jpg)',
+    backgroundImage: 'linear-gradient(rgba(63, 81, 181, 0.49), rgba(63, 81, 181, 0)), url(/images/login.jpg)',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center'
@@ -232,27 +232,12 @@ const SignIn = props => {
         >
           <div className={classes.quote}>
             <div className={classes.quoteInner}>
-              <Typography
+              {/* <Typography
                 className={classes.quoteText}
                 variant="h1"
               >
-                Hella narwhal Cosby sweater McSweeney's, salvia kitsch before
-                they sold out High Life.
-              </Typography>
-              <div className={classes.person}>
-                <Typography
-                  className={classes.name}
-                  variant="body1"
-                >
-                  Takamaru Ayako
-                </Typography>
-                <Typography
-                  className={classes.bio}
-                  variant="body2"
-                >
-                  Manager at inVision
-                </Typography>
-              </div>
+                LIM INTERVIEW MANAGEMENT
+              </Typography> */}
             </div>
           </div>
         </Grid>
