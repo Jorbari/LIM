@@ -1,1 +1,1 @@
-export { default } from './ApplicantsTable';
+export { default } from './UsersTable';

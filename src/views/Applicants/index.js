@@ -1,1 +1,1 @@
-export { default } from './ApplicantList';
+export { default } from './UserList';

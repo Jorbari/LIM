@@ -1,4 +1,15 @@
 import uuid from 'uuid/v1';
+import API from '../../services/interviewer';
+
+// import {reactLocalStorage} from 'reactjs-localstorage';
+//  const userProfile = reactLocalStorage.getObject('userProfile');
+
+// let interviewData = [];
+// API.get('api/showAllInterviewer').then(res => {
+//   console.log(res);
+//   interviewData = res.data.data;
+// }).catch(err => console.log(err));
+
 
 export default [
   {
