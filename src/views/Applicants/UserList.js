@@ -30,7 +30,7 @@ class UserList extends React.Component{
     const { classes } = this.props;
     return(
       <div className={classes.root}>
-       <UsersToolbar updateuser={this.addedInterviewer}/>
+       <UsersToolbar updateuser={this.addedInterviewer} />
        <div className={classes.content}>
          <UsersTable users={this.state.applicants} />
        </div>
