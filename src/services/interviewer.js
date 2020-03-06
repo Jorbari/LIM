@@ -6,7 +6,7 @@ console.log(token);
 
 export default axios.create({
   baseURL: 'http://lim-manager.herokuapp.com/',
-  headers: {'Authorization': 'Bearer '+token}
+  headers: {'Authorization': 'Bearer '+ token}
 });
 
 /* eslint-disable */

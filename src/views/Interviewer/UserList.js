@@ -21,6 +21,7 @@ class UserList extends React.Component{
       interviewData: []
     };
     this.loadData = this.loadData.bind(this);
+    this.addedInterviewer = this.addedInterviewer.bind(this);
     this.loadData();
   }
 
@@ -29,7 +30,7 @@ class UserList extends React.Component{
     const { classes } = this.props;
     return(
       <div className={classes.root}>
-       <UsersToolbar />
+       <UsersToolbar updateuser={this.addedInterviewer}/>
        <div className={classes.content}>
          <UsersTable users={this.state.interviewData} />
        </div>
@@ -37,6 +38,12 @@ class UserList extends React.Component{
     )
   }
 
+  addedInterviewer(user){
+    console.log(user);
+    if(user == true){
+      this.loadData();
+    }
+  }
   loadData(){
     let interviewData = [];
     API.get('api/showAllInterviewer').then(res => {

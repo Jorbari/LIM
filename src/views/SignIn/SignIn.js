@@ -203,6 +203,7 @@ const SignIn = props => {
         console.log(res.data.data.User);
         reactLocalStorage.setObject('userProfile', res.data.data.User);
         reactLocalStorage.set('token', res.data.data.User.token);
+        console.log(res.data.data.User.token);
         history.push("/dashboard");
       }
       

@@ -66,13 +66,17 @@ const UsersTable = props => {
 
   const handleChange = () => {
     setState(!state);
-    if(state == true){
       API.post(`api/activateInterviewer/${id}`).then(
         res => {
-          console.log('successfully changed');
+          console.log(res.data.data)
+          console.log(res.data.data.is_active);
+          users.find(r => {
+            if(r.id == res.data.data.id){
+              r.is_active = res.data.data.is_active;
+            }
+          } )
         }
       ).catch(err => console.log(err))
-    }
   };
 
   const modalFirstNameInputChange = (event) => {
@@ -247,6 +251,7 @@ const UsersTable = props => {
           <div className="Edit_user_" >
              <button
                className="btn btn-primary ml-auto"
+               disabled={lastName.length == 0 || firstName.length == 0}
                onClick={updateInterviewerProfile}
              >Edit Details
           </button>
