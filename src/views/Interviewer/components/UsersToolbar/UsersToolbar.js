@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import { Button } from '@material-ui/core';
+import Modals from '../../../../helpers/modal';
 
 import { SearchInput } from 'components';
 
@@ -30,6 +31,24 @@ const useStyles = makeStyles(theme => ({
 
 const UsersToolbar = props => {
   const { className, ...rest } = props;
+  const [show, setShow] = useState(false);
+  const [firstName, setfirstName] = useState('');
+  const [lastName, setlastName] = useState('');
+
+
+  const modalFirstNameInputChange = (event) => {
+    setfirstName(event.target.value);
+  }
+  const handleClose = () => setShow(false);
+  const modalLastNameInputChange = (event) => {
+    setlastName(event.target.value);
+  }
+  const handleShow = () => {
+     setShow(true);
+  };
+  const createInterviewerAccount = () => {
+
+  }
 
   const classes = useStyles();
 
@@ -44,6 +63,7 @@ const UsersToolbar = props => {
         <Button className={classes.exportButton}>Export</Button> */}
         <Button
           color="primary"
+          onClick={handleShow}
           variant="contained"
         >
           Add Interviewer
@@ -55,6 +75,61 @@ const UsersToolbar = props => {
           placeholder="Search user"
         />
       </div>
+
+
+      <Modals
+        onHide={handleClose}
+        show={show}
+        title={`Add Interviewer`}
+      >
+        <div>
+          <div className="form-group">
+            <label htmlFor="email">First Name:</label>
+            <input
+              className="form-control"
+              onChange={modalFirstNameInputChange}
+              placeholder="Enter First Name"
+              type="text"
+              value={firstName}
+            />
+            {
+              firstName.length == 0 && 
+              <p className="err_sm_" >
+                Field cannot be left blank
+              </p>
+            }
+          </div>
+          <div className="form-group">
+            <label htmlFor="email">Last Name:</label>
+            <input
+              className="form-control"
+              onChange={modalLastNameInputChange}
+              placeholder="Enter Last Name"
+              type="text"
+              value={lastName}
+            />
+            {
+              lastName.length == 0 && 
+              <p className="err_sm_" >
+                Field cannot be left blank
+              </p>
+            }
+          </div>
+
+         
+          <div className="Edit_user_" >
+             <button
+               className="btn btn-primary ml-auto"
+               onClick={createInterviewerAccount}
+             >Add Interviewer
+          </button>
+          </div>
+         
+        </div>
+      </Modals>
+   
+
+
     </div>
   );
 };

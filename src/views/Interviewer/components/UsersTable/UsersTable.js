@@ -254,6 +254,7 @@ const UsersTable = props => {
          
         </div>
       </Modals>
+   
     </div>
     
   );
