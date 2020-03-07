@@ -32,7 +32,7 @@ const Footer = props => {
         . 2020
       </Typography>
       <Typography variant="caption">
-        develeopment mode activated
+        you are in development mode
       </Typography>
     </div>
   );
