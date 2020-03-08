@@ -49,12 +49,12 @@ const Sidebar = props => {
     },
     {
       title: 'Interviewers',
-      href: '/users',
+      href: '/interviewers',
       icon: <PeopleIcon />
     },
     {
       title: 'Calendar',
-      href: '/products',
+      href: '/calendar',
       icon: <ShoppingBasketIcon />
     },
     {

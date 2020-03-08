@@ -3,6 +3,19 @@
     border-radius: 25px;
     padding: 2%;
 }
+.top_calendar_{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 2%;
+    padding-left: 2%;
+    width: 80%;
+}
+._new-schedule{
+    border-radius: 25px;
+    color: white;
+    background-color: #3f51b5;
+    border-color: #3f51b5;
+}
 .calendar_container{
     display: flex !important;
     padding: 2%;
@@ -15,4 +28,22 @@
     padding-left: 2%;
     padding-top: 2%;
     padding-bottom: 2%;
+    background-color: #35353503;
+}
+.no_booked_schedule{
+    text-align: center;
+}
+.no_booked_schedule h4{
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    color: #353535;
+    font-weight: 700;
+}
+.no_booked_schedule p{
+    font-size: 1.3em;
+    width: 240px;
+    color: #353535e7;
+    font-family: "Work Sans",Roboto,Segoe UI,Open Sans,sans-serif;
+    // padding-left: 2%;
+    // padding-right: 2%;
 }
