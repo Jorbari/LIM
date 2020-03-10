@@ -1,16 +1,14 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core';
-import InsertChartIcon from '@material-ui/icons/InsertChartOutlined';
-import API from '../../../../services/interviewer';
+import PeopleIcon from '@material-ui/icons/PeopleOutlined';
+import API from '../../../../../services/interviewer';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    height: '100%',
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText
+    height: '100%'
   },
   content: {
     alignItems: 'center',
@@ -20,28 +18,39 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 700
   },
   avatar: {
-    backgroundColor: theme.palette.white,
-    color: theme.palette.primary.main,
+    backgroundColor: theme.palette.error.main,
     height: 56,
     width: 56
   },
   icon: {
     height: 32,
     width: 32
+  },
+  difference: {
+    marginTop: theme.spacing(2),
+    display: 'flex',
+    alignItems: 'center'
+  },
+  differenceIcon: {
+    color: theme.palette.error.dark
+  },
+  differenceValue: {
+    color: theme.palette.error.dark,
+    marginRight: theme.spacing(1)
   }
 }));
 
-const TotalProfit = props => {
+const Budget = props => {
   const { className, ...rest } = props;
-  const [pendingInterview, setpendIngInterview]  = useState(0);
+  const [interview, setInterview]  = useState(0);
 
   const classes = useStyles();
 
-  const getPendingInterview = () => {
-    API.get('api/sumOfPendingInterview')
+  const getbudgetData = () => {
+    API.get('api/sumOfInterviewer')
     .then(
       res => {
-        setpendIngInterview(res.data.data);
+        setInterview(res.data.data);
       }
     )
     .catch(
@@ -51,12 +60,13 @@ const TotalProfit = props => {
       }
     )
   }
+
   return (
     <Card
       {...rest}
       className={clsx(classes.root, className)}
     >
-      {getPendingInterview()}
+      {getbudgetData()}
       <CardContent>
         <Grid
           container
@@ -65,22 +75,17 @@ const TotalProfit = props => {
           <Grid item>
             <Typography
               className={classes.title}
-              color="inherit"
+              color="textSecondary"
               gutterBottom
               variant="body2"
             >
-              PENDING INTERVIEW
+              INTERVIEWERS
             </Typography>
-            <Typography
-              color="inherit"
-              variant="h3"
-            >
-              {pendingInterview}
-            </Typography>
+            <Typography variant="h3">{interview} user<span>(s)</span> </Typography>
           </Grid>
           <Grid item>
           <Avatar className={classes.avatar}>
-              <InsertChartIcon className={classes.icon} />
+              <PeopleIcon className={classes.icon} />
             </Avatar>
           </Grid>
         </Grid>
@@ -89,8 +94,8 @@ const TotalProfit = props => {
   );
 };
 
-TotalProfit.propTypes = {
+Budget.propTypes = {
   className: PropTypes.string
 };
 
-export default TotalProfit;
+export default Budget;

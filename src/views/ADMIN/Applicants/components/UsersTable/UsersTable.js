@@ -6,8 +6,8 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import { makeStyles } from '@material-ui/styles';
 import Switch from '@material-ui/core/Switch';
 import 'font-awesome/css/font-awesome.min.css';
-import Modals from '../../../../helpers/modal';
-import API from '../../../../services/interviewer';
+import Modals from '../../../../../helpers/modal';
+import API from '../../../../../services/interviewer';
 import {
   Card,
   CardActions,

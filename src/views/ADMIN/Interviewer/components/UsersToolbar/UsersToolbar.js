@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import { Button } from '@material-ui/core';
-import Modals from '../../../../helpers/modal';
-import API from '../../../../services/interviewer';
+import Modals from '../../../../../helpers/modal';
+import API from '../../../../../services/interviewer';
 
 import { SearchInput } from 'components';
 

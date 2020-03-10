@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import validate from 'validate.js';
 import { makeStyles } from '@material-ui/styles';
 import {reactLocalStorage} from 'reactjs-localstorage';
-import ErrorHandler from '../../helpers/error';
+import ErrorHandler from '../../../helpers/error';
 import {
   Grid,
   Button,
@@ -14,7 +14,7 @@ import {
   Link,
   Typography
 } from '@material-ui/core';
-import API from '../../services/login';
+import API from '../../../services/login';
 // import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 // import { Facebook as FacebookIcon, Google as GoogleIcon } from 'icons';

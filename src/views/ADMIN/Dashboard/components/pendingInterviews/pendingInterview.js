@@ -2,19 +2,15 @@ import React, {useState} from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import {
-  Card,
-  CardContent,
-  Grid,
-  Typography,
-  Avatar,
-} from '@material-ui/core';
+import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core';
 import InsertChartIcon from '@material-ui/icons/InsertChartOutlined';
-import API from '../../../../services/interviewer';
+import API from '../../../../../services/interviewer';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    height: '100%'
+    height: '100%',
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText
   },
   content: {
     alignItems: 'center',
@@ -24,31 +20,28 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 700
   },
   avatar: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.white,
+    color: theme.palette.primary.main,
     height: 56,
     width: 56
   },
   icon: {
     height: 32,
     width: 32
-  },
-  progress: {
-    marginTop: theme.spacing(3)
   }
 }));
 
-const TasksProgress = props => {
+const TotalProfit = props => {
   const { className, ...rest } = props;
-  const [booked, setBooked]  = useState(0);
+  const [pendingInterview, setpendIngInterview]  = useState(0);
 
   const classes = useStyles();
 
-  const getBookedInterviews = () => {
-    API.get('api/sumOfBookedInterview')
+  const getPendingInterview = () => {
+    API.get('api/sumOfPendingInterview')
     .then(
       res => {
-        setBooked(res.data.data);
+        setpendIngInterview(res.data.data);
       }
     )
     .catch(
@@ -63,7 +56,7 @@ const TasksProgress = props => {
       {...rest}
       className={clsx(classes.root, className)}
     >
-      {getBookedInterviews()}
+      {getPendingInterview()}
       <CardContent>
         <Grid
           container
@@ -72,16 +65,21 @@ const TasksProgress = props => {
           <Grid item>
             <Typography
               className={classes.title}
-              color="textSecondary"
+              color="inherit"
               gutterBottom
               variant="body2"
             >
-              BOOKED INTERVIEWS
+              PENDING INTERVIEW
             </Typography>
-            <Typography variant="h3">{booked}</Typography>
+            <Typography
+              color="inherit"
+              variant="h3"
+            >
+              {pendingInterview}
+            </Typography>
           </Grid>
           <Grid item>
-            <Avatar className={classes.avatar}>
+          <Avatar className={classes.avatar}>
               <InsertChartIcon className={classes.icon} />
             </Avatar>
           </Grid>
@@ -91,8 +89,8 @@ const TasksProgress = props => {
   );
 };
 
-TasksProgress.propTypes = {
+TotalProfit.propTypes = {
   className: PropTypes.string
 };
 
-export default TasksProgress;
+export default TotalProfit;

@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/styles';
-import API from '../../services/interviewer';
+import API from '../../../services/interviewer';
 import { UsersToolbar, UsersTable } from './components';
 
 const styles = theme => ({
@@ -18,7 +18,7 @@ class UserList extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      applicants: []
+      interviewData: []
     };
     this.loadData = this.loadData.bind(this);
     this.addedInterviewer = this.addedInterviewer.bind(this);
@@ -30,9 +30,9 @@ class UserList extends React.Component{
     const { classes } = this.props;
     return(
       <div className={classes.root}>
-       <UsersToolbar updateuser={this.addedInterviewer} />
+       <UsersToolbar updateuser={this.addedInterviewer}/>
        <div className={classes.content}>
-         <UsersTable users={this.state.applicants} />
+         <UsersTable users={this.state.interviewData} />
        </div>
      </div>
     )
@@ -45,11 +45,11 @@ class UserList extends React.Component{
     }
   }
   loadData(){
-    let applicants = [];
-    API.get('api/showAllApplicant').then(res => {
+    let interviewData = [];
+    API.get('api/showAllInterviewer').then(res => {
       console.log(res);
-      applicants = res.data.data;
-      this.setState({applicants: applicants});
+      interviewData = res.data.data;
+      this.setState({interviewData: interviewData});
     }).catch(err => console.log(err));
   }
 }

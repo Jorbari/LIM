@@ -14,7 +14,7 @@ import {
   SignUp as SignUpView,
   SignIn as SignInView,
   NotFound as NotFoundView
-} from './views';
+} from './views/ADMIN';
 
 const Routes = () => {
   return (

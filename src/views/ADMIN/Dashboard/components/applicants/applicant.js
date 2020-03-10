@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core';
 import PeopleIcon from '@material-ui/icons/PeopleOutlined';
-import API from '../../../../services/interviewer';
+import API from '../../../../../services/interviewer';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 700
   },
   avatar: {
-    backgroundColor: theme.palette.error.main,
+    backgroundColor: theme.palette.success.main,
     height: 56,
     width: 56
   },
@@ -32,25 +32,25 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center'
   },
   differenceIcon: {
-    color: theme.palette.error.dark
+    color: theme.palette.success.dark
   },
   differenceValue: {
-    color: theme.palette.error.dark,
+    color: theme.palette.success.dark,
     marginRight: theme.spacing(1)
   }
 }));
 
-const Budget = props => {
+const TotalUsers = props => {
   const { className, ...rest } = props;
-  const [interview, setInterview]  = useState(0);
+  const [applicant, setApplicant]  = useState(0);
 
   const classes = useStyles();
 
-  const getbudgetData = () => {
-    API.get('api/sumOfInterviewer')
+  const getApplicant = () => {
+    API.get('api/sumOfApplicant')
     .then(
       res => {
-        setInterview(res.data.data);
+        setApplicant(res.data.data);
       }
     )
     .catch(
@@ -66,7 +66,7 @@ const Budget = props => {
       {...rest}
       className={clsx(classes.root, className)}
     >
-      {getbudgetData()}
+      {getApplicant()}
       <CardContent>
         <Grid
           container
@@ -79,12 +79,12 @@ const Budget = props => {
               gutterBottom
               variant="body2"
             >
-              INTERVIEWERS
+              APPLICANTS
             </Typography>
-            <Typography variant="h3">{interview} user<span>(s)</span> </Typography>
+            <Typography variant="h3">{applicant} <span>user(s)</span> </Typography>
           </Grid>
           <Grid item>
-          <Avatar className={classes.avatar}>
+            <Avatar className={classes.avatar}>
               <PeopleIcon className={classes.icon} />
             </Avatar>
           </Grid>
@@ -94,8 +94,8 @@ const Budget = props => {
   );
 };
 
-Budget.propTypes = {
+TotalUsers.propTypes = {
   className: PropTypes.string
 };
 
-export default Budget;
+export default TotalUsers;
