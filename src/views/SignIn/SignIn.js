@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-undef */
 import React, { useState, useEffect } from 'react';
 import { Link as RouterLink, withRouter, Redirect } from 'react-router-dom';
@@ -204,7 +205,15 @@ const SignIn = props => {
         reactLocalStorage.setObject('userProfile', res.data.data.User);
         reactLocalStorage.set('token', res.data.data.User.token);
         console.log(res.data.data.User);
-        history.push("/dashboard");
+        if(res.data.data.User.role.name == 'administrator'){
+          history.push("/admin");
+        }
+        else if(res.data.data.User.role.name == 'interviewer'){
+          history.push("/interviewer");
+        }
+        else{
+          history.push("/applicant");
+        }
       }
       
     }).catch(err => {
