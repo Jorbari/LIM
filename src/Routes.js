@@ -3,7 +3,9 @@ import React from 'react';
 import { Switch, Redirect, Route, BrowserRouter } from 'react-router-dom';
 import {reactLocalStorage} from 'reactjs-localstorage';
 import { RouteWithLayout } from './components';
-import { Main as MainLayout, Minimal as MinimalLayout } from './layouts';
+import { Main as AdminMainLayout, Minimal as MinimalLayout } from './layouts/Admin';
+import { Main as InterviewerMainLayout} from './layouts/Interviewer';
+import { Main as ApplicantMainLayout} from './layouts/Interviewer';
 
 import {
   Dashboard as DashboardView,
@@ -67,77 +69,83 @@ const Routes = () => {
         />
         <PrivateRoute
           path="/admin"
-          layout={MainLayout}
+          layout={AdminMainLayout}
           render={({ match: { url } }) => (
             <>
               <RouteWithLayout
                 component={DashboardView}
                 exact
-                layout={MainLayout}
+                layout={AdminMainLayout}
                 path={`${url}/`}
               />
               <RouteWithLayout
                 component={UserListView}
                 exact
-                layout={MainLayout}
+                layout={AdminMainLayout}
                 path={`${url}/interviewers`}
               />
               <RouteWithLayout
                 component={ApplicantsView}
                 exact
-                layout={MainLayout}
+                layout={AdminMainLayout}
                 path={`${url}/applicants`}
+              />
+              <RouteWithLayout
+                component={AccountView}
+                exact
+                layout={AdminMainLayout}
+                path={`${url}/account`}
               />
             </>
           )}
         />
         <InterviewerRoute
           path="/interviewer"
-          layout={MainLayout}
+          layout={InterviewerMainLayout}
           render={({ match: { url } }) => (
             <>
               <RouteWithLayout
                 component={DashboardView}
                 exact
-                layout={MainLayout}
+                layout={InterviewerMainLayout}
                 path={`${url}/`}
               />
               <RouteWithLayout
-                component={UserListView}
+                component={ProductListView}
                 exact
-                layout={MainLayout}
-                path={`${url}/interviewers`}
+                layout={InterviewerMainLayout}
+                path={`${url}/calendar`}
               />
               <RouteWithLayout
-                component={ApplicantsView}
+                component={AccountView}
                 exact
-                layout={MainLayout}
-                path={`${url}/applicants`}
+                layout={InterviewerMainLayout}
+                path={`${url}/account`}
               />
             </>
           )}
         />
         <ApplicantRoute
           path="/applicant"
-          layout={MainLayout}
+          layout={ApplicantMainLayout}
           render={({ match: { url } }) => (
             <>
               <RouteWithLayout
                 component={DashboardView}
                 exact
-                layout={MainLayout}
+                layout={ApplicantMainLayout}
                 path={`${url}/`}
               />
               <RouteWithLayout
                 component={UserListView}
                 exact
-                layout={MainLayout}
+                layout={ApplicantMainLayout}
                 path={`${url}/interviewers`}
               />
               <RouteWithLayout
                 component={ApplicantsView}
                 exact
-                layout={MainLayout}
+                layout={ApplicantMainLayout}
                 path={`${url}/applicants`}
               />
             </>
@@ -157,7 +165,6 @@ const Routes = () => {
           layout={MinimalLayout}
           path="/sign-in"
         />
-
 
         <RouteWithLayout
           component={NotFoundView}
