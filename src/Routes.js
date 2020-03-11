@@ -22,7 +22,7 @@ const token = reactLocalStorage.get('token', '');
 const userProfile = reactLocalStorage.getObject('userProfile', {'role': 'sss'} );
 const Auth = {
   isAuthenticated: token,
-  userRole: userProfile.role?.name
+  userRole: userProfile.role.name
 }
 
 // const PrivateRoute = ({component: Component, ...rest}) => (
