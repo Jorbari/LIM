@@ -35,7 +35,7 @@ const Auth = {
 //   />
 // );
 const PrivateRoute = ({...rest}) => (
-  Auth?.isAuthenticated != '' && Auth.userRole == 'administrator' ? 
+  Auth.userRole == 'administrator' ? 
   <Route
     {...rest}
   />
@@ -43,7 +43,7 @@ const PrivateRoute = ({...rest}) => (
   <Redirect to="/sign-in" />
 );
 const InterviewerRoute = ({...rest}) => (
-  Auth?.isAuthenticated != '' && Auth.userRole == 'interviewer' ? 
+  Auth.userRole == 'interviewer' ? 
   <Route
     {...rest}
   />
@@ -51,7 +51,7 @@ const InterviewerRoute = ({...rest}) => (
   <Redirect to="/sign-in" />
 );
 const ApplicantRoute = ({...rest}) => (
-  Auth?.isAuthenticated != '' && Auth?.userRole == 'applicant' ? 
+  Auth.userRole == 'applicant' ? 
   <Route
     {...rest}
   />

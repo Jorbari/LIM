@@ -206,13 +206,16 @@ const SignIn = props => {
         reactLocalStorage.set('token', res.data.data.User.token);
         console.log(res.data.data.User);
         if(res.data.data.User.role.name == 'administrator'){
-          history.push("/admin");
+          // history.push("/admin");
+          window.location.href = '/admin';
         }
         else if(res.data.data.User.role.name == 'interviewer'){
-          history.push("/interviewer");
+          window.location.href = '/interviewer';
+          // history.push("/interviewer");
         }
         else{
-          history.push("/applicant");
+          window.location.href = '/applicant';
+          // history.push("/applicant");
         }
       }
       

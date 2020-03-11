@@ -7,7 +7,8 @@ import { AppBar, Toolbar, Badge, Hidden, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 // import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
-import logOut from '../../../../helpers/signOut';
+// import logOut from '../../../../helpers/signOut';
+import {reactLocalStorage} from 'reactjs-localstorage';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,9 +30,8 @@ const Topbar = props => {
   const [notifications] = useState([]);
 
   const clearStorage = () => {
-    logOut();
-    // history.pushState('/sign-in');
-    // alert('this is me')
+    reactLocalStorage.clear();
+    window.location.href = '/sign-in';
   }
 
   return (
