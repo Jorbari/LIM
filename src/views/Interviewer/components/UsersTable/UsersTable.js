@@ -158,7 +158,7 @@ const UsersTable = props => {
                       </TableCell>
                       <TableCell>{user.email}</TableCell>
                       <TableCell>
-                        {moment(user.created_dAt).format('DD/MM/YYYY')}
+                        {moment(user.created_at).format('DD/MM/YYYY')}
                       </TableCell>
                       <TableCell>
                         <div className={(user.is_active == 1) ? 'user_active' : 'user_inactive'} >

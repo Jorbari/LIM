@@ -44,6 +44,34 @@
     width: 240px;
     color: #353535e7;
     font-family: "Work Sans",Roboto,Segoe UI,Open Sans,sans-serif;
-    // padding-left: 2%;
-    // padding-right: 2%;
+}
+.fc-past {
+    background-color: rgba(128, 128, 128, 0.432);
+}
+.fc-bgevent{
+  opacity: 1 !important;
+}
+.toast{
+    opacity: unset;
+}
+.interview_decline_accept{
+    display: flex;
+    justify-content: flex-end;
+    // justify-content: space-around;
+}
+.interview_decline_accept .btn{
+    font-size: 11px;
+    margin-left: 10px;
+}
+.interview_decline_accept .btn.btn-success{
+    background-color: #3f51b5;
+    outline: none;
+    border-color: #3f51b5;
+}
+.interview_decline_accept .btn.btn-outline{
+    border: 1px solid gray;
+}
+.interview_decline_accept .btn.btn-outline:hover{
+    background-color: rgba(255, 0, 0, 0.842);
+    border-color: rgba(255, 0, 0, 0.842);
 }
