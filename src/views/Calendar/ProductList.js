@@ -1,3 +1,4 @@
+/* eslint-disable react/no-set-state */
 
 import React, { Component } from 'react';
 // import { Calendar } from '@fullcalendar/core';
@@ -10,6 +11,7 @@ import Modals from '../../helpers/modal';
 
 
 class ProductList extends Component{
+  scheduleData;
 
   constructor(props){
     super(props);
@@ -18,14 +20,23 @@ class ProductList extends Component{
     this.getMyBookedSchedules = this.getMyBookedSchedules.bind(this);
     this.declineInterviewRequest = this.declineInterviewRequest.bind(this);
     this.declineInterview = this.declineInterview.bind(this);
+    this.AddInterview = this.AddInterview.bind(this);
+    this.showModal = this.showModal.bind(this);
+    this.getApprovedInterview = this.getApprovedInterview.bind(this);
+    this.confirmInterview = this.confirmInterview.bind(this);
+    this.handleClose = this.handleClose.bind(this);
     this.getMySchedules();
     this.getMyBookedSchedules();
+    this.getApprovedInterview();
 
     this.state = {
       scheduleDate: [],
       show: false,
       pendingSchedule: [],
-      pendingScheduleId: ''
+      pendingScheduleId: '',
+      showAddSchedule: false,
+      schedule_date: '',
+      approvedInterview: []
     }
 
     
@@ -33,6 +44,9 @@ class ProductList extends Component{
 
   handleClose(){
     this.setState({show: !this.state.show});
+  }
+  showModal(){
+    this.setState({showAddSchedule: !this.state.showAddSchedule});
   }
 
   declineInterviewRequest(id){
@@ -43,26 +57,61 @@ class ProductList extends Component{
     const id = this.state.pendingScheduleId;
     API.delete(`api/DeleteInterviewRequest/${id}`, id).then(
       res => {
-        console.log(res)
+        console.log(res);
+        this.handleClose();
+      },
+      err => console.log(err)
+    )
+  }
+
+  AddInterview(){
+    const scheduleDate = {
+      date: this.state.schedule_date
+    };
+    API.post(`api/schedule/create`, scheduleDate).then(
+      res => {
+        console.log(res);
+        if(res.data.status == 200){
+           const data = {
+            interviewer_id: res.data.data.interviewer_id,
+            date: res.data.data.schedule_time
+          }
+          this.setState({scheduleDate: [...this.state.scheduleDate, data] });
+          console.log(data);
+        }
+        this.showModal();
+      },
+      err => console.log(err)
+    )
+  }
+  confirmInterview(id){
+    console.log(id);
+    API.post(`api/ApproveInterviewRequest/${id}`).then(
+      res => {
+        if(res.data.status == 200){
+          console.log(res);
+          this.getMyBookedSchedules();
+        }
       },
       err => console.log(err)
     )
   }
 
   render() {
-    let scheduleData;
+    
     if(this.state.pendingSchedule.length > 0){
-      scheduleData = this.state.pendingSchedule.map(
+      this.scheduleData = this.state.pendingSchedule.map(
         e => (
           <div key={e.id}>
             {
             e.applicant_details.map(
               r => (
-                <div key={e.id} >
+                <div key={e.id}>
                   <Snippet
+                    confirm={() => this.confirmInterview(e.applicant_id)}
+                    decline={() => this.declineInterviewRequest(r.applicant_id)}
                     firstName={r.first_name}
                     lastName={r.last_name}
-                    decline={() => this.declineInterviewRequest(e.id)}
                   />
                 </div>
               )
@@ -73,7 +122,7 @@ class ProductList extends Component{
       )
     }
     else{
-      scheduleData = 
+      this.scheduleData = 
       <div className="no_booked_schedule" >
         <h4>It's a Free Day</h4>
         <p>
@@ -90,7 +139,10 @@ class ProductList extends Component{
             <h2>My Calendar</h2>
           </div>
           <div>
-            <button className="btn btn-warning _new-schedule" >New Schedule</button>
+            <button
+              className="btn btn-warning _new-schedule"
+              onClick={this.showModal}
+            >New Schedule</button>
           </div>
         </div>
          <div className="calendar_container" >
@@ -105,33 +157,36 @@ class ProductList extends Component{
           </div>
 
           <div className="update_calendar_container" >
-            {/* <div className="no_booked_schedule" >
-              <h4>It's a Free Day</h4>
-              <p>
-                Relax, you have no booked interview for today.
-              </p>
-              
-            </div> */}
 
-            {/* {
-              this.state.pendingSchedule.map(e => (
-                  e.applicant_details.map(r => ( 
-                    <Snippet
-                      firstName={r.first_name}
-                      id={e.id}
-                      lastName={r.last_name}
-                      decline={this.declineInterviewRequest}
-                    />
-                  ))
-              ))
-            } */}
-
-            {scheduleData}
-            
+            {this.scheduleData}
             
           </div>
           
         </div>
+
+        <Modals
+          onHide={this.showModal}
+          show={this.state.showAddSchedule}
+          title={`Add Schedule`}
+        >
+        <div>
+          <div className="Edit_user_" >
+            <div className="form-group" >
+              <input
+                className="form-control"
+                onChange={(event) => this.setState({schedule_date: event.target.value})}
+                type="datetime-local"
+              />
+            </div>
+             <button
+               className="btn btn-primary ml-auto"
+               onClick={this.AddInterview}
+             >Add Schedule
+          </button>
+          </div>
+         
+        </div>
+      </Modals>
 
         <Modals
           onHide={this.handleClose}
@@ -155,20 +210,22 @@ class ProductList extends Component{
      
     )
 
-
   }
 
   getMySchedules(){
     API.get('api/schedule/show').then(
       res => {
-        res.data.data.forEach(schedule => {
-          const data = {
-            interviewer_id: schedule.interviewer_id,
-            date: schedule.schedule_time
-          }
-          this.setState({scheduleDate: [...this.state.scheduleDate, data]})
-        });
-        // console.log(this.state.scheduleDate);
+        if(res.data.data.length > 0){
+           res.data.data.forEach(schedule => {
+            console.log(schedule);
+            const data = {
+              id: schedule.id,
+              date: schedule.schedule_time,
+              color: 'pink'
+            }
+            this.setState({scheduleDate: [...this.state.scheduleDate, data]})
+          });
+        }
       },
       err => console.log(err)
     )
@@ -177,25 +234,76 @@ class ProductList extends Component{
   getMyBookedSchedules(){
     API.get('api/showAllPendingInterview').then(
       res => {
-        console.log(res.data.data);
-        this.setState({pendingSchedule: res.data.data});
+        console.log(res.data);
+        if(res.data.data.length > 0){
+          this.setState({pendingSchedule: res.data.data});
+        }
         console.log(this.state.pendingSchedule);
       }
       
     ).catch(err => console.log(err))
   }
 
-  handleDateClick = (arg) => { // bind with an arrow function
+  getApprovedInterview(){
+    API.get('api/showAllApprovedInterview').then(
+      res => {
+        if(res.data.data.length > 0){
+          res.data.data.forEach( c => {
+
+            let confirmSchedule = {
+              title: '',
+              date: '',
+              id: '',
+              render: 'background',
+              color: '#257ED9'
+            }
+
+            confirmSchedule.date = c.session_time;
+            confirmSchedule.id = c.id;
+
+            console.log(confirmSchedule.id);
+            const scheduleArr = [...this.state.scheduleDate];
+            const schedule = scheduleArr.find(r => r.id == confirmSchedule.id);
+
+            
+              
+              const dataId = scheduleArr.indexOf(schedule);
+
+            c.applicant_details.forEach(r => {
+              confirmSchedule.title = `${r.first_name} ${r.last_name}`;
+              console.log(confirmSchedule);
+
+              if(dataId != -1){
+                console.log(dataId);
+                scheduleArr[dataId] = confirmSchedule;
+              this.setState({scheduleDate: scheduleArr});
+              }
+
+            })
+          })
+        }
+        // console.log(confirmSchedule);
+
+        // const scheduleArr = [...this.state.scheduleDate];
+        // console.log(scheduleArr);
+        // const schedule = scheduleArr.findIndex(r => r.interviewer_id == confirmSchedule.interviewer_id);
+        // console.log(schedule);
+        // let item = {...scheduleArr[schedule]};
+        // console.log(item);
+        // item = confirmSchedule;
+        // scheduleArr[schedule] = item;
+        // this.setState({scheduleDate: scheduleArr});
+
+        // this.getMySchedules();
+
+      }
+      
+    ).catch(err => console.log(err))
+
+  }
+
+  handleDateClick = (arg) => { 
     console.log(arg);
   }
 }
 export default ProductList;
-
-/*
-events={[
-  { id: 1, title: 'event 1', date: '2020-03-03' },
-  { id: 2, title: 'event 2', date: '2020-03-04' },
-  { id: 3, title: 'event 3', date: '2020-03-05' },
-  { id: 4, title: 'event 4', date: '2020-03-06' }
-]}
-*/

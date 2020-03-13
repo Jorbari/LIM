@@ -18,12 +18,6 @@ class Snippet extends Component {
     this.setState({showSnippet: !this.state.showSnippet});
   }
 
-  acceptRequest(){
-    
-  }
-
-
-
   render(){
     return (
       <div>
@@ -45,10 +39,16 @@ class Snippet extends Component {
           <strong className="mr-auto"> {this.props.firstName.slice(0.4)} {this.props.lastName.slice(0,3)}... </strong>
         </Toast.Header>
         <Toast.Body>
-          Applicant above requested an interview with you.
+          <div className="booked_schedule">
+              Applicant above requested an interview with you.
+          </div>
+          
           <div className="interview_decline_accept" >
           <div>
-              <button className="btn btn-success" >Confirm</button>
+              <button
+                className="btn btn-success"
+                onClick={this.props.confirm}
+              >Confirm</button>
             </div>
             <div> 
               <button

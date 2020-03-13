@@ -57,11 +57,11 @@ const Sidebar = props => {
       href: '/interviewer/account',
       icon: <AccountBoxIcon />
     },
-    {
-      title: 'Settings',
-      href: '/interviewer/settings',
-      icon: <SettingsIcon />
-    }
+    // {
+    //   title: 'Settings',
+    //   href: '/interviewer/settings',
+    //   icon: <SettingsIcon />
+    // }
   ];
 
   return (

@@ -96,6 +96,12 @@ const Routes = () => {
                 layout={AdminMainLayout}
                 path={`${url}/account`}
               />
+              {/* <RouteWithLayout
+                component={SettingsView}
+                exact
+                layout={AdminMainLayout}
+                path={`${url}/settings`}
+              /> */}
             </>
           )}
         />

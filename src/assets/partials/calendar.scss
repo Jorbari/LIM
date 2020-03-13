@@ -33,6 +33,10 @@
 .no_booked_schedule{
     text-align: center;
 }
+.booked_schedule{
+    padding-top: 2%;
+    padding-bottom: 4%;
+}
 .no_booked_schedule h4{
     font-size: 1.8em;
     margin-bottom: 20px;
@@ -50,6 +54,17 @@
 }
 .fc-bgevent{
   opacity: 1 !important;
+}
+.fc-day-grid-event .fc-time{
+    display: block !important;
+}
+.fc-title{
+    color: white;
+    font-weight: 600;
+    font-weight: 1.1em;
+}
+.fc-time{
+    color: white;
 }
 .toast{
     opacity: unset;
