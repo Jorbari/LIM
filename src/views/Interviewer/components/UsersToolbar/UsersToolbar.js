@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const UsersToolbar = props => {
-  const { updateuser, className, ...rest } = props;
+  const { updateuser, searchInput, className, ...rest } = props;
   const [show, setShow] = useState(false);
   const [firstName, setfirstName] = useState('');
   const [lastName, setlastName] = useState('');
@@ -82,6 +82,10 @@ const UsersToolbar = props => {
 
   }
 
+  const filterSearch = (event) => {
+    searchInput(event.target.value);
+  }
+
   const classes = useStyles();
 
   return (
@@ -105,6 +109,7 @@ const UsersToolbar = props => {
         <SearchInput
           className={classes.searchInput}
           placeholder="Search user"
+          onChange={filterSearch}
         />
       </div>
 

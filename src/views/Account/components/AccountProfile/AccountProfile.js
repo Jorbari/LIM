@@ -42,6 +42,7 @@ const AccountProfile = props => {
       {...rest}
       className={clsx(classes.root, className)}
     >
+      
       <CardContent>
         <div className={classes.details}>
           <div>
@@ -57,6 +58,7 @@ const AccountProfile = props => {
           variant="outlined"
         />
       </CardContent>
+
       <Divider />
       <CardActions>
         

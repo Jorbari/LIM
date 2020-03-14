@@ -94,6 +94,9 @@ const UsersTable = props => {
  
 
   const handlePageChange = (event, page) => {
+    console.log('****** i am here *******');
+    console.log(page);
+    console.log(event);
     setPage(page);
   };
 
@@ -139,7 +142,7 @@ const UsersTable = props => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {users.slice(0, rowsPerPage).map(user => (
+                  {users?.slice(0, rowsPerPage).map(user => (
                     <TableRow
                       className={classes.tableRow}
                       hover

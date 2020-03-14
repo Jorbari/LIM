@@ -22,6 +22,7 @@ class UserList extends React.Component{
     };
     this.loadData = this.loadData.bind(this);
     this.addedInterviewer = this.addedInterviewer.bind(this);
+    this.searchApplicant = this.searchApplicant.bind(this);
     this.loadData();
   }
 
@@ -30,7 +31,10 @@ class UserList extends React.Component{
     const { classes } = this.props;
     return(
       <div className={classes.root}>
-       <UsersToolbar updateuser={this.addedInterviewer} />
+       <UsersToolbar
+         searchInput={this.searchApplicant}
+         updateuser={this.addedInterviewer}
+       />
        <div className={classes.content}>
          <UsersTable users={this.state.applicants} />
        </div>
@@ -44,6 +48,21 @@ class UserList extends React.Component{
       this.loadData();
     }
   }
+
+  
+  searchApplicant(params){
+    console.log(params);
+    let applicants = [];
+    API.get(`api/ApplicantSearch?q=${params}`).then(res => {
+      console.log(res);
+      applicants = res.data.data[0];
+      if(applicants.length > 0){
+        this.setState({applicants: applicants});
+      }
+      
+    }).catch(err => console.log(err));
+  }
+
   loadData(){
     let applicants = [];
     API.get('api/showAllApplicant').then(res => {

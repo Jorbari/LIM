@@ -101,6 +101,7 @@ const AccountDetails = props => {
               xs={12}
             >
               <TextField
+                disabled
                 fullWidth
                 label="Email Address"
                 margin="dense"
@@ -109,7 +110,6 @@ const AccountDetails = props => {
                 required
                 value={values.email}
                 variant="outlined"
-                disabled="true"
               />
             </Grid>
           </Grid>
