@@ -25,13 +25,17 @@ class ProductList extends Component{
     this.getApprovedInterview = this.getApprovedInterview.bind(this);
     this.confirmInterview = this.confirmInterview.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.toggleDeleteSchedule = this.toggleDeleteSchedule.bind(this);
+    this.DeleteSchedule = this.DeleteSchedule.bind(this);
+    this.handleDateClick = this.handleDateClick.bind(this);
     this.getMySchedules();
     this.getMyBookedSchedules();
-    this.getApprovedInterview();
 
     this.state = {
       scheduleDate: [],
       show: false,
+      showDeleteScheduleModal: false,
+      deleteScheduleID: '',
       pendingSchedule: [],
       pendingScheduleId: '',
       showAddSchedule: false,
@@ -44,6 +48,9 @@ class ProductList extends Component{
 
   handleClose(){
     this.setState({show: !this.state.show});
+  }
+  toggleDeleteSchedule(){
+    this.setState({showDeleteScheduleModal: !this.state.showDeleteScheduleModal});
   }
   showModal(){
     this.setState({showAddSchedule: !this.state.showAddSchedule});
@@ -92,6 +99,16 @@ class ProductList extends Component{
           console.log(res);
           this.getMyBookedSchedules();
         }
+      },
+      err => console.log(err)
+    )
+  }
+  DeleteSchedule(){
+    const id = this.state.deleteScheduleID;
+    API.delete(`api/schedule/1/delete/${id}`, id).then(
+      res => {
+        console.log(res);
+        this.toggleDeleteSchedule();
       },
       err => console.log(err)
     )
@@ -148,7 +165,8 @@ class ProductList extends Component{
          <div className="calendar_container" >
           <div className="calendar-area">
             <FullCalendar
-              dateClick={this.handleDateClick}
+              // dateClick={this.handleDateClick}
+              eventClick={this.handleDateClick}
               defaultView="dayGridMonth"
               events = {this.state.scheduleDate}
               plugins={[ dayGridPlugin, interactionPlugin  ]}
@@ -189,12 +207,30 @@ class ProductList extends Component{
       </Modals>
 
         <Modals
+          onHide={this.toggleDeleteSchedule}
+          show={this.state.showDeleteScheduleModal}
+          title={`Delete Schedule`}
+        >
+        <div>
+          Are you sure you want to delete this schedule?
+          <div className="Edit_user_" >
+             <button
+               className="btn btn-primary ml-auto"
+               onClick={this.DeleteSchedule}
+             >Delete Schedule
+          </button>
+          </div>
+         
+        </div>
+      </Modals>
+
+        <Modals
           onHide={this.handleClose}
           show={this.state.show}
           title={`Decline Request`}
         >
         <div>
-          Are you sure you wanto decline the request?
+          Are you sure you want to decline the request?
           <div className="Edit_user_" >
              <button
                className="btn btn-primary ml-auto"
@@ -221,14 +257,20 @@ class ProductList extends Component{
             const data = {
               id: schedule.id,
               date: schedule.schedule_time,
-              color: 'pink'
+              color: 'pink',
+              description: 'a description'
             }
             this.setState({scheduleDate: [...this.state.scheduleDate, data]})
           });
         }
       },
       err => console.log(err)
+    ).then(
+      () => {
+        this.getApprovedInterview();
+      }
     )
+    .catch( err => console.log(err))
   }
 
   getMyBookedSchedules(){
@@ -249,6 +291,7 @@ class ProductList extends Component{
       res => {
         if(res.data.data.length > 0){
           res.data.data.forEach( c => {
+            
 
             let confirmSchedule = {
               title: '',
@@ -265,8 +308,6 @@ class ProductList extends Component{
             const scheduleArr = [...this.state.scheduleDate];
             const schedule = scheduleArr.find(r => r.id == confirmSchedule.id);
 
-            
-              
               const dataId = scheduleArr.indexOf(schedule);
 
             c.applicant_details.forEach(r => {
@@ -302,8 +343,10 @@ class ProductList extends Component{
 
   }
 
-  handleDateClick = (arg) => { 
-    console.log(arg);
+  handleDateClick = (eventObj) => { 
+    console.log(eventObj.event.id);
+    this.toggleDeleteSchedule();
+    // console.log(arg.id)
   }
 }
 export default ProductList;
