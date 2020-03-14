@@ -81,7 +81,8 @@ class ProductList extends Component{
         if(res.data.status == 200){
            const data = {
             interviewer_id: res.data.data.interviewer_id,
-            date: res.data.data.schedule_time
+            date: res.data.data.schedule_time,
+            id: res.data.data.id
           }
           this.setState({scheduleDate: [...this.state.scheduleDate, data] });
           console.log(data);
@@ -105,10 +106,14 @@ class ProductList extends Component{
   }
   DeleteSchedule(){
     const id = this.state.deleteScheduleID;
-    API.delete(`api/schedule/1/delete/${id}`, id).then(
+    API.delete(`api/schedule/delete/${id}`, id).then(
       res => {
-        console.log(res);
-        this.toggleDeleteSchedule();
+        if(res.data.status == 200){
+          this.setState({scheduleDate: []});
+          this.getMySchedules();
+          this.toggleDeleteSchedule();
+        }
+        
       },
       err => console.log(err)
     )
@@ -251,6 +256,7 @@ class ProductList extends Component{
   getMySchedules(){
     API.get('api/schedule/show').then(
       res => {
+        console.log(res);
         if(res.data.data.length > 0){
            res.data.data.forEach(schedule => {
             console.log(schedule);
@@ -291,7 +297,6 @@ class ProductList extends Component{
       res => {
         if(res.data.data.length > 0){
           res.data.data.forEach( c => {
-            
 
             let confirmSchedule = {
               title: '',
@@ -344,7 +349,8 @@ class ProductList extends Component{
   }
 
   handleDateClick = (eventObj) => { 
-    console.log(eventObj.event.id);
+    const id = eventObj.event.id;
+    this.setState({deleteScheduleID: id});
     this.toggleDeleteSchedule();
     // console.log(arg.id)
   }
