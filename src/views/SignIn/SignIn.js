@@ -201,21 +201,25 @@ const SignIn = props => {
         setShow(true);
       }
       else{
-        console.log(res.data.data.User);
+        const profileData = {
+          id: res.data.data.User.id,
+          first_name: res.data.data.User.first_name,
+          last_name: res.data.data.User.last_name,
+          email: res.data.data.User.email,
+          photo: res.data.data.User.photo
+        }
+        reactLocalStorage.setObject('Profile', profileData);
         reactLocalStorage.setObject('userProfile', res.data.data.User);
         reactLocalStorage.set('token', res.data.data.User.token);
         console.log(res.data.data.User);
         if(res.data.data.User.role.name == 'administrator'){
-          // history.push("/admin");
           window.location.href = '/admin';
         }
         else if(res.data.data.User.role.name == 'interviewer'){
           window.location.href = '/interviewer';
-          // history.push("/interviewer");
         }
         else{
           window.location.href = '/applicant';
-          // history.push("/applicant");
         }
       }
       
