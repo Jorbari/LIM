@@ -83,6 +83,13 @@ const Dashboard = () => {
       >
         <Budget />
       </div>
+
+      <div
+        className="interviewer-dashboard"
+        style={{display: Auth.userRole == "applicant" ? "inherit" : "none"}}
+      >
+        <Budget />
+      </div>
   
     </div>
    

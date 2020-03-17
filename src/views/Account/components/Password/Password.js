@@ -24,7 +24,8 @@ const Password = props => {
 
   const [values, setValues] = useState({
     OldPassword: '',
-    NewPassword: ''
+    NewPassword: '',
+    ConfirmNewPassword: ''
   });
 
   const handleChange = event => {
@@ -36,17 +37,24 @@ const Password = props => {
 
   const editPassword = (event) => {
     event.preventDefault();
-    const editPasswordModel = {
-      password: values.OldPassword, 
-      password_confirmation: values.NewPassword
-    }
-    console.log(editPasswordModel);
+    if( (values.NewPassword.length > 7) && (values.NewPassword == values.ConfirmNewPassword) && (values.OldPassword > 0) ){
 
-    API.put('api/updatePassword', editPasswordModel)
-    .then(res => {
-      console.log(res);
-    })
-    .catch(err => console.log(err))
+
+      const editPasswordModel = {
+        password: values.NewPassword, 
+        password_confirmation: values.ConfirmNewPassword,
+        current_password: values.OldPassword
+      }
+      console.log(editPasswordModel);
+  
+      API.put('api/updatePassword', editPasswordModel)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => console.log(err))
+
+    }
+    
   }
 
   return (
@@ -67,8 +75,9 @@ const Password = props => {
             name="OldPassword"
             onChange={handleChange}
             type="password"
-            value={values.password}
+            value={values.OldPassword}
             variant="outlined"
+            className={values.OldPassword.length == 0 ? 'account_error_border' : ''}
           />
           <TextField
             fullWidth
@@ -77,8 +86,20 @@ const Password = props => {
             onChange={handleChange}
             style={{ marginTop: '1rem' }}
             type="password"
-            value={values.confirm}
+            value={values.NewPassword}
             variant="outlined"
+            className={values.NewPassword.length < 7 || values.NewPassword !== values.ConfirmNewPassword ? 'account_error_border' : ''}
+          />
+          <TextField
+            fullWidth
+            label="Confirm Password"
+            name="ConfirmNewPassword"
+            onChange={handleChange}
+            style={{ marginTop: '1rem' }}
+            type="password"
+            value={values.ConfirmNewPassword}
+            variant="outlined"
+            className={values.ConfirmNewPassword.length < 7 || values.NewPassword !== values.ConfirmNewPassword ? 'account_error_border' : ''}
           />
         </CardContent>
         <Divider />

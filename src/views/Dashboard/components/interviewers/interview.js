@@ -203,6 +203,45 @@ const Budget = props => {
           </div>
         </div>
     
+      
+      <div
+        className="interviewer-dashboard"
+        style={{display: Auth.userRole == "applicant" ? "inherit" : "none"}}
+      >
+          <div className="__interviewer-padding" >
+            <div className="pendingInterview_no" >
+              <div className="child_card_" >
+
+                <div className="text_portion" >
+                  <h5>Pending Interview(s)</h5>
+                  <h1> {interview} </h1>
+
+                </div>
+                <div className="icon_portion" >
+                  <Avatar className={classes.interviewAvatar}>
+                    <PeopleIcon className={classes.icon} />
+                  </Avatar>
+                </div>
+              </div>
+            </div>
+
+            <div className="approvedInterview_no" >
+              <div className="child_card_" >
+                <div className="icon_portion" >
+                  <Avatar className={classes.interviewAvatar}>
+                    <PeopleIcon className={classes.icon} />
+                  </Avatar>
+                </div>
+
+                <div className="text_portion" >
+                  <h5>Approved Interview(s)</h5>
+                  <h1> {approvedinterview} </h1>
+                </div>
+                </div>
+            </div>
+          </div>
+        </div>
+    
 
     </div>
     

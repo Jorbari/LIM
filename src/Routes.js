@@ -146,7 +146,7 @@ const Routes = () => {
                 component={ApplicantsView}
                 exact
                 layout={ApplicantMainLayout}
-                path={`${url}/applicants`}
+                path={`${url}/account`}
               />
             </>
           )}
