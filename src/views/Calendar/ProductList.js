@@ -295,6 +295,7 @@ class ProductList extends Component{
   getApprovedInterview(){
     API.get('api/showAllApprovedInterview').then(
       res => {
+        console.log(res);
         if(res.data.data.length > 0){
           res.data.data.forEach( c => {
 
@@ -309,23 +310,30 @@ class ProductList extends Component{
             confirmSchedule.date = c.session_time;
             confirmSchedule.id = c.id;
 
-            console.log(confirmSchedule.id);
-            const scheduleArr = [...this.state.scheduleDate];
-            const schedule = scheduleArr.find(r => r.id == confirmSchedule.id);
-
-              const dataId = scheduleArr.indexOf(schedule);
-
             c.applicant_details.forEach(r => {
               confirmSchedule.title = `${r.first_name} ${r.last_name}`;
-              console.log(confirmSchedule);
-
-              if(dataId != -1){
-                console.log(dataId);
-                scheduleArr[dataId] = confirmSchedule;
-              this.setState({scheduleDate: scheduleArr});
-              }
+                this.setState({scheduleDate: [...this.state.scheduleDate, confirmSchedule]});
 
             })
+
+            // const scheduleArr = [...this.state.scheduleDate];
+            // const schedule = scheduleArr.find(r => r.id == confirmSchedule.id);
+            // const dataId = scheduleArr.indexOf(schedule);
+
+            // c.applicant_details.forEach(r => {
+            //   confirmSchedule.title = `${r.first_name} ${r.last_name}`;
+            //   console.log(confirmSchedule);
+
+            //   if(dataId != -1){
+            //     console.log(dataId);
+            //     scheduleArr[dataId] = confirmSchedule;
+            //     this.setState({scheduleDate: scheduleArr});
+            //   }
+
+            // })
+
+
+            
           })
         }
         // console.log(confirmSchedule);

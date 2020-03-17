@@ -33,9 +33,6 @@ const Account = () => {
           xs={12}
         >
           <Password />
-          <div className="mt-3" style={{display: Auth.userRole == "administrator" ? "inherit" : "none"}} >
-            <AccountProfile  />
-          </div>
         </Grid>
         <Grid
           item
@@ -44,7 +41,10 @@ const Account = () => {
           xl={8}
           xs={12}
         >
-          <AccountDetails />
+          <AccountProfile style={{display: Auth.userRole == "administrator" ? "inherit" : "none"}}  />
+
+          <AccountDetails style={{display: Auth.userRole == "interviewer" ? "inherit" : "none"}} />
+          
         </Grid>
       </Grid>
     </div>

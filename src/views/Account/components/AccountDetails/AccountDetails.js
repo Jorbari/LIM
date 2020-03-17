@@ -47,6 +47,7 @@ const AccountDetails = props => {
     event.preventDefault();
 
     const editProfileModel = {
+      id: Auth.userRole.id,
       first_name:values.firstName,
       last_name:values.lastName,
       photo:''
@@ -54,10 +55,11 @@ const AccountDetails = props => {
 
     console.log(editProfileModel);
 
-    API.post(`api/updateInterviewer/${Auth.userRole.id}`, editProfileModel)
+    API.put(`api/updateInterviewer/${Auth.userRole.id}`, editProfileModel)
     .then(
       res => {
         console.log(res);
+        reactLocalStorage.setObject('Profile', editProfileModel);
       }
     )
     .catch(

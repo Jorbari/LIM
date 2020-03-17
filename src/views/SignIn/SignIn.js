@@ -309,6 +309,7 @@ const SignIn = props => {
                   value={formState.values.password || ''}
                   variant="outlined"
                 />
+                <a href="https://lim-manager.herokuapp.com/password/reset">Forgotten Password? Click here </a>
                 <Button
                   className={classes.signInButton}
                   color="primary"
@@ -320,6 +321,7 @@ const SignIn = props => {
                 >
                   Sign in now
                 </Button>
+                
                 {/* <Typography
                   color="textSecondary"
                   variant="body1"

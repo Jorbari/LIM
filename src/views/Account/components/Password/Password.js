@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
+import API from '../../../../services/interviewer';
 import {
   Card,
   CardHeader,
@@ -22,8 +23,8 @@ const Password = props => {
   const classes = useStyles();
 
   const [values, setValues] = useState({
-    password: '',
-    confirm: ''
+    OldPassword: '',
+    NewPassword: ''
   });
 
   const handleChange = event => {
@@ -33,22 +34,37 @@ const Password = props => {
     });
   };
 
+  const editPassword = (event) => {
+    event.preventDefault();
+    const editPasswordModel = {
+      password: values.OldPassword, 
+      password_confirmation: values.NewPassword
+    }
+    console.log(editPasswordModel);
+
+    API.put('api/updatePassword', editPasswordModel)
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => console.log(err))
+  }
+
   return (
     <Card
       {...rest}
       className={clsx(classes.root, className)}
     >
-      <form>
+      <form onSubmit={editPassword} >
         <CardHeader
           subheader="Update password"
-          title="Password"
+          title="OldPassword"
         />
         <Divider />
         <CardContent>
           <TextField
             fullWidth
-            label="Password"
-            name="password"
+            label="OldPassword"
+            name="OldPassword"
             onChange={handleChange}
             type="password"
             value={values.password}
@@ -56,8 +72,8 @@ const Password = props => {
           />
           <TextField
             fullWidth
-            label="Confirm password"
-            name="confirm"
+            label="New Password"
+            name="NewPassword"
             onChange={handleChange}
             style={{ marginTop: '1rem' }}
             type="password"
@@ -70,6 +86,7 @@ const Password = props => {
           <Button
             color="primary"
             variant="outlined"
+            type="submit"
           >
             Update
           </Button>
