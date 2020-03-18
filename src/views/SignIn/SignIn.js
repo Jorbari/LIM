@@ -153,9 +153,6 @@ const SignIn = props => {
     }));
   }, [formState.values]);
 
-  // const handleBack = () => {
-  //   history.goBack();
-  // };
 
   const handleChange = event => {
     event.persist();
@@ -177,6 +174,7 @@ const SignIn = props => {
   };
 
   const [errorMsg, setErrorMsg] = useState('');
+  const [variant, setvariant] = useState('');
   const [show, setShow] = useState(false);
   const showError = () => {
     setShow(false);
@@ -197,7 +195,8 @@ const SignIn = props => {
     .then(res => {
       if(res.data.status != 200){
         console.log(res);
-        setErrorMsg(res.data.message)
+        setErrorMsg(res.data.message);
+        setvariant('danger');
         setShow(true);
       }
       else{
@@ -268,7 +267,7 @@ const SignIn = props => {
               close={showError}
               message={errorMsg}
               show={show}
-              title="Error"
+              variant={variant}
             />
             <div className={classes.contentBody}>
               <form

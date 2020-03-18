@@ -44,17 +44,17 @@ const Sidebar = props => {
   const pages = [
     {
       title: 'Dashboard',
-      href: '/dashboard',
+      href: '/applicant',
       icon: <DashboardIcon />
     },
     {
-      title: 'Calendar',
-      href: '/calendar',
+      title: 'Interview',
+      href: '/applicant/interviewer',
       icon: <ShoppingBasketIcon />
     },
     {
       title: 'Account',
-      href: '/account',
+      href: '/applicant/account',
       icon: <AccountBoxIcon />
     },
     // {

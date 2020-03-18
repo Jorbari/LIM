@@ -1,6 +1,7 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Grid, Typography as MuiTypography } from '@material-ui/core';
+import API from '../../services/interviewer';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -8,26 +9,31 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const variants = {
-  h1: 'Nisi euismod ante senectus consequat phasellus ut',
-  h2: 'Nisi euismod ante senectus consequat phasellus ut',
-  h3: 'Nisi euismod ante senectus consequat phasellus ut',
-  h4: 'Nisi euismod ante senectus consequat phasellus ut',
-  h5: 'Nisi euismod ante senectus consequat phasellus ut',
-  h6: 'Nisi euismod ante senectus consequat phasellus ut',
-  subtitle1: 'Leo varius justo aptent arcu urna felis pede nisl',
-  subtitle2: 'Leo varius justo aptent arcu urna felis pede nisl',
-  body1:
-    'Justo proin curabitur dictumst semper auctor, consequat tempor, nostra aenean neque turpis nunc. Leo. Sapien aliquet facilisi turpis, elit facilisi praesent porta metus leo. Dignissim amet dis nec ac integer inceptos erat dis Turpis sodales ad torquent. Dolor, erat convallis.Laoreet velit a fames commodo tristique hendrerit sociosqu rhoncus vel sapien penatibus facilisis faucibus ad. Mus purus vehicula imperdiet tempor lectus, feugiat Sapien erat viverra netus potenti mattis purus turpis. Interdum curabitur potenti tristique. Porta velit dignissim tristique ultrices primis.',
-  body2:
-    'Justo proin curabitur dictumst semper auctor, consequat tempor, nostra aenean neque turpis nunc. Leo. Sapien aliquet facilisi turpis, elit facilisi praesent porta metus leo. Dignissim amet dis nec ac integer inceptos erat dis Turpis sodales ad torquent. Dolor, erat convallis.',
-  caption: 'Accumsan leo pretium conubia ullamcorper.',
-  overline: 'Accumsan leo pretium conubia ullamcorper.',
-  button: 'Vivamus ultrices rutrum fames dictumst'
-};
+
 
 const Typography = () => {
   const classes = useStyles();
+
+  useEffect(()=>{
+
+    getInterviewerList();
+    
+  }, []) 
+  
+  const getInterviewerList = () => {
+    API.get('api/listOfInterviewers')
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => console.log('**********', err))
+  }
+
+  const openNav = () => {
+    document.getElementById("mySidenav").style.width = "25%";
+  }
+  const closeNav = () => {
+    document.getElementById("mySidenav").style.width = "0";
+  }
 
   return (
     <div className={classes.root}>
@@ -35,7 +41,45 @@ const Typography = () => {
         container
         spacing={4}
       >
-        {Object.keys(variants).map((key, i) => (
+
+        <div className="Applicant_interview_wrapper" >
+          
+          <div className="Applicant_interview_card" >
+
+
+            <div className="card testimonial-card">
+
+              {/* <div className="card-up indigo lighten-1" /> */}
+
+              <div className="avatar mx-auto white img_avatar_wrapper">
+                <img
+                  alt="avatar"
+                  className="rounded-circle img_avatar"
+                  src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
+                />
+              </div>
+
+              <div className="card-body">
+                <h4 className="card-title">Anna Doe</h4>
+                <hr />
+                <p> 
+                  Email: interviewer@gmail.com
+                </p>
+                <button
+                  className="btn btn_Int_schedule"
+                  onClick={openNav}
+                >Show Schedules</button>
+              </div>
+
+            </div>
+
+          </div>
+        
+        
+        </div>
+
+
+        {/* {Object.keys(variants).map((key, i) => (
           <Fragment key={i}>
             <Grid
               item
@@ -52,8 +96,42 @@ const Typography = () => {
               <MuiTypography variant={key}>{variants[key]}</MuiTypography>
             </Grid>
           </Fragment>
-        ))}
+        ))} */}
+
+        <div
+          className="sidenav"
+          id="mySidenav"
+        >
+          <a
+            className="closebtn"
+            onClick={closeNav}
+          >&times;</a>
+
+          <div className="card_side_" >
+            <p>
+            Date: 22/09/2019 12:09AM
+            </p>
+
+            <hr />
+
+            <button className="btn card_side_btn" >Book Interview</button>
+            
+
+          </div>
+
+          {/* <a href="#">About</a>
+          <a href="#">Services</a>
+          <a href="#">Clients</a>
+          <a href="#">Contact</a> */}
+      </div>
+
+
       </Grid>
+
+
+
+      
+
     </div>
   );
 };

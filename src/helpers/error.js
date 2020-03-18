@@ -9,9 +9,9 @@ const ErrorHandler = props => {
         <Alert
           dismissible
           onClose={props.close}
-          variant="danger"
+          variant={props.variant}
         >
-        <Alert.Heading>{props.title}!</Alert.Heading>
+        {/* <Alert.Heading>{props.title}!</Alert.Heading> */}
           {props.message}
       </Alert>
       }

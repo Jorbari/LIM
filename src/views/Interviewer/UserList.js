@@ -54,7 +54,7 @@ class UserList extends React.Component{
     console.log(params);
     let interviewData = [];
     API.get(`api/InterviewerSearch?q=${params}`).then(res => {
-      // console.log(res);
+      console.log(res);
       interviewData = res.data.data[0];
       if(interviewData.length > 0){
         this.setState({interviewData: interviewData});

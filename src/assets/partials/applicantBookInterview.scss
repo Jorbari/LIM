@@ -1,0 +1,92 @@
+.Applicant_interview_wrapper{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 1em;
+    // grid-auto-rows: 100px;
+    width: 100%;
+}
+.Applicant_interview_wrapper > .Applicant_interview_card .card{
+   border-radius: 25px;
+   width: 80%;
+}
+.Applicant_interview_wrapper  .Applicant_interview_card .img_avatar_wrapper{
+   text-align: center;
+   padding-top: 3%;
+}
+.Applicant_interview_wrapper  .Applicant_interview_card .img_avatar{
+   width: 70%;
+}
+.btn_Int_schedule{
+    width: 100%;
+    background-color: #3f51b5;
+    color: white;
+    border-radius: 25px;
+    transition: ease-in .3s;
+}
+.btn_Int_schedule:hover{
+    width: 100%;
+    background-color: white;
+    color: #3f51b5;
+    border: 1px solid #3f51b5;
+    border-radius: 25px;
+    font-weight: 600;
+}
+
+/* ____SideBar Card _______________ */
+.card_side_{
+    background-color: white;
+    border-radius: 25px;
+    padding: 5%;
+    margin: 4%;
+}
+.card_side_btn{
+    height: 5%;
+    padding: 0;
+    font-weight: 500;
+    font-size: 1.2em;
+    color: #3f51b5;
+}
+
+// ------------------
+
+
+.sidenav {
+    height: 100%;
+    width: 0px;
+    position: fixed;
+    z-index: 1000;
+    top: 64px;
+    right: 0;
+    // background-color: #74767f;
+    background-color: #30385e;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+  }
+  
+  .sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+  
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+    cursor: pointer;
+  }
+  
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }

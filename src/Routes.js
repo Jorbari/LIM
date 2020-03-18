@@ -5,7 +5,7 @@ import {reactLocalStorage} from 'reactjs-localstorage';
 import { RouteWithLayout } from './components';
 import { Main as AdminMainLayout, Minimal as MinimalLayout } from './layouts/Admin';
 import { Main as InterviewerMainLayout} from './layouts/Interviewer';
-import { Main as ApplicantMainLayout} from './layouts/Interviewer';
+import { Main as ApplicantMainLayout} from './layouts/Applicant';
 
 import {
   Dashboard as DashboardView,
@@ -137,13 +137,13 @@ const Routes = () => {
                 path={`${url}/`}
               />
               <RouteWithLayout
-                component={UserListView}
+                component={TypographyView}
                 exact
                 layout={ApplicantMainLayout}
-                path={`${url}/interviewers`}
+                path={`${url}/interviewer`}
               />
               <RouteWithLayout
-                component={ApplicantsView}
+                component={AccountView}
                 exact
                 layout={ApplicantMainLayout}
                 path={`${url}/account`}

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import {reactLocalStorage} from 'reactjs-localstorage';
 import API from '../../../../services/interviewer';
+import ErrorHandler from '../../../../helpers/error';
 import {
   Card,
   CardHeader,

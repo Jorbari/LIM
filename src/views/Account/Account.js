@@ -42,8 +42,8 @@ const Account = () => {
           xs={12}
         >
           <AccountProfile style={{display: Auth.userRole == "administrator" ? "inherit" : "none"}}  />
-
           <AccountDetails style={{display: Auth.userRole == "interviewer" ? "inherit" : "none"}} />
+          <AccountDetails style={{display: Auth.userRole == "applicant" ? "inherit" : "none"}} />
           
         </Grid>
       </Grid>
