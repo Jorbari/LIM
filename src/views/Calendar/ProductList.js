@@ -8,6 +8,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import API from '../../services/interviewer';
 import Snippet from './snippet';
 import Modals from '../../helpers/modal';
+import ErrorHandler from '../../helpers/error';
 
 
 class ProductList extends Component{
@@ -36,11 +37,16 @@ class ProductList extends Component{
       show: false,
       showDeleteScheduleModal: false,
       deleteScheduleID: '',
+      modalTitle: '',
+      ScheduleTitle: '',
       pendingSchedule: [],
       pendingScheduleId: '',
       showAddSchedule: false,
       schedule_date: '',
-      approvedInterview: []
+      approvedInterview: [],
+      errorMsg: '',
+      variant: '',
+      showError: false
     }
 
     
@@ -59,15 +65,32 @@ class ProductList extends Component{
   declineInterviewRequest(id){
     this.setState({pendingScheduleId: id});
     this.setState({show: true});
+    // this.declineInterview();
   }
   declineInterview(){
     const id = this.state.pendingScheduleId;
     API.delete(`api/DeleteInterviewRequest/${id}`, id).then(
       res => {
-        console.log(res);
-        this.handleClose();
+        if(res.data.status == 200){
+          this.setState({pendingSchedule: []});
+          this.setState({errorMsg: res.data.message});
+          this.setState({variant: 'success'});
+          this.setState({showError: true});
+          this.getMyBookedSchedules();
+          this.handleClose();
+        }
+        else{
+          this.setState({errorMsg: res.data.message});
+          this.setState({variant: 'danger'});
+          this.setState({showError: true});
+        }
       },
-      err => console.log(err)
+    ).catch(
+      () => {
+        this.setState({errorMsg: 'An error occurred, please try again!!!'});
+        this.setState({variant: 'danger'});
+        this.setState({showError: true});
+      }
     )
   }
 
@@ -77,46 +100,114 @@ class ProductList extends Component{
     };
     API.post(`api/schedule/create`, scheduleDate).then(
       res => {
-        console.log(res);
         if(res.data.status == 200){
            const data = {
             interviewer_id: res.data.data.interviewer_id,
             date: res.data.data.schedule_time,
-            id: res.data.data.id
+            id: res.data.data.id,
+            title: 'Not Booked',
           }
           this.setState({scheduleDate: [...this.state.scheduleDate, data] });
-          console.log(data);
+          
+          this.setState({errorMsg: res.data.message});
+          this.setState({variant: 'success'});
+          this.setState({showError: true});
+        }
+        else{
+          this.setState({errorMsg: res.data.message});
+          this.setState({variant: 'danger'});
+          this.setState({showError: true});
         }
         this.showModal();
-      },
-      err => console.log(err)
+      }
+    )
+    .catch(
+      () => {
+        this.setState({errorMsg: 'An error occurred, please try again!!!'});
+        this.setState({variant: 'danger'});
+        this.setState({showError: true});
+      }
     )
   }
   confirmInterview(id){
-    console.log(id);
     API.post(`api/ApproveInterviewRequest/${id}`).then(
       res => {
         if(res.data.status == 200){
-          console.log(res);
+          this.setState({pendingSchedule: []});
+          this.setState({scheduleDate: []});
+          this.setState({errorMsg: res.data.message});
+          this.setState({variant: 'success'});
+          this.setState({showError: true});
           this.getMyBookedSchedules();
+          this.getMySchedules();
         }
-      },
-      err => console.log(err)
+      }
+    )
+    .catch(
+      () => {
+        this.setState({errorMsg: 'An error occurred, please try again!!!'});
+        this.setState({variant: 'danger'});
+        this.setState({showError: true});
+      }
     )
   }
   DeleteSchedule(){
     const id = this.state.deleteScheduleID;
-    API.delete(`api/schedule/delete/${id}`, id).then(
-      res => {
-        if(res.data.status == 200){
-          this.setState({scheduleDate: []});
-          this.getMySchedules();
-          this.toggleDeleteSchedule();
+    const title = this.state.ScheduleTitle;
+    if(title == 'Not Booked'){
+      API.delete(`api/schedule/delete/${id}`, id).then(
+        res => {
+          if(res.data.status == 200){
+            this.setState({scheduleDate: []});
+            this.setState({errorMsg: res.data.message});
+            this.setState({variant: 'success'});
+            this.setState({showError: true});
+            this.getMySchedules();
+            this.toggleDeleteSchedule();
+          }
+          else{
+            this.setState({errorMsg: res.data.message});
+            this.setState({variant: 'danger'});
+            this.setState({showError: true});
+          }
+          
+        },
+        err => {
+          this.setState({errorMsg: 'An error occurred, please kindly try again!!!'});
+          this.setState({variant: 'danger'});
+          this.setState({showError: true});
         }
-        
-      },
-      err => console.log(err)
-    )
+      )
+    }
+    else{
+      API.delete(`api/DeleteInterviewRequest/${id}`, id).then(
+        res => {
+          if(res.data.status == 200){
+            this.setState({scheduleDate: []});
+            this.setState({errorMsg: res.data.message});
+            this.setState({variant: 'success'});
+            this.setState({showError: true});
+            this.getMySchedules();
+            this.toggleDeleteSchedule();
+          }
+          else{
+            this.setState({errorMsg: 'interview was successfully deleted'});
+            this.setState({variant: 'danger'});
+            this.setState({showError: true});
+          }
+          
+        },
+        err => {
+          this.setState({errorMsg: 'An error occurred, please kindly try again!!!'});
+          this.setState({variant: 'danger'});
+          this.setState({showError: true});
+        }
+      )
+    }
+    
+  }
+  showError = () => {
+    this.setState({showError: false});
   }
 
   render() {
@@ -131,7 +222,7 @@ class ProductList extends Component{
                 <div key={e.id}>
                   <Snippet
                     confirm={() => this.confirmInterview(e.applicant_id)}
-                    decline={() => this.declineInterviewRequest(r.applicant_id)}
+                    decline={() => this.declineInterviewRequest(e.applicant_id)}
                     firstName={r.first_name}
                     lastName={r.last_name}
                   />
@@ -156,6 +247,14 @@ class ProductList extends Component{
       
     return(
       <div>
+
+        <ErrorHandler
+          close={this.showError}
+          message={this.state.errorMsg}
+          show={this.state.showError}
+          variant={this.state.variant}
+        />
+
         <div className="top_calendar_" >
           <div>
             <h2>My Calendar</h2>
@@ -170,7 +269,6 @@ class ProductList extends Component{
          <div className="calendar_container" >
           <div className="calendar-area">
             <FullCalendar
-              // dateClick={this.handleDateClick}
               eventClick={this.handleDateClick}
               defaultView="dayGridMonth"
               events = {this.state.scheduleDate}
@@ -214,7 +312,7 @@ class ProductList extends Component{
         <Modals
           onHide={this.toggleDeleteSchedule}
           show={this.state.showDeleteScheduleModal}
-          title={`Delete Schedule`}
+          title={this.state.modalTitle}
         >
         <div>
           Are you sure you want to delete this schedule?
@@ -239,7 +337,7 @@ class ProductList extends Component{
           <div className="Edit_user_" >
              <button
                className="btn btn-primary ml-auto"
-               onClick={this.declineInterviewRequest}
+               onClick={this.declineInterview}
              >Decline
           </button>
           </div>
@@ -256,46 +354,54 @@ class ProductList extends Component{
   getMySchedules(){
     API.get('api/schedule/show').then(
       res => {
-        console.log(res);
         if(res.data.data.length > 0){
            res.data.data.forEach(schedule => {
-            console.log(schedule);
             const data = {
               id: schedule.id,
               date: schedule.schedule_time,
               color: 'pink',
-              description: 'a description'
+              title: 'Not Booked',
+              description: 'schedule'
             }
             this.setState({scheduleDate: [...this.state.scheduleDate, data]})
           });
         }
-      },
-      err => console.log(err)
+      }
     ).then(
       () => {
         this.getApprovedInterview();
       }
     )
-    .catch( err => console.log(err))
+    .catch( 
+      () => {
+        this.setState({errorMsg: 'An error occurred, please try again!!!'});
+        this.setState({variant: 'danger'});
+        this.setState({showError: true});
+      }
+    )
   }
 
   getMyBookedSchedules(){
     API.get('api/showAllPendingInterview').then(
       res => {
-        console.log(res.data);
         if(res.data.data.length > 0){
           this.setState({pendingSchedule: res.data.data});
         }
-        console.log(this.state.pendingSchedule);
       }
       
-    ).catch(err => console.log(err))
+    )
+    .catch(
+      () => {
+        this.setState({errorMsg: 'An error occurred, please try again!!!'});
+        this.setState({variant: 'danger'});
+        this.setState({showError: true});
+      }
+    )
   }
 
   getApprovedInterview(){
     API.get('api/showAllApprovedInterview').then(
       res => {
-        console.log(res);
         if(res.data.data.length > 0){
           res.data.data.forEach( c => {
 
@@ -308,59 +414,41 @@ class ProductList extends Component{
             }
 
             confirmSchedule.date = c.session_time;
-            confirmSchedule.id = c.id;
+            confirmSchedule.id = c.applicant_id;
 
             c.applicant_details.forEach(r => {
               confirmSchedule.title = `${r.first_name} ${r.last_name}`;
                 this.setState({scheduleDate: [...this.state.scheduleDate, confirmSchedule]});
 
             })
-
-            // const scheduleArr = [...this.state.scheduleDate];
-            // const schedule = scheduleArr.find(r => r.id == confirmSchedule.id);
-            // const dataId = scheduleArr.indexOf(schedule);
-
-            // c.applicant_details.forEach(r => {
-            //   confirmSchedule.title = `${r.first_name} ${r.last_name}`;
-            //   console.log(confirmSchedule);
-
-            //   if(dataId != -1){
-            //     console.log(dataId);
-            //     scheduleArr[dataId] = confirmSchedule;
-            //     this.setState({scheduleDate: scheduleArr});
-            //   }
-
-            // })
-
-
             
           })
         }
-        // console.log(confirmSchedule);
-
-        // const scheduleArr = [...this.state.scheduleDate];
-        // console.log(scheduleArr);
-        // const schedule = scheduleArr.findIndex(r => r.interviewer_id == confirmSchedule.interviewer_id);
-        // console.log(schedule);
-        // let item = {...scheduleArr[schedule]};
-        // console.log(item);
-        // item = confirmSchedule;
-        // scheduleArr[schedule] = item;
-        // this.setState({scheduleDate: scheduleArr});
-
-        // this.getMySchedules();
 
       }
       
-    ).catch(err => console.log(err))
+    ).catch(
+      () => {
+        this.setState({errorMsg: 'An error occurred, please try again!!!'});
+        this.setState({variant: 'danger'});
+        this.setState({showError: true});
+      }
+    )
 
   }
 
   handleDateClick = (eventObj) => { 
     const id = eventObj.event.id;
+    const title = eventObj.event.title;
+    if(title == 'Not Booked'){
+      this.setState({modalTitle: 'Delete Schedule'});
+    }
+    else{
+      this.setState({modalTitle: 'Delete Interview'});
+    }
     this.setState({deleteScheduleID: id});
+    this.setState({ScheduleTitle: title});
     this.toggleDeleteSchedule();
-    // console.log(arg.id)
   }
 }
 export default ProductList;

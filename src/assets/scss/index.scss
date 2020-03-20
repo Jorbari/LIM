@@ -25,6 +25,14 @@ a {
 .modal{
   top: 20% !important;
 }
+.forgotten_pass{
+  text-align: right;
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+.forgotten_pass a{
+  font-size: 1em;
+}
 // @import 'bootstrap/dist/css/bootstrap.min.css';
 @import '../partials/interviewer.scss';
 @import '../partials/calendar.scss';
