@@ -1,10 +1,48 @@
-.Applicant_interview_wrapper{
+
+@media(min-width: 1025px){
+  .Applicant_interview_wrapper{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 1em;
     // grid-auto-rows: 100px;
     width: 100%;
+  }
 }
+@media(min-width: 926px) and (max-width: 1024px) {
+  .Applicant_interview_wrapper{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1em;
+    // grid-auto-rows: 100px;
+    width: 100%;
+  }
+}
+@media(min-width: 701px) and (max-width: 925px) {
+  .Applicant_interview_wrapper{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1em;
+    // grid-auto-rows: 100px;
+    width: 100%;
+  }
+}
+@media(min-width: 300px) and (max-width: 700px) {
+  .Applicant_interview_card{
+    justify-content: center;
+    padding-top: 3%;
+  }
+  .Applicant_interview_wrapper{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 1em;
+    margin-left: auto !important;
+    // grid-auto-rows: 100px;
+    width: 100%;
+  }
+}
+
+
+
 .Applicant_interview_wrapper > .Applicant_interview_card .card{
    border-radius: 25px;
    width: 80%;
@@ -38,9 +76,18 @@
   padding: 4%;
 }
 .no_record_found{
-  padding: 3%;
-  background-color: red;
+  padding: 5px;
+  background-color: rgba(255, 0, 0, 0.664) !important;
   width: 100% !important;
+  display: flex;
+  align-content: center;
+  color: white;
+  font-size: 1.2rem;
+}
+.no__schedule{
+  color: white;
+  display: flex;
+  justify-content: center;
 }
 .interviewerImgIcon{
   width: 160px !important;

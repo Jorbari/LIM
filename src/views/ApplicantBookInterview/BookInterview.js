@@ -1,15 +1,10 @@
 import React, { Fragment, useEffect, useState, Component } from 'react';
-import { makeStyles } from '@material-ui/styles';
 import { Grid, Typography as MuiTypography } from '@material-ui/core';
 import API from '../../services/interviewer';
 import { Avatar } from '@material-ui/core';
 import ErrorHandler from '../../helpers/error';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    padding: theme.spacing(4)
-  }
-}));
+
 
 class Typography extends Component {
 
@@ -100,6 +95,7 @@ class Typography extends Component {
   render() {
     let interviewerArr;
     let interviewerSchedule;
+    let _interviewArr;
     if(this.state.listOfInterviewers.length > 0){
       interviewerArr = this.state.listOfInterviewers.map(
         _interview => (
@@ -143,8 +139,8 @@ class Typography extends Component {
       )
     }
     else{
-      interviewerArr = <div className="no_record_found" >
-        <p>no interviewer record found!!!</p>
+      _interviewArr = <div className="no_record_found" >
+        <p>No interviewer record found!!!</p>
       </div>
     }
 
@@ -166,8 +162,14 @@ class Typography extends Component {
         </div>
       ))
     }
+    else{
+      interviewerSchedule = <div className="no__schedule" >
+        No scheduled interview!!!
+      </div>
+    }
      return (
        <div>
+         {_interviewArr}
 
         <ErrorHandler
           close={this.showError}
@@ -177,7 +179,7 @@ class Typography extends Component {
         />
 
       <div className="_wrapper__">
-        
+      
         <Grid
           container
           spacing={4}
@@ -185,35 +187,6 @@ class Typography extends Component {
 
           <div className="Applicant_interview_wrapper" >
             {interviewerArr}
-{/*             
-            <div className="Applicant_interview_card" >
-
-              <div className="card testimonial-card">
-
-                <div className="avatar mx-auto white img_avatar_wrapper">
-                  <img
-                    alt="avatar"
-                    className="rounded-circle img_avatar"
-                    src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
-                  />
-                </div>
-
-                <div className="card-body">
-                  <h4 className="card-title">Anna Doe</h4>
-                  <hr />
-                  <p> 
-                    Email: interviewer@gmail.com
-                  </p>
-                  <button
-                    className="btn btn_Int_schedule"
-                    onClick={this.openNav}
-                  >Show Schedules</button>
-                </div>
-
-              </div>
-
-            </div>
-           */}
           </div>
 
 

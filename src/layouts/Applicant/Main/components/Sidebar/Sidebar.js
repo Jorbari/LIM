@@ -47,21 +47,16 @@ const Sidebar = props => {
       href: '/applicant',
       icon: <DashboardIcon />
     },
-    {
-      title: 'Interview',
-      href: '/applicant/interviewer',
-      icon: <ShoppingBasketIcon />
-    },
+    // {
+    //   title: 'Interview',
+    //   href: '/applicant/interviewer',
+    //   icon: <ShoppingBasketIcon />
+    // },
     {
       title: 'Account',
       href: '/applicant/account',
       icon: <AccountBoxIcon />
     },
-    // {
-    //   title: 'Settings',
-    //   href: '/settings',
-    //   icon: <SettingsIcon />
-    // }
   ];
 
   return (

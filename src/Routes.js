@@ -131,17 +131,17 @@ const Routes = () => {
           render={({ match: { url } }) => (
             <>
               <RouteWithLayout
-                component={DashboardView}
+                component={TypographyView}
                 exact
                 layout={ApplicantMainLayout}
                 path={`${url}/`}
               />
-              <RouteWithLayout
+              {/* <RouteWithLayout
                 component={TypographyView}
                 exact
                 layout={ApplicantMainLayout}
                 path={`${url}/interviewer`}
-              />
+              /> */}
               <RouteWithLayout
                 component={AccountView}
                 exact

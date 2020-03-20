@@ -16,6 +16,7 @@ import {
   Button,
   TextField
 } from '@material-ui/core';
+import { Spinner } from 'react-bootstrap';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -43,6 +44,7 @@ const AccountDetails = props => {
   const [errorMsg, setErrorMsg] = useState('');
   const [variant, setvariant] = useState('');
   const [show, setShow] = useState(false);
+  const [isLoading, setisLoading] = useState(false);
   const showError = () => {
     setShow(false);
   }
@@ -57,6 +59,7 @@ const AccountDetails = props => {
 
   const editProfile = (event) => {
     event.preventDefault();
+    setisLoading(true);
 
     const editProfileModel = {
       id: Auth.userRole.id,
@@ -81,6 +84,7 @@ const AccountDetails = props => {
           setErrorMsg(res.data.message);
           setShow(true);
           reactLocalStorage.setObject('Profile', editProfileModel);
+          setisLoading(false);
         }
         else{
           setvariant('danger');
@@ -240,9 +244,15 @@ const AccountDetails = props => {
         <CardActions>
           <Button
             color="primary"
+            disabled={isLoading}
             type="submit"
             variant="contained"
           >
+            {isLoading === true && <Spinner
+              animation="grow"
+              variant="danger"
+                                   />}
+            
             Save details
           </Button>
         </CardActions>
