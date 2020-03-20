@@ -90,14 +90,17 @@ const AccountDetails = props => {
           setvariant('danger');
           setErrorMsg(res.data.message);
           setShow(true);
+          setisLoading(false);
         }
         
       }
     )
     .catch(
       err => {
-        console.log('an error occurred');
-        console.log(err);
+        setvariant('danger');
+        setErrorMsg('An error occurred, Please try again!!!');
+        setShow(true);
+        setisLoading(false);
       }
     )
   }
