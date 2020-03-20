@@ -11,9 +11,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const userProfile = reactLocalStorage.getObject('userProfile', {'role': 'sss'} );
+const userProfile = reactLocalStorage.getObject('Profile', {'role': 'sss'} );
 const Auth = {
-  userRole: userProfile.role.name
+  userRole: userProfile.RoleName
 }
 
 const Account = () => {

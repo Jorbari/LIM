@@ -55,9 +55,9 @@ const Budget = props => {
   const [approvedinterview, setApprovedInterview]  = useState(0);
 
   const classes = useStyles();
-  const userProfile = reactLocalStorage.getObject('userProfile', {'role': 'sss'} );
+  const userProfile = reactLocalStorage.getObject('Profile', {'role': 'sss'} );
   const Auth = {
-    userRole: userProfile.role.name
+    userRole: userProfile.RoleName
   }
 
   useEffect(()=>{

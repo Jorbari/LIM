@@ -21,10 +21,10 @@ import {
 } from './views';
 
 const token = reactLocalStorage.get('token', '');
-const userProfile = reactLocalStorage.getObject('userProfile', {'role': 'sss'} );
+const userProfile = reactLocalStorage.getObject('Profile', {'role': 'sss'} );
 const Auth = {
   isAuthenticated: token,
-  userRole: userProfile.role.name
+  userRole: userProfile.RoleName
 }
 
 const PrivateRoute = ({...rest}) => (

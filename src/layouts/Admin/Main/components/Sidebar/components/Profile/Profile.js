@@ -26,12 +26,12 @@ const Profile = props => {
   const { className, ...rest } = props;
 
   const classes = useStyles();
-  const userProfile = reactLocalStorage.getObject('userProfile');
+  const userProfile = reactLocalStorage.getObject('Profile');
 
   const user = {
     name: `${userProfile.last_name}  ${userProfile.first_name.slice(0, 3)}...`,
     avatar: userProfile.photo,
-    bio: userProfile.role.name
+    bio: userProfile.RoleName
   };
 
   return (

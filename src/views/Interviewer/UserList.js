@@ -60,15 +60,20 @@ class UserList extends React.Component{
         this.setState({interviewData: interviewData});
       }
       
-    }).catch(err => console.log(err));
+    }).catch(err => {
+      console.log(err)
+    });
   }
 
   loadData(){
     let interviewData = [];
     API.get('api/showAllInterviewer').then(res => {
+      console.log(res);
       interviewData = res.data.data;
       this.setState({interviewData: interviewData});
-    }).catch(err => console.log(err));
+    }).catch(err => { 
+      console.log(err)
+    });
   }
 }
 

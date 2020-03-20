@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import {reactLocalStorage} from 'reactjs-localstorage';
 import API from '../../../../services/interviewer';
+import FileBase64 from 'react-file-base64';
 import ErrorHandler from '../../../../helpers/error';
 import {
   Card,
@@ -34,7 +35,17 @@ const AccountDetails = props => {
     firstName: Auth.userRole.first_name,
     lastName: Auth.userRole.last_name,
     email: Auth.userRole.email,
+    photo: Auth.userRole.photo,
+    RoleName: Auth.userRole.RoleName
   });
+  const [imgFile, setImageFile] = useState();
+
+  const [errorMsg, setErrorMsg] = useState('');
+  const [variant, setvariant] = useState('');
+  const [show, setShow] = useState(false);
+  const showError = () => {
+    setShow(false);
+  }
 
   const handleChange = event => {
     setValues({
@@ -51,16 +62,32 @@ const AccountDetails = props => {
       id: Auth.userRole.id,
       first_name:values.firstName,
       last_name:values.lastName,
-      photo:''
+      photo: imgFile
     }
 
     console.log(editProfileModel);
+    let endpoint = 'api/updateInterviewer';
+    if(values.RoleName == 'applicant'){
+      endpoint = 'api/updateApplicant';
+    }
+    console.log(endpoint);
 
-    API.put(`api/updateInterviewer/${Auth.userRole.id}`, editProfileModel)
+    API.put(`${endpoint}/${Auth.userRole.id}`, editProfileModel)
     .then(
       res => {
         console.log(res);
-        reactLocalStorage.setObject('Profile', editProfileModel);
+        if(res.data.status == 200){
+          setvariant('success');
+          setErrorMsg(res.data.message);
+          setShow(true);
+          reactLocalStorage.setObject('Profile', editProfileModel);
+        }
+        else{
+          setvariant('danger');
+          setErrorMsg(res.data.message);
+          setShow(true);
+        }
+        
       }
     )
     .catch(
@@ -71,8 +98,45 @@ const AccountDetails = props => {
     )
   }
 
+  const getFiles = (files) =>{
+    console.log(files);
+    if(files.type == 'image/png' || files.type == 'image/jpeg' ){
+      if(files.file.size < 1000000){
+        console.log(files.base64);
+        setImageFile(files.base64);
+        setValues({
+          ...values,
+          photo: files.base64
+        });
+      }
+      else{
+        setvariant('danger');
+        setErrorMsg('Image file cannot be greather than 1MB!')
+        setShow(true);
+      }
+    }else{
+      setvariant('danger');
+      setErrorMsg('file format not supported!');
+      setShow(true);
+    }
+    
+  }
+
+  const triggerFileInput = () => {
+    const FileInput = document.querySelector("input[type=file]");
+    FileInput.click();
+
+  }
 
   return (
+    <div>
+      <ErrorHandler
+        close={showError}
+        message={errorMsg}
+        show={show}
+        variant={variant}
+      />
+
     <Card
       {...rest}
       className={clsx(classes.root, className)}
@@ -87,11 +151,37 @@ const AccountDetails = props => {
           title="Profile"
         />
         <Divider />
+
+
+        <div className="userAccountImgWrapper" >
+            <FileBase64
+              multiple={false}
+              onDone={getFiles}
+            />
+          </div>
+        
+        <div className="avatar-upload">
+              <div className="avatar-edit">
+                  <FileBase64
+                    multiple={false}
+                    onDone={getFiles}
+                  />
+                  <label onClick={triggerFileInput} />
+              </div>
+              <div className="avatar-preview">
+                  <div
+                    id="imagePreview"
+                    style={{backgroundImage: `url(${values.photo})`}}
+                  />
+              </div>
+          </div>
+
         <CardContent>
           <Grid
             container
             spacing={3}
           >
+
             <Grid
               item
               md={6}
@@ -125,6 +215,7 @@ const AccountDetails = props => {
                 variant="outlined"
               />
             </Grid>
+           
             <Grid
               item
               md={6}
@@ -142,20 +233,24 @@ const AccountDetails = props => {
                 variant="outlined"
               />
             </Grid>
+          
           </Grid>
         </CardContent>
         <Divider />
         <CardActions>
           <Button
             color="primary"
-            variant="contained"
             type="submit"
+            variant="contained"
           >
             Save details
           </Button>
         </CardActions>
       </form>
     </Card>
+    
+    </div>
+    
   );
 };
 

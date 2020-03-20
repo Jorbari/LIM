@@ -205,16 +205,17 @@ const SignIn = props => {
           first_name: res.data.data.User.first_name,
           last_name: res.data.data.User.last_name,
           email: res.data.data.User.email,
-          photo: res.data.data.User.photo
+          photo: res.data.data.User.photo,
+          RoleName: res.data.data.RoleName
         }
+        console.log(res);
         reactLocalStorage.setObject('Profile', profileData);
-        reactLocalStorage.setObject('userProfile', res.data.data.User);
         reactLocalStorage.set('token', res.data.data.User.token);
         console.log(res.data.data.User);
-        if(res.data.data.User.role.name == 'administrator'){
+        if(res.data.data.RoleName == 'administrator'){
           window.location.href = '/admin';
         }
-        else if(res.data.data.User.role.name == 'interviewer'){
+        else if(res.data.data.RoleName == 'interviewer'){
           window.location.href = '/interviewer';
         }
         else{
@@ -225,6 +226,7 @@ const SignIn = props => {
     }).catch(err => {
       
       console.log(err);
+      setvariant('danger');
       setErrorMsg('An error occurred, Pls try again!')
       setShow(true);
       
