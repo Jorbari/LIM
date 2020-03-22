@@ -10,7 +10,7 @@ import {
   Avatar,
 } from '@material-ui/core';
 import InsertChartIcon from '@material-ui/icons/InsertChartOutlined';
-import API from '../../../../services/interviewer';
+import API from '../../../../services/general';
 
 const useStyles = makeStyles(theme => ({
   root: {

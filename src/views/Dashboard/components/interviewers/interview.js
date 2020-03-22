@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core';
 import PeopleIcon from '@material-ui/icons/PeopleOutlined';
-import API from '../../../../services/interviewer';
+import API from '../../../../services/general';
 import {reactLocalStorage} from 'reactjs-localstorage';
 
 const useStyles = makeStyles(theme => ({
@@ -69,8 +69,7 @@ const Budget = props => {
       approvedInterview();
     }
     
-    
-  }, []) 
+  }) 
 
   
 

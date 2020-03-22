@@ -1,6 +1,6 @@
-import React, { Fragment, useEffect, useState, Component } from 'react';
+import React, { Component } from 'react';
 import { Grid, Typography as MuiTypography } from '@material-ui/core';
-import API from '../../services/interviewer';
+import API from '../../services/general';
 import { Avatar } from '@material-ui/core';
 import ErrorHandler from '../../helpers/error';
 

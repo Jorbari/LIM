@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import {reactLocalStorage} from 'reactjs-localstorage';
-import API from '../../../../services/interviewer';
+import API from '../../../../services/general';
 import FileBase64 from 'react-file-base64';
 import ErrorHandler from '../../../../helpers/error';
 import {

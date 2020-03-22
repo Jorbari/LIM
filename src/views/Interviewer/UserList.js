@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/styles';
-import API from '../../services/interviewer';
+import API from '../../services/general';
 import { UsersToolbar, UsersTable } from './components';
 
 const styles = theme => ({

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
-import API from '../../../../services/interviewer';
+import API from '../../../../services/general';
 import {
   Card,
   CardHeader,

@@ -4,16 +4,14 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { makeStyles } from '@material-ui/styles';
-import Switch from '@material-ui/core/Switch';
 import 'font-awesome/css/font-awesome.min.css';
 import Modals from '../../../../helpers/modal';
-import API from '../../../../services/interviewer';
+import API from '../../../../services/general';
 import {
   Card,
   CardActions,
   CardContent,
   Avatar,
-  // Checkbox,
   Table,
   TableBody,
   TableCell,
@@ -64,21 +62,6 @@ const UsersTable = props => {
     setlastName(user.last_name);
   };
 
-  const handleChange = () => {
-    setState(!state);
-      API.post(`api/activateInterviewer/${id}`).then(
-        res => {
-          console.log(res.data.data)
-          console.log(res.data.data.is_active);
-          users.find(r => {
-            if(r.id == res.data.data.id){
-              r.is_active = res.data.data.is_active;
-            }
-          } )
-        }
-      ).catch(err => console.log(err))
-  };
-
   const modalFirstNameInputChange = (event) => {
     setfirstName(event.target.value);
   }
@@ -87,7 +70,6 @@ const UsersTable = props => {
   }
   const classes = useStyles();
 
-  // const [selectedUsers, setSelectedUsers] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
 
@@ -233,21 +215,6 @@ const UsersTable = props => {
             }
           </div>
 
-          {/* <div className="form-group form-check">
-            <label
-              className="form-check-label"
-              data-toggle="tooltip"
-              title="Toggle the switch to either activate or di-activate a user"
-            >
-              <Switch
-                checked={state}
-                inputProps={{ 'aria-label': 'secondary checkbox' }}
-                onChange={handleChange}
-                value="checkedA"
-              />
-              Di-activate user
-            </label>
-          </div> */}
           <div className="Edit_user_" >
              <button
                className="btn btn-primary ml-auto"

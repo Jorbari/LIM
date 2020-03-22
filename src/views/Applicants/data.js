@@ -1,5 +1,5 @@
 import uuid from 'uuid/v1';
-import API from '../../services/interviewer';
+import API from '../../services/general';
 
 // import {reactLocalStorage} from 'reactjs-localstorage';
 //  const userProfile = reactLocalStorage.getObject('userProfile');

@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import API from '../../services/interviewer';
+import API from '../../services/general';
 import Snippet from './snippet';
 import Modals from '../../helpers/modal';
 import ErrorHandler from '../../helpers/error';
