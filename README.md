@@ -40,8 +40,3 @@ material-react-dashboard
 	└── Routes.jsx
 ```
 
-## Resources
-
-- More freebies like this one: <https://devias.io>
-
-
