@@ -87,7 +87,6 @@ const UsersTable = props => {
   }
   const classes = useStyles();
 
-  // const [selectedUsers, setSelectedUsers] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
 

@@ -108,8 +108,8 @@ const UsersToolbar = props => {
       <div className={classes.row}>
         <SearchInput
           className={classes.searchInput}
-          placeholder="Search user"
           onChange={filterSearch}
+          placeholder="Search user"
         />
       </div>
 

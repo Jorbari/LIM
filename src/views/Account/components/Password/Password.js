@@ -70,6 +70,7 @@ const Password = props => {
         <Divider />
         <CardContent>
           <TextField
+            className={values.OldPassword.length == 0 ? 'account_error_border' : ''}
             fullWidth
             label="OldPassword"
             name="OldPassword"
@@ -77,9 +78,9 @@ const Password = props => {
             type="password"
             value={values.OldPassword}
             variant="outlined"
-            className={values.OldPassword.length == 0 ? 'account_error_border' : ''}
           />
           <TextField
+            className={values.NewPassword.length < 7 || values.NewPassword !== values.ConfirmNewPassword ? 'account_error_border' : ''}
             fullWidth
             label="New Password"
             name="NewPassword"
@@ -88,9 +89,9 @@ const Password = props => {
             type="password"
             value={values.NewPassword}
             variant="outlined"
-            className={values.NewPassword.length < 7 || values.NewPassword !== values.ConfirmNewPassword ? 'account_error_border' : ''}
           />
           <TextField
+            className={values.ConfirmNewPassword.length < 7 || values.NewPassword !== values.ConfirmNewPassword ? 'account_error_border' : ''}
             fullWidth
             label="Confirm Password"
             name="ConfirmNewPassword"
@@ -99,15 +100,14 @@ const Password = props => {
             type="password"
             value={values.ConfirmNewPassword}
             variant="outlined"
-            className={values.ConfirmNewPassword.length < 7 || values.NewPassword !== values.ConfirmNewPassword ? 'account_error_border' : ''}
           />
         </CardContent>
         <Divider />
         <CardActions>
           <Button
             color="primary"
-            variant="outlined"
             type="submit"
+            variant="outlined"
           >
             Update
           </Button>

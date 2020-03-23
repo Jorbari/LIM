@@ -14,7 +14,7 @@ import {
   Typography as TypographyView,
   Applicants as ApplicantsView,
   Account as AccountView,
-  Settings as SettingsView,
+  // Settings as SettingsView,
   SignUp as SignUpView,
   SignIn as SignInView,
   NotFound as NotFoundView
