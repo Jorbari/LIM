@@ -10,15 +10,48 @@
     padding-left: 2%;
     width: 80%;
 }
+.hidden-md{
+    display: none;
+}
+@media(max-width: 812px){
+    .top_calendar_{
+        width: 100% !important;
+        padding-left: 5% !important;
+        padding-right: 5% !important;
+        margin-bottom: 5%;
+        margin-top: 3%;
+    }
+    .top_calendar_ h2{
+        font-size: 1.3em;
+    }
+    .top_calendar_ button{
+        font-size: 12px;
+    }
+    .hidden-md{
+        display: block !important;
+    }
+    .no_booked_schedule{
+        padding: 5%;
+    }
+}
 ._new-schedule{
     border-radius: 25px;
     color: white;
     background-color: #3f51b5;
     border-color: #3f51b5;
 }
-.calendar_container{
-    display: flex !important;
-    padding: 2%;
+
+@media(min-width: 900px){
+    .calendar_container{
+        display: flex !important;
+        padding: 2%;
+    }
+}
+@media(max-width: 899px){
+    .calendar_container{
+        display: block;
+        padding: 2%;
+    }
 }
 .calendar-area{
     flex:5;
@@ -45,7 +78,7 @@
 }
 .no_booked_schedule p{
     font-size: 1.3em;
-    width: 240px;
+    // width: 240px;
     color: #353535e7;
     font-family: "Work Sans",Roboto,Segoe UI,Open Sans,sans-serif;
 }

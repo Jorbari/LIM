@@ -11,7 +11,7 @@ import Modals from '../../helpers/modal';
 import ErrorHandler from '../../helpers/error';
 
 
-class ProductList extends Component{
+class CalendarList extends Component{
   scheduleData;
 
   constructor(props){
@@ -266,6 +266,7 @@ class ProductList extends Component{
             >New Schedule</button>
           </div>
         </div>
+        <hr className="hidden-md" />
          <div className="calendar_container" >
           <div className="calendar-area">
             <FullCalendar
@@ -451,4 +452,4 @@ class ProductList extends Component{
     this.toggleDeleteSchedule();
   }
 }
-export default ProductList;
+export default CalendarList;
