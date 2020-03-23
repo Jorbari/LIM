@@ -1,24 +1,20 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-undef */
 import React, { useState, useEffect } from 'react';
-import { Link as RouterLink, withRouter, Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import validate from 'validate.js';
 import { makeStyles } from '@material-ui/styles';
 import {reactLocalStorage} from 'reactjs-localstorage';
+import { Spinner } from 'react-bootstrap';
 import ErrorHandler from '../../helpers/error';
 import {
   Grid,
   Button,
   // IconButton,
   TextField,
-  Link,
   Typography
 } from '@material-ui/core';
 import API from '../../services/login';
-// import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-
-// import { Facebook as FacebookIcon, Google as GoogleIcon } from 'icons';
 
 const schema = {
   email: {
@@ -176,6 +172,7 @@ const SignIn = props => {
   const [errorMsg, setErrorMsg] = useState('');
   const [variant, setvariant] = useState('');
   const [show, setShow] = useState(false);
+  const [isLoading, setisLoading] = useState(false);
   const showError = () => {
     setShow(false);
   }
@@ -183,14 +180,13 @@ const SignIn = props => {
   // eslint-disable-next-line react/no-multi-comp
   const handleSignIn = e => {
     e.preventDefault();
+    setisLoading(true);
 
     const loginModel = {
       email:formState.values.email,
       password:formState.values.password
     }
 
-    // history.push('/');
-    // return <Redirect to="/dashboard" />
     API.post('api/AuthLogin',loginModel)
     .then(res => {
       if(res.data.status != 200){
@@ -198,6 +194,7 @@ const SignIn = props => {
         setErrorMsg(res.data.message);
         setvariant('danger');
         setShow(true);
+        setisLoading(false);
       }
       else{
         const profileData = {
@@ -229,6 +226,7 @@ const SignIn = props => {
       setvariant('danger');
       setErrorMsg('An error occurred, Pls try again!')
       setShow(true);
+      setisLoading(false);
       
     })
   };
@@ -317,12 +315,19 @@ const SignIn = props => {
                 <Button
                   className={classes.signInButton}
                   color="primary"
-                  disabled={!formState.isValid}
+                  disabled={!formState.isValid || isLoading}
                   fullWidth
                   size="large"
                   type="submit"
                   variant="contained"
                 >
+                  {
+                    isLoading === true && 
+                    <Spinner
+                      animation="grow"
+                      variant="danger"
+                    />
+                  }
                   Sign in now
                 </Button>
                 

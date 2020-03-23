@@ -251,10 +251,13 @@ const AccountDetails = props => {
             type="submit"
             variant="contained"
           >
-            {isLoading === true && <Spinner
-              animation="grow"
-              variant="danger"
-                                   />}
+            {
+              isLoading === true && 
+              <Spinner
+                animation="grow"
+                variant="danger"
+              />
+            }
             
             Save details
           </Button>
