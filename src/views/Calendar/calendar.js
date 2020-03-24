@@ -1,7 +1,5 @@
 /* eslint-disable react/no-set-state */
-
 import React, { Component } from 'react';
-// import { Calendar } from '@fullcalendar/core';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -270,8 +268,8 @@ class CalendarList extends Component{
          <div className="calendar_container" >
           <div className="calendar-area">
             <FullCalendar
-              eventClick={this.handleDateClick}
               defaultView="dayGridMonth"
+              eventClick={this.handleDateClick}
               events = {this.state.scheduleDate}
               plugins={[ dayGridPlugin, interactionPlugin  ]}
               selectable

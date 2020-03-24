@@ -138,6 +138,10 @@ const SignIn = props => {
     errors: {}
   });
 
+  // To check if the user is logged in so as
+  // to prevent them from accessing this page if they are
+  const token = reactLocalStorage.get('token', '');
+
   useEffect(() => {
     const errors = validate(formState.values, schema);
 
@@ -231,11 +235,18 @@ const SignIn = props => {
     })
   };
 
+  const goBack = () => {
+    if (token !== '') {
+        history.goBack();
+    }
+  }
+
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
 
   return (
     <div className={classes.root}>
+      {goBack()}
       <Grid
         className={classes.grid}
         container
