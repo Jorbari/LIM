@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/styles';
 import API from '../../services/general';
 import { UsersToolbar, UsersTable } from './components';
+import ErrorHandler from '../../helpers/error';
 
 const styles = theme => ({
   root: {
@@ -18,7 +19,10 @@ class UserList extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      interviewData: []
+      interviewData: [],
+      errorMsg: '',
+      variant: '',
+      showError: false
     };
     this.loadData = this.loadData.bind(this);
     this.addedInterviewer = this.addedInterviewer.bind(this);
@@ -27,11 +31,21 @@ class UserList extends React.Component{
     this.loadData();
   }
 
+  showError = () => {
+    this.setState({showError: false});
+  }
+
   render(){
     
     const { classes } = this.props;
     return(
       <div className={classes.root}>
+        <ErrorHandler
+          close={this.showError}
+          message={this.state.errorMsg}
+          show={this.state.showError}
+          variant={this.state.variant}
+        />
        <UsersToolbar
          searchInput={this.searchInterviewer}
          updateuser={(params) => this.addedInterviewer(params)}
@@ -46,7 +60,15 @@ class UserList extends React.Component{
   addedInterviewer(user){
     console.log(user);
     if(user == true){
+      this.setState({errorMsg: `interviewer added successfully!!!`});
+      this.setState({variant: 'success'});
+      this.setState({showError: true});
       this.loadData();
+    }
+    else{
+      this.setState({errorMsg: `An error occurred while trying to add interviewer, please try again.`});
+      this.setState({variant: 'danger'});
+      this.setState({showError: true});
     }
   }
 
@@ -61,7 +83,7 @@ class UserList extends React.Component{
       }
       
     }).catch(err => {
-      console.log(err)
+      console.log(err);
     });
   }
 
@@ -71,8 +93,9 @@ class UserList extends React.Component{
       console.log(res);
       interviewData = res.data.data;
       this.setState({interviewData: interviewData});
+      
     }).catch(err => { 
-      console.log(err)
+      console.log(err);
     });
   }
 }
