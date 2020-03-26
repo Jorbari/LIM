@@ -9,12 +9,12 @@ import { Main as ApplicantMainLayout} from './layouts/Applicant';
 
 import {
   Dashboard as DashboardView,
-  ProductList as ProductListView,
-  UserList as UserListView,
-  Typography as TypographyView,
+  Calendar as CalendarView,
+  Interviewer as InterviewerView,
+  BookInterview as BookInterviewView,
   Applicants as ApplicantsView,
   Account as AccountView,
-  // Settings as SettingsView,
+  Comments as CommentsView,
   SignUp as SignUpView,
   SignIn as SignInView,
   NotFound as NotFoundView
@@ -68,8 +68,8 @@ const Routes = () => {
           to="/sign-in"
         />
         <PrivateRoute
-          path="/admin"
           layout={AdminMainLayout}
+          path="/admin"
           render={({ match: { url } }) => (
             <>
               <RouteWithLayout
@@ -79,7 +79,7 @@ const Routes = () => {
                 path={`${url}/`}
               />
               <RouteWithLayout
-                component={UserListView}
+                component={InterviewerView}
                 exact
                 layout={AdminMainLayout}
                 path={`${url}/interviewers`}
@@ -100,8 +100,8 @@ const Routes = () => {
           )}
         />
         <InterviewerRoute
-          path="/interviewer"
           layout={InterviewerMainLayout}
+          path="/interviewer"
           render={({ match: { url } }) => (
             <>
               <RouteWithLayout
@@ -111,10 +111,16 @@ const Routes = () => {
                 path={`${url}/`}
               />
               <RouteWithLayout
-                component={ProductListView}
+                component={CalendarView}
                 exact
                 layout={InterviewerMainLayout}
                 path={`${url}/calendar`}
+              />
+              <RouteWithLayout
+                component={CommentsView}
+                exact
+                layout={InterviewerMainLayout}
+                path={`${url}/comment`}
               />
               <RouteWithLayout
                 component={AccountView}
@@ -126,12 +132,12 @@ const Routes = () => {
           )}
         />
         <ApplicantRoute
-          path="/applicant"
           layout={ApplicantMainLayout}
+          path="/applicant"
           render={({ match: { url } }) => (
             <>
               <RouteWithLayout
-                component={TypographyView}
+                component={BookInterviewView}
                 exact
                 layout={ApplicantMainLayout}
                 path={`${url}/`}

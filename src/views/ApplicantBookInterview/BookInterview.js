@@ -1,3 +1,4 @@
+/* eslint-disable react/no-set-state */
 import React, { Component } from 'react';
 import { Grid, Typography as MuiTypography } from '@material-ui/core';
 import API from '../../services/general';
@@ -6,7 +7,7 @@ import ErrorHandler from '../../helpers/error';
 
 
 
-class Typography extends Component {
+class BookInterview extends Component {
 
   constructor(props){
     super(props);
@@ -40,6 +41,9 @@ class Typography extends Component {
     .then(res => {
       if(res.data.data.length > 0){
         this.setState({listOfSchedules: res.data.data});
+      }
+      else{
+        this.setState({listOfSchedules: []});
       }
       
     })
@@ -212,4 +216,4 @@ class Typography extends Component {
  
 }
 
-export default Typography;
+export default BookInterview;
