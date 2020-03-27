@@ -107,7 +107,7 @@ const Password = props => {
           <Button
             color="primary"
             type="submit"
-            variant="outlined"
+            variant="contained"
           >
             Update
           </Button>

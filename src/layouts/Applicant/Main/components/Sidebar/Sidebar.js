@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   root: {
-    backgroundColor: theme.palette.white,
+    backgroundColor: '#222753',
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
