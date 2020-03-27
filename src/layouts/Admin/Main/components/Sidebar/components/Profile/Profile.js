@@ -50,9 +50,11 @@ const Profile = props => {
         className={classes.name}
         variant="h4"
       >
-        {user.name}
+        <span className="sideProfile_white" >
+          {user.name}
+        </span>
       </Typography>
-      <Typography variant="body2">{user.bio}</Typography>
+      <Typography variant="body2" className="sideProfile_white">{user.bio}</Typography>
     </div>
   );
 };

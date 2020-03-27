@@ -1,3 +1,105 @@
+$box_shadow: 6px 6px 17px #c9c9c9, -6px -6px 17px #ffffff;
+// $box_shadow: 6px 6px 17px black, -6px -6px 17px black;
+$bg_blue: #3f51b5;
+
 .comment_wrapper_{
-    padding: 2%;
+    // padding: 2%;
+
+    .__spacing{
+        // background-color: #000029;
+        padding: 2%;
+    }
+    .comment_section{
+        width: 100%;
+        // height: 25vh;
+        display: flex;
+
+        .comment_box{
+            flex: 1;
+            padding: 2%;
+            box-shadow:  $box_shadow;
+            border-radius: 20px;
+            margin-right: 2%;
+            height: fit-content;
+
+            h2{
+                font-size: 18px;
+                padding-left: 2%;
+                padding-bottom: 1%;
+            }
+            .form-control{
+                border-radius: 25px;
+                padding: 2%;
+                margin-bottom: 2%;
+            }
+            .message_box{
+                width: 100%;
+                border: none;
+                outline: none;
+                padding: 2%;
+                height: 80%;
+                border-radius: 38px;
+                background: #feffff;
+                color: $bg_blue;
+                resize: none;
+            }
+        }
+    }
+
+    .select_applicant{
+        flex: 0.5;
+        padding: 2%;
+        box-shadow:  $box_shadow;
+        border-radius: 20px;
+        justify-content: center;
+        align-items: center;
+        justify-items: center;
+        justify-self: center;
+        align-self: center;
+        h2{
+            font-size: 18px;
+            padding-left: 2%;
+            padding-bottom: 1%;
+        }
+        #dropdown-basic{
+            background-color: $bg_blue;
+            border: none;
+            outline: none !important;
+            box-shadow: none;
+            border-radius: 20px;
+            padding-left: 5%;
+            padding-right: 5%;
+        }
+    }
+
+    .blog_list{
+        margin-top: 6%;
+        padding: 2%;
+
+        .card{
+            width: 60%;
+        }
+        .card-body{
+            padding: 0.7rem !important;
+        }
+        h4{
+            font-size: 16px;
+            font-weight: bold;
+        }
+        p{
+            font-size: 14px;
+            width: 60%;
+            margin-bottom: unset;
+        }
+
+        .user_icon_text{
+            display: flex;
+
+            .applicant_img_sec{
+                // flex: 0.1;
+                margin-right: 2%;
+            }
+            
+        }
+    }
 }

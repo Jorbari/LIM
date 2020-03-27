@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   root: {
-    backgroundColor: theme.palette.white,
+    backgroundColor: '#222753',
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
@@ -42,22 +42,22 @@ const Sidebar = props => {
     {
       title: 'Dashboard',
       href: '/interviewer',
-      icon: <DashboardIcon />
+      icon: <DashboardIcon className="sidebarIconColour" />
     },
     {
       title: 'Calendar',
       href: '/interviewer/calendar',
-      icon: <Icon className="fa fa-calendar" />
+      icon: <Icon className="fa fa-calendar sidebarIconColour" />
     },
     {
       title: 'Comment',
       href: '/interviewer/comment',
-      icon: <Icon className="fa fa-pencil" />
+      icon: <Icon className="fa fa-pencil sidebarIconColour" />
     },
     {
       title: 'Account',
       href: '/interviewer/account',
-      icon: <AccountBoxIcon />
+      icon: <AccountBoxIcon className="sidebarIconColour" />
     },
     // {
     //   title: 'Settings',

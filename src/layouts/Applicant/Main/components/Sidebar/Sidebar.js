@@ -40,12 +40,12 @@ const Sidebar = props => {
     {
       title: 'Dashboard',
       href: '/applicant',
-      icon: <DashboardIcon />
+      icon: <DashboardIcon className="sidebarIconColour" />
     },
     {
       title: 'Account',
       href: '/applicant/account',
-      icon: <AccountBoxIcon />
+      icon: <AccountBoxIcon className="sidebarIconColour" />
     },
   ];
 

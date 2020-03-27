@@ -10,7 +10,8 @@ import {reactLocalStorage} from 'reactjs-localstorage';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    boxShadow: 'none'
+    boxShadow: 'none',
+    backgroundColor: '#222753'
   },
   flexGrow: {
     flexGrow: 1

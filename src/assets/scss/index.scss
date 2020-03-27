@@ -1,3 +1,4 @@
+$bg_blue: #3f51b5;
 * {
   box-sizing: border-box;
   margin: 0;
@@ -21,6 +22,20 @@ a {
 
 #root {
   height: 100%;
+}
+
+.sidebarIconColour{
+  color: #fea20b !important;
+}
+.sideProfile_white{
+  color: white;
+}
+.MuiButton-label{
+  color: white;
+
+  &:hover{
+    color: $bg_blue;
+  }
 }
 
 @media(min-width: 900px){
