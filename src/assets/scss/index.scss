@@ -22,8 +22,21 @@ a {
 #root {
   height: 100%;
 }
-.modal{
-  top: 20% !important;
+
+@media(min-width: 900px){
+  .modal{
+    top: 10% !important;
+  }
+}
+@media(min-width: 1270px){
+  .modal{
+    left: 10%;
+  }
+}
+@media(max-width: 899px){
+  .modal{
+    top: 10% !important;
+  }
 }
 .forgotten_pass{
   text-align: right;
