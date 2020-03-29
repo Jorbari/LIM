@@ -125,15 +125,18 @@
     width: 0px;
     position: fixed;
     z-index: 1000;
-    top: 64px;
     right: 0;
-    // background-color: #74767f;
     background-color: #30385e;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
     display: flex;
     flex-direction: column;
+  }
+  @media(min-width: 635px){
+    .sidenav {
+      top: 64px;
+    }
   }
   
   .sidenav a {
@@ -161,4 +164,21 @@
   @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
+  }
+
+  @media(min-width: 700px) and (max-width: 1279px){
+    .side_drawar{
+      width: 40%;
+    }
+  }
+  @media(min-width: 1280px){
+    .side_drawar{
+      width: 25%;
+    }
+  }
+
+  @media(min-width: 300px) and (max-width: 700px){
+    .side_drawar{
+      width: 100%;
+    }
   }

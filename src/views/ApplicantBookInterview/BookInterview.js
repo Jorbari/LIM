@@ -90,7 +90,8 @@ class BookInterview extends Component {
 
   openNav = (id) => {
     this.showAnInterviewerSchedule(id);
-    document.getElementById("mySidenav").style.width = "40%";
+    // document.getElementById("mySidenav").style.width = "40%";
+    document.getElementById("mySidenav").classList.add('side_drawar');
   }
   closeNav = () => {
     document.getElementById("mySidenav").style.width = "0";
