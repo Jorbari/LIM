@@ -27,7 +27,7 @@ class BookInterview extends Component {
     .then(res => {
       if(res.data.data.length > 0){
         res.data.data.forEach(interviewer => {
-          this.setState({listOfInterviewers: [...this.state.listOfInterviewers , interviewer]});
+          // this.setState({listOfInterviewers: [...this.state.listOfInterviewers , interviewer]});
         });
 
       }
@@ -144,7 +144,7 @@ class BookInterview extends Component {
     }
     else{
       _interviewArr = <div className="no_record_found" >
-        <p>No interviewer record found!!!</p>
+        <p>No interviewer record found...!!!</p>
       </div>
     }
 
