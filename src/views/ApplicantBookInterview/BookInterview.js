@@ -27,7 +27,7 @@ class BookInterview extends Component {
     .then(res => {
       if(res.data.data.length > 0){
         res.data.data.forEach(interviewer => {
-          // this.setState({listOfInterviewers: [...this.state.listOfInterviewers , interviewer]});
+          this.setState({listOfInterviewers: [...this.state.listOfInterviewers , interviewer]});
         });
 
       }
@@ -90,7 +90,7 @@ class BookInterview extends Component {
 
   openNav = (id) => {
     this.showAnInterviewerSchedule(id);
-    document.getElementById("mySidenav").style.width = "25%";
+    document.getElementById("mySidenav").style.width = "40%";
   }
   closeNav = () => {
     document.getElementById("mySidenav").style.width = "0";
@@ -117,11 +117,6 @@ class BookInterview extends Component {
                   className="interviewerImgIcon"
                   src={_interview.photo}
                 />
-                {/* <img
-                  alt="avatar"
-                  className="rounded-circle img_avatar"
-                  src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
-                /> */}
               </div>
 
               <div className="card-body">
