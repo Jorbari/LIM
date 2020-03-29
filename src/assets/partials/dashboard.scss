@@ -1,76 +1,108 @@
-@media(min-width: 1024px){
-    .__interviewer-padding{
-        padding: 5%;
-        display: flex;
-        flex-direction: row;
-    }
+@media (min-width: 1024px) {
+  .__interviewer-padding {
+    padding: 5%;
+    display: flex;
+    flex-direction: row;
+  }
 }
 
-@media(max-width: 1023px){
-    .__interviewer-padding{
-        padding: 5%;
-        display: flex;
-        flex-direction: column;
-    }
+@media (max-width: 1023px) {
+  .__interviewer-padding {
+    padding: 5%;
+    display: flex;
+    flex-direction: column;
+  }
 }
 
-.pendingInterview_no{
-    flex: 1;
-    padding: 10%;
-    margin: 2%;
-    border-radius: 59px;
-    background: linear-gradient(145deg, #ffffff, #e5e6e6);
-    box-shadow:  29px 29px 46px #cecfcf, 
-                -29px -29px 46px #ffffff;
+.pendingInterview_no {
+  flex: 1;
+  padding: 10%;
+  margin: 2%;
+  border-radius: 59px;
+  background: linear-gradient(145deg, #ffffff, #e5e6e6);
+  box-shadow: 29px 29px 46px #cecfcf, -29px -29px 46px #ffffff;
 }
 
-.approvedInterview_no{
-    flex: 1;
-    padding: 10%;
-    border-radius: 59px;
-    background: linear-gradient(145deg, #e5e6e6, #ffffff);
-    box-shadow:  29px 29px 46px #cecfcf, 
-                -29px -29px 46px #ffffff;
+.approvedInterview_no {
+  flex: 1;
+  padding: 10%;
+  border-radius: 59px;
+  background: linear-gradient(145deg, #e5e6e6, #ffffff);
+  box-shadow: 29px 29px 46px #cecfcf, -29px -29px 46px #ffffff;
 }
 // *****
-.pendingInterview_no .child_card_{
-    display: flex;
-    justify-content: space-around;
+.pendingInterview_no .child_card_ {
+  display: flex;
+  justify-content: space-around;
 }
-.pendingInterview_no .child_card_ .text_portion{
-    display: flex;
-    flex: 2;
-    flex-direction: column;
+.pendingInterview_no .child_card_ .text_portion {
+  display: flex;
+  flex: 2;
+  flex-direction: column;
 }
-.pendingInterview_no .child_card_ .text_portion h1{
-    color: gray;
+.pendingInterview_no .child_card_ .text_portion h1 {
+  color: gray;
 }
-.pendingInterview_no .child_card_ .icon_portion{
-    flex: 1;
+.pendingInterview_no .child_card_ .icon_portion {
+  flex: 1;
 }
 
 // ---------------------
-.makeStyles-avatar-175{
-    background-color: #3f51b5 !important;
+.makeStyles-avatar-175 {
+  background-color: #3f51b5 !important;
+}
+.approvedInterview_no .child_card_ {
+  display: flex;
+  justify-content: space-around;
+}
+.approvedInterview_no .child_card_ .text_portion {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+}
+.approvedInterview_no .child_card_ .text_portion h1 {
+  color: gray;
+}
+.approvedInterview_no .child_card_ .icon_portion {
+  margin-right: 10%;
+}
 
+.account_error_border {
+  border: 00.1px solid red !important;
 }
-.approvedInterview_no .child_card_{
-    display: flex;
-    justify-content: space-around;
-}
-.approvedInterview_no .child_card_ .text_portion{
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    justify-content: center;
-}
-.approvedInterview_no .child_card_ .text_portion h1{
-    color: gray;
-}
-.approvedInterview_no .child_card_ .icon_portion{
-    margin-right: 10%;
+.logout_ {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  text-align: center;
 }
 
-.account_error_border{
-    border: 00.1px solid red !important;
+/* loading dots */
+
+.loading:after {
+  content: ' .';
+  animation: dots 1s steps(5, end) infinite;
+}
+
+@keyframes dots {
+  0%,
+  20% {
+    color: rgba(0, 0, 0, 0);
+    text-shadow: 0.25em 0 0 rgba(0, 0, 0, 0), 0.5em 0 0 rgba(0, 0, 0, 0);
+  }
+  40% {
+    color: white;
+    text-shadow: 0.25em 0 0 rgba(0, 0, 0, 0), 0.5em 0 0 rgba(0, 0, 0, 0);
+  }
+  60% {
+    text-shadow: 0.25em 0 0 white, 0.5em 0 0 rgba(0, 0, 0, 0);
+  }
+  80%,
+  100% {
+    text-shadow: 0.25em 0 0 white, 0.5em 0 0 white;
+  }
 }

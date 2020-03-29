@@ -17,7 +17,8 @@ import {
   Comments as CommentsView,
   SignUp as SignUpView,
   SignIn as SignInView,
-  NotFound as NotFoundView
+  NotFound as NotFoundView,
+  Logout as LogoutView
 } from './views';
 
 const token = reactLocalStorage.get('token', '');
@@ -171,13 +172,20 @@ const Routes = () => {
           layout={MinimalLayout}
           path="/sign-in"
         />
-
+        
         <RouteWithLayout
           component={NotFoundView}
           exact
           layout={MinimalLayout}
           path="/not-found"
         />
+
+        <Route
+          component={LogoutView}
+          exact
+          path="/logout"
+        />
+
         <Redirect to="/not-found" />
 
 

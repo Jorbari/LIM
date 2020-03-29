@@ -6,7 +6,6 @@ import { makeStyles } from '@material-ui/styles';
 import { AppBar, Toolbar, Hidden, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import InputIcon from '@material-ui/icons/Input';
-import {reactLocalStorage} from 'reactjs-localstorage';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,11 +25,6 @@ const Topbar = props => {
 
   const classes = useStyles();
 
-  const clearStorage = () => {
-    reactLocalStorage.clear();
-    window.location.href = '/sign-in';
-  }
-
   return (
     <AppBar
       {...rest}
@@ -46,13 +40,18 @@ const Topbar = props => {
         </RouterLink>
         <div className={classes.flexGrow} />
         <Hidden mdDown>
-          <IconButton
-            className={classes.signOutButton}
-            color="inherit"
-            onClick={clearStorage}
+          <RouterLink
+            className="text-white"
+            to="/logout"
           >
-            <InputIcon />
-          </IconButton>
+            <IconButton
+              className={classes.signOutButton}
+              color="inherit"
+            >
+              <InputIcon />
+            </IconButton>
+          </RouterLink>
+          
         </Hidden>
         <Hidden lgUp>
           <IconButton

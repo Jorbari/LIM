@@ -2,11 +2,12 @@ import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { Divider, Drawer } from '@material-ui/core';
+import { Divider, Drawer, Hidden } from '@material-ui/core';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import PeopleIcon from '@material-ui/icons/People';
 import ImageIcon from '@material-ui/icons/Image';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import { Profile, SidebarNav } from './components';
 
@@ -38,7 +39,39 @@ const Sidebar = props => {
 
   const classes = useStyles();
 
-  const pages = [
+  const Small_screen_pages = [
+    {
+      title: 'Dashboard',
+      href: '/admin/',
+      icon: <DashboardIcon className="sidebarIconColour" />
+    },
+    {
+      title: 'Interviewers',
+      href: '/admin/interviewers',
+      icon: <PeopleIcon className="sidebarIconColour" />
+    },
+    {
+      title: 'Apllicants',
+      href: '/admin/applicants',
+      icon: <ImageIcon className="sidebarIconColour" />
+    },
+    {
+      title: 'Account',
+      href: '/admin/account',
+      icon: <AccountBoxIcon className="sidebarIconColour" />
+    },
+    {
+      title: 'Logout',
+      href: '/logout',
+      icon: <ExitToAppIcon className="text-white" />
+    },
+    // {
+    //   title: 'Settings',
+    //   href: '/admin/settings',
+    //   icon: <SettingsIcon />
+    // }
+  ];
+  const Large_screen_pages = [
     {
       title: 'Dashboard',
       href: '/admin/',
@@ -80,10 +113,18 @@ const Sidebar = props => {
       >
         <Profile />
         <Divider className={classes.divider} />
-        <SidebarNav
-          className={classes.nav}
-          pages={pages}
-        />
+        <Hidden mdDown>
+          <SidebarNav
+            className={classes.nav}
+            pages={Large_screen_pages}
+          />
+        </Hidden>
+        <Hidden lgUp>
+          <SidebarNav
+            className={classes.nav}
+            pages={Small_screen_pages}
+          />
+        </Hidden>
       </div>
     </Drawer>
   );

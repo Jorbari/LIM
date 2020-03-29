@@ -8,3 +8,4 @@ export { default as SignUp } from './SignUp';
 export { default as BookInterview } from './ApplicantBookInterview';
 export { default as Interviewer } from './Interviewer';
 export { default as Comments } from './comment';
+export { default as Logout } from './Logout';
