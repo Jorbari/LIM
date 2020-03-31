@@ -1,50 +1,54 @@
 import React, { Component } from 'react';
 import { Dropdown, Card } from 'react-bootstrap';
-import {Avatar} from '@material-ui/core'
+import {Avatar} from '@material-ui/core';
+import API from '../../services/general';
 
 
 class AddComment extends Component{
+
+  showApplicantAlreadyInterviewed = () => {
+    const url = ``;
+  }
+
   render(){
     return(
       <div className="comment_wrapper_" >
         <div className="__spacing" >
 
           <div className="comment_section">
-          <div className="comment_box" >
-            <h2>Enter title</h2>
-            <input
-              className="form-control"
-              placeholder="Title..."
-            />
-            <h2>Enter your comment</h2>
-            <textarea
-              className="message_box"
-              placeholder="Comment..."
-            />
-          </div>
-          <div className="select_applicant" >
-         
-          <h2>Select applicant</h2>
+            <div className="comment_box" >
+              <div>
+                <h2>Enter title</h2>
+              <input
+                className="form-control"
+                placeholder="Title..."
+              />
+              <h2>Enter your comment</h2>
+              <textarea
+                className="message_box"
+                placeholder="Comment..."
+              />
+              </div>
+              <div>
+                <button className="btn" >Add Comment</button>
+              </div>
+              
+            </div>
+            <div className="select_applicant" >
           
-          <Dropdown>
-            <Dropdown.Toggle
-              id="dropdown-basic"
-              variant="success"
+            <h2>Select applicant</h2>
+
+            <select
+              className="form-control"
             >
-              List of applicant
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-              <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-              <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-
-
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+            </select>
+            
+            </div>
           </div>
-        </div>
-      
         </div>
         
         <div className="blog_list" >

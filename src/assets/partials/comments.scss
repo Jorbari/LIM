@@ -1,17 +1,14 @@
 $box_shadow: 6px 6px 17px #c9c9c9, -6px -6px 17px #ffffff;
-// $box_shadow: 6px 6px 17px black, -6px -6px 17px black;
 $bg_blue: #3f51b5;
+$bg_gold: #fea20b;
 
 .comment_wrapper_{
-    // padding: 2%;
 
     .__spacing{
-        // background-color: #000029;
         padding: 2%;
     }
     .comment_section{
         width: 100%;
-        // height: 25vh;
         display: flex;
 
         .comment_box{
@@ -21,6 +18,31 @@ $bg_blue: #3f51b5;
             border-radius: 20px;
             margin-right: 2%;
             height: fit-content;
+
+            display: flex;
+
+            & div:first-child{
+                flex-grow: 2;
+            }
+            & div:last-child{
+                flex-grow: .5;
+                padding-left: 4%;
+
+                .btn{
+                    background-color:$bg_blue;
+                    color: white;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 25px;
+                    font-size: 1.4em;
+                    font-weight: bold;
+
+                    &:hover{
+                        background-color: $bg_gold;
+                        color: $bg_blue;
+                    }
+                }
+            }
 
             h2{
                 font-size: 18px;
@@ -37,7 +59,6 @@ $bg_blue: #3f51b5;
                 border: none;
                 outline: none;
                 padding: 2%;
-                height: 80%;
                 border-radius: 38px;
                 background: #feffff;
                 color: $bg_blue;
@@ -61,7 +82,7 @@ $bg_blue: #3f51b5;
             padding-left: 2%;
             padding-bottom: 1%;
         }
-        #dropdown-basic{
+        select{
             background-color: $bg_blue;
             border: none;
             outline: none !important;
@@ -69,16 +90,14 @@ $bg_blue: #3f51b5;
             border-radius: 20px;
             padding-left: 5%;
             padding-right: 5%;
+            color: $bg_gold;
+            font-weight: bold;
         }
     }
 
     .blog_list{
-        margin-top: 6%;
         padding: 2%;
 
-        .card{
-            width: 60%;
-        }
         .card-body{
             padding: 0.7rem !important;
         }
@@ -88,7 +107,6 @@ $bg_blue: #3f51b5;
         }
         p{
             font-size: 14px;
-            width: 60%;
             margin-bottom: unset;
         }
 
@@ -96,7 +114,6 @@ $bg_blue: #3f51b5;
             display: flex;
 
             .applicant_img_sec{
-                // flex: 0.1;
                 margin-right: 2%;
             }
             

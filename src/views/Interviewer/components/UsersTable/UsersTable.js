@@ -68,12 +68,11 @@ const UsersTable = props => {
     setState(!state);
       API.post(`api/activateInterviewer/${id}`).then(
         res => {
-          console.log(res.data.data)
-          console.log(res.data.data.is_active);
           users.find(r => {
             if(r.id == res.data.data.id){
               r.is_active = res.data.data.is_active;
             }
+            return;
           } )
         }
       ).catch(err => console.log(err))
