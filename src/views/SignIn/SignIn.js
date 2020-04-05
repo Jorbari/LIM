@@ -237,7 +237,7 @@ const SignIn = props => {
 
   const goBack = () => {
     if (token !== '') {
-        history.goBack();
+        // history.goBack();
     }
   }
 
