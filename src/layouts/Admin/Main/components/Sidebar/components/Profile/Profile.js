@@ -44,7 +44,7 @@ const Profile = props => {
         className={classes.avatar}
         component={RouterLink}
         src={user.avatar}
-        to="/settings"
+        to="/admin/account"
       />
       <Typography
         className={classes.name}
@@ -54,7 +54,10 @@ const Profile = props => {
           {user.name}
         </span>
       </Typography>
-      <Typography variant="body2" className="sideProfile_white">{user.bio}</Typography>
+      <Typography
+        className="sideProfile_white"
+        variant="body2"
+      >{user.bio}</Typography>
     </div>
   );
 };

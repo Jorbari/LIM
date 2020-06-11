@@ -14,10 +14,15 @@ const useStyles = makeStyles(theme => ({
     height: '42px',
     display: 'flex',
     alignItems: 'center',
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
+    justifyContent: 'space-between',
+    
   },
-  spacer: {
-    flexGrow: 1
+  wrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingBottom: '2rem'
   },
   importButton: {
     marginRight: theme.spacing(1)
@@ -27,8 +32,10 @@ const useStyles = makeStyles(theme => ({
   },
   searchInput: {
     marginRight: theme.spacing(1)
-  }
+  },
+
 }));
+
 
 const UsersToolbar = props => {
   const { updateuser, searchInput, className, ...rest } = props;
@@ -93,26 +100,29 @@ const UsersToolbar = props => {
       {...rest}
       className={clsx(classes.root, className)}
     >
-      <div className={classes.row}>
-        <span className={classes.spacer} />
-        {/* <Button className={classes.importButton}>Import</Button>
-        <Button className={classes.exportButton}>Export</Button> */}
-        <Button
-          color="primary"
-          onClick={handleShow}
-          variant="contained"
-        >
-          Add Applicant
-        </Button>
-      </div>
-      <div className={classes.row}>
-        <SearchInput
-          className={classes.searchInput}
-          onChange={filterSearch}
-          placeholder="Search user"
-        />
-      </div>
+      <div className={classes.wrapper} >
 
+        <div className={classes.row}>
+            <Button
+              color="primary"
+              onClick={handleShow}
+              variant="contained"
+            >
+              Add Applicant
+            </Button>
+        </div>
+
+        <div className={classes.row}>
+          <SearchInput
+            className={classes.searchInput}
+            onChange={filterSearch}
+            placeholder="Search user"
+          />
+        </div>
+
+
+      </div>
+  
 
       <Modals
         onHide={handleClose}

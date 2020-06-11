@@ -8,6 +8,14 @@ import {reactLocalStorage} from 'reactjs-localstorage';
     constructor(props){
       super(props);
       
+      // To check if the user is logged in so as
+      // to prevent them from accessing this page if they are
+      const token = reactLocalStorage.get('token', '');
+
+      if(!token){
+        window.location.href = '/sign-in';
+      }
+      
       reactLocalStorage.clear();
       window.location.href = '/sign-in';
     }
