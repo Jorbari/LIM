@@ -40,8 +40,22 @@ const useStyles = makeStyles(theme => ({
   },
   actions: {
     justifyContent: 'flex-end'
+  },
+  spaceRight: {
+    marginRight: '3%',
+    fontSize: '15px'
   }
 }));
+
+const noData = {
+  noData: {
+    display: 'flex',
+    justifyContent: 'center',
+    paddingTop: '1%',
+    fontize: '1.4rem',
+    color: '#222753'
+  }
+}
 
 const UsersTable = props => {
   const [state, setState] = useState(false);
@@ -101,6 +115,12 @@ const UsersTable = props => {
     ).catch(err => console.log(err))
   }
 
+  let isDataFound;
+  if(users.length < 1) {
+    isDataFound = 
+    <p style={noData.noData}>No Data</p>
+  }
+
   return (
 
     <div>
@@ -130,7 +150,7 @@ const UsersTable = props => {
                       <TableCell>
                         <div className={classes.nameContainer}>
                           <Avatar
-                            className={classes.first_name}
+                            className={classes.spaceRight}
                             src={user.avatarUrl}
                           >
                             {getInitials(user.first_name)}
@@ -162,7 +182,9 @@ const UsersTable = props => {
             </div>
           </PerfectScrollbar>
         </CardContent>
-        <CardActions className={classes.actions}>
+        {
+          !isDataFound && 
+          <CardActions className={classes.actions}>
           <TablePagination
             component="div"
             count={users.length}
@@ -173,6 +195,8 @@ const UsersTable = props => {
             rowsPerPageOptions={[5, 10, 25]}
           />
         </CardActions>
+        }
+        {isDataFound}
       </Card>
   
 

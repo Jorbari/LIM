@@ -1,74 +1,27 @@
-
-@media(min-width: 1025px){
-  .Applicant_interview_wrapper{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 1em;
-    // grid-auto-rows: 100px;
-    width: 100%;
-  }
+.Applicant_interview_wrapper{
+  width: 100%;
 }
-@media(min-width: 926px) and (max-width: 1024px) {
-  .Applicant_interview_wrapper{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 1em;
-    // grid-auto-rows: 100px;
-    width: 100%;
-  }
+.btn__less{
+  background: none !important;
+  border: none !important;
 }
-@media(min-width: 701px) and (max-width: 925px) {
-  .Applicant_interview_wrapper{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 1em;
-    // grid-auto-rows: 100px;
-    width: 100%;
-  }
-}
-@media(min-width: 300px) and (max-width: 700px) {
-  .Applicant_interview_card{
-    justify-content: center;
-    padding-top: 3%;
-  }
-  .Applicant_interview_wrapper{
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    grid-gap: 1em;
-    margin-left: auto !important;
-    // grid-auto-rows: 100px;
-    width: 100%;
-  }
+.open_sideBar_icon{
+  font-size: 2rem !important;
+  color: #222753 !important;
 }
 
-
-
-.Applicant_interview_wrapper > .Applicant_interview_card .card{
-   border-radius: 25px;
-   width: 100%;
-}
-.Applicant_interview_wrapper  .Applicant_interview_card .img_avatar_wrapper{
-   text-align: center;
-   padding-top: 3%;
-}
-.Applicant_interview_wrapper  .Applicant_interview_card .img_avatar{
-   width: 70%;
-}
-.Applicant_interview_wrapper  .Applicant_interview_card .card-body{
-   text-align: center;
-}
 .btn_Int_schedule{
-    width: 100%;
-    background-color: #3f51b5;
+    width: 90%;
+    background-color: #3f51b5 !important;
     color: white;
-    border-radius: 25px;
+    border-radius: 25px !important;
     transition: ease-in .3s;
 }
 .btn_Int_schedule:hover{
     width: 100%;
-    background-color: white;
+    background-color: white !important;
     color: #3f51b5;
-    border: 1px solid #3f51b5;
+    border: 1px solid #3f51b5 !important;
     border-radius: 25px;
     font-weight: 600;
 }
@@ -90,30 +43,41 @@
   font-weight: bold;
   font-size: 1.2em;
 }
+.no_schedule_wrapper{
+  height: 100%;
+}
 .no__schedule{
-  color: white;
   display: flex;
   justify-content: center;
+  height: 100%;
+  align-items: center;
 }
 .interviewerImgIcon{
-  width: 160px !important;
-  height: 160px !important;
+  width: 130px !important;
+  height: 130px !important;
 }
 
 /* ____SideBar Card _______________ */
 .card_side_{
     background-color: white;
-    border-radius: 25px;
     padding: 5%;
-    margin: 4%;
+    border-radius: 27px;
+    background: linear-gradient(145deg, #e5e6e6, #ffffff);
+    box-shadow: 8px 8px 16px #d5d6d6, -8px -8px 16px #ffffff;
+    width: 91%;
+    transition: all 0.2s ease-in-out;
+}
+.MuiBackdrop-root{
+  background-color: rgba(0, 0, 0, 0.14) !important;
+
 }
 .card_side_btn{
-    height: 5%;
-    padding: 0;
-    font-weight: 500;
-    font-size: 1.2em;
-    color: #3f51b5;
-    outline: none !important;
+  height: 5%;
+  padding: 0;
+  font-weight: 500;
+  font-size: 1.2em;
+  color: #3f51b5;
+  outline: none !important;
 }
 
 // ------------------

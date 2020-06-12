@@ -42,8 +42,23 @@ const useStyles = makeStyles(theme => ({
   },
   actions: {
     justifyContent: 'flex-end'
-  }
+  },
+  spaceRight: {
+    marginRight: '3%',
+    fontSize: '15px'
+  },
+
 }));
+
+const noData = {
+  noData: {
+    display: 'flex',
+    justifyContent: 'center',
+    paddingTop: '1%',
+    fontize: '1.4rem',
+    color: '#222753'
+  }
+}
 
 const UsersTable = props => {
   const [state, setState] = useState(false);
@@ -89,8 +104,6 @@ const UsersTable = props => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
 
- 
-
   const handlePageChange = (event, page) => {
     console.log('****** i am here *******');
     console.log(page);
@@ -120,9 +133,17 @@ const UsersTable = props => {
     ).catch(err => console.log(err))
   }
 
+  let isDataFound;
+  if(users.length < 1) {
+    isDataFound = 
+    <p style={noData.noData}>No Data</p>
+  }
+
+
   return (
 
     <div>
+      
       <Card
         {...rest}
         className={clsx(classes.root, className)}
@@ -140,6 +161,7 @@ const UsersTable = props => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
+                  
                   {users?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(user => (
                     <TableRow
                       className={classes.tableRow}
@@ -149,7 +171,7 @@ const UsersTable = props => {
                       <TableCell>
                         <div className={classes.nameContainer}>
                           <Avatar
-                            className={classes.first_name}
+                            className={classes.spaceRight}
                             src={user.avatarUrl}
                           >
                             {getInitials(user.first_name)}
@@ -176,12 +198,15 @@ const UsersTable = props => {
                       </TableCell>
                     </TableRow>
                   ))}
+
                 </TableBody>
               </Table>
             </div>
           </PerfectScrollbar>
         </CardContent>
-        <CardActions className={classes.actions}>
+        {
+          !isDataFound && 
+          <CardActions className={classes.actions}>
           <TablePagination
             component="div"
             count={users.length}
@@ -192,6 +217,9 @@ const UsersTable = props => {
             rowsPerPageOptions={[5, 10, 25]}
           />
         </CardActions>
+        }
+        
+        {isDataFound}
       </Card>
   
 
