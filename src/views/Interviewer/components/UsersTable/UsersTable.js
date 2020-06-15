@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -65,7 +65,9 @@ const UsersTable = props => {
   const { className, users, ...rest } = props;
   const [show, setShow] = useState(false);
   const [id, setId] = useState();
+  
   const [firstName, setfirstName] = useState('');
+  
   const [lastName, setlastName] = useState('');
   const handleClose = () => setShow(false);
   const handleShow = (user) => {
@@ -132,6 +134,8 @@ const UsersTable = props => {
       }
     ).catch(err => console.log(err))
   }
+
+
 
   let isDataFound;
   if(users.length < 1) {
@@ -229,6 +233,9 @@ const UsersTable = props => {
         title={`Edit Account`}
       >
         <div>
+          
+
+          
           <div className="form-group">
             <label htmlFor="email">First Name:</label>
             <input
@@ -245,6 +252,9 @@ const UsersTable = props => {
               </p>
             }
           </div>
+
+
+
           <div className="form-group">
             <label htmlFor="email">Last Name:</label>
             <input

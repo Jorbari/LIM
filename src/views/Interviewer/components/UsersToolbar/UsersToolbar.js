@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import { Button } from '@material-ui/core';
+import moment from 'moment';
 import Modals from '../../../../helpers/modal';
 import API from '../../../../services/general';
 
@@ -40,36 +41,55 @@ const UsersToolbar = props => {
   const [lastName, setlastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [sessionId, setsessionId] = useState();
+  const [sessionList, setSessionList] = useState([]);
 
+  useEffect(() => {
+    getSessionList();
+  }, []);
 
-  const modalFirstNameInputChange = (event) => {
+  const getSessionList = () => {
+    API.get('api/return_all_sessions')
+      .then(res => {
+        if (res.data.status == 200) {
+          console.log(res.data.data);
+          setSessionList(res.data.data);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  const modalFirstNameInputChange = event => {
     setfirstName(event.target.value);
-  }
-  const modalLastNameInputChange = (event) => {
+  };
+  const modalLastNameInputChange = event => {
     setlastName(event.target.value);
-  }
-  const modalEmailInputChange = (event) => {
+  };
+  const modalEmailInputChange = event => {
     setEmail(event.target.value);
-  }
-  const modalPasswordInputChange = (event) => {
+  };
+  const modalPasswordInputChange = event => {
     setPassword(event.target.value);
-  }
+  };
   const handleClose = () => setShow(false);
 
   const handleShow = () => {
-     setShow(true);
-      };
+    setShow(true);
+  };
   const createInterviewerAccount = () => {
+    // add sessionId
     const accountModel = {
-      first_name:firstName,
-      last_name:lastName,
+      first_name: firstName,
+      last_name: lastName,
       email: email,
-      password:password
-    }
+      password: password,
+      session_range_id: sessionId
+    };
 
     API.post('api/createInterviewer', accountModel)
-    .then(
-      res => {
+      .then(res => {
         console.log(res);
         setfirstName('');
         setlastName('');
@@ -77,27 +97,26 @@ const UsersToolbar = props => {
         setPassword('');
         updateuser(true);
         handleClose();
-      }
-    )
-    .catch(
-      err => console.log(err)
-    )
+      })
+      .catch(err => console.log(err));
+  };
 
-  }
-
-  const filterSearch = (event) => {
+  const filterSearch = event => {
     searchInput(event.target.value);
-  }
+  };
 
   const classes = useStyles();
+
+  const optionClicked = event => {
+    setsessionId(event.target.value);
+  };
 
   return (
     <div
       {...rest}
       className={clsx(classes.root, className)}
     >
-      <div className={classes.wrapper} >
-
+      <div className={classes.wrapper}>
         <div className={classes.row}>
           <Button
             color="primary"
@@ -110,14 +129,11 @@ const UsersToolbar = props => {
         <div className={classes.row}>
           <SearchInput
             className={classes.searchInput}
-            placeholder="Search user"
             onChange={filterSearch}
+            placeholder="Search user"
           />
         </div>
-
       </div>
-    
-
 
       <Modals
         onHide={handleClose}
@@ -125,6 +141,28 @@ const UsersToolbar = props => {
         title={`Add Interviewer`}
       >
         <div>
+          <div className="form-group">
+            <label htmlFor="email">Select Session:</label>
+            <select
+              className="form-control"
+              onChange={optionClicked}
+            >
+              {sessionList.map(session => (
+                <option
+                  key={session.id}
+                  value={session.id}
+                >
+                  {session.title}: {moment(session.from).format('DD/MM/YYYY')} -{' '}
+                  {moment(session.to).format('DD/MM/YYYY')}
+                </option>
+              ))}
+            </select>
+            <h1>{sessionId}</h1>
+            {!sessionId && (
+              <p className="err_sm_">Field cannot be left blank</p>
+            )}
+          </div>
+
           <div className="form-group">
             <label htmlFor="email">First Name:</label>
             <input
@@ -134,12 +172,9 @@ const UsersToolbar = props => {
               type="text"
               value={firstName}
             />
-            {
-              firstName.length == 0 && 
-              <p className="err_sm_" >
-                Field cannot be left blank
-              </p>
-            }
+            {firstName.length == 0 && (
+              <p className="err_sm_">Field cannot be left blank</p>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="email">Last Name:</label>
@@ -150,12 +185,9 @@ const UsersToolbar = props => {
               type="text"
               value={lastName}
             />
-            {
-              lastName.length == 0 && 
-              <p className="err_sm_" >
-                Field cannot be left blank
-              </p>
-            }
+            {lastName.length == 0 && (
+              <p className="err_sm_">Field cannot be left blank</p>
+            )}
           </div>
 
           <div className="form-group">
@@ -167,12 +199,9 @@ const UsersToolbar = props => {
               type="email"
               value={email}
             />
-            {
-              email.length == 0 && 
-              <p className="err_sm_" >
-                Field cannot be left blank
-              </p>
-            }
+            {email.length == 0 && (
+              <p className="err_sm_">Field cannot be left blank</p>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="email">Password:</label>
@@ -183,29 +212,28 @@ const UsersToolbar = props => {
               type="password"
               value={password}
             />
-            {
-              password.length == 0 && 
-              <p className="err_sm_" >
-                Field cannot be left blank
-              </p>
-            }
+            {password.length == 0 && (
+              <p className="err_sm_">Field cannot be left blank</p>
+            )}
           </div>
 
-         
-          <div className="Edit_user_" >
-             <button
-               className="btn btn-primary ml-auto"
-               disabled={firstName.length == 0 || lastName.length == 0 || email.length == 0 || password.length == 0}
-               onClick={createInterviewerAccount}
-             >Add Interviewer
-          </button>
+          <div className="Edit_user_">
+            <button
+              className="btn btn-primary ml-auto"
+              disabled={
+                firstName.length == 0 ||
+                lastName.length == 0 ||
+                email.length == 0 ||
+                password.length == 0 ||
+                !sessionId
+              }
+              onClick={createInterviewerAccount}
+            >
+              Add Interviewer
+            </button>
           </div>
-         
         </div>
       </Modals>
-   
-
-
     </div>
   );
 };

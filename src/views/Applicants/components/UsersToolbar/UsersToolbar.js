@@ -43,6 +43,7 @@ const UsersToolbar = props => {
   const [firstName, setfirstName] = useState('');
   const [lastName, setlastName] = useState('');
   const [email, setEmail] = useState('');
+  const [programme, setProgramme] = useState('');
   const [password, setPassword] = useState('');
 
 
@@ -68,7 +69,8 @@ const UsersToolbar = props => {
       first_name:firstName,
       last_name:lastName,
       email: email,
-      password:password
+      password:password,
+      programme: programme
     }
 
     API.post('api/createApplicant', accountModel)
@@ -162,6 +164,22 @@ const UsersToolbar = props => {
               </p>
             }
           </div>
+          <div className="form-group">
+            <label htmlFor="email">Programme:</label>
+            <input
+              className="form-control"
+              onChange={(event) => setProgramme(event.target.value)}
+              placeholder="Enter Last Name"
+              type="text"
+              value={programme}
+            />
+            {
+              programme.length == 0 && 
+              <p className="err_sm_" >
+                Field cannot be left blank
+              </p>
+            }
+          </div>
 
           <div className="form-group">
             <label htmlFor="email">Email:</label>
@@ -200,7 +218,7 @@ const UsersToolbar = props => {
           <div className="Edit_user_" >
              <button
                className="btn btn-primary ml-auto"
-               disabled={firstName.length == 0 || lastName.length == 0 || email.length == 0 || password.length == 0}
+               disabled={firstName.length == 0 || lastName.length == 0 || email.length == 0 || password.length == 0 || !programme}
                onClick={createApplicantAccount}
              >Add Applicant
           </button>

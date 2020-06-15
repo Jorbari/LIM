@@ -213,14 +213,14 @@ const SignIn = props => {
         reactLocalStorage.setObject('Profile', profileData);
         reactLocalStorage.set('token', res.data.data.User.token);
         console.log(res.data.data.User);
-        if(res.data.data.RoleName == 'administrator'){
+        if(res.data.data.RoleName == 'Administrator'){
           window.location.href = '/admin';
         }
-        else if(res.data.data.RoleName == 'interviewer'){
+        else if(res.data.data.RoleName == 'Interviewer'){
           window.location.href = '/interviewer';
         }
         else{
-          window.location.href = '/applicant';
+          window.location.href = '/Applicant';
         }
       }
       

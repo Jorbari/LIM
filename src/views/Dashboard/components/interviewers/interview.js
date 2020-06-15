@@ -61,15 +61,15 @@ const Budget = props => {
   }
 
   useEffect(()=>{
-    if(Auth.userRole == "administrator"){
+    if(Auth.userRole == "Administrator"){
       InterviewSum();
     }
-    if(Auth.userRole == "interviewer"){
+    if(Auth.userRole == "Interviewer"){
       pendingInterview();
       approvedInterview();
     }
     
-  }) 
+  }, []) 
 
   
 
@@ -126,7 +126,7 @@ const Budget = props => {
 
       <div
         className={classes.root}
-        style={{display: Auth.userRole == "administrator" ? "inherit" : "none"}}
+        style={{display: Auth.userRole == "Administrator" ? "inherit" : "none"}}
       >
           <Card
             {...rest}
@@ -166,7 +166,7 @@ const Budget = props => {
       
       <div
         className="interviewer-dashboard"
-        style={{display: Auth.userRole == "interviewer" ? "inherit" : "none"}}
+        style={{display: Auth.userRole == "Interviewer" ? "inherit" : "none"}}
       >
           <div className="__interviewer-padding" >
             <div className="pendingInterview_no" >
@@ -205,7 +205,7 @@ const Budget = props => {
       
       <div
         className="interviewer-dashboard"
-        style={{display: Auth.userRole == "applicant" ? "inherit" : "none"}}
+        style={{display: Auth.userRole == "Applicant" ? "inherit" : "none"}}
       >
           <div className="__interviewer-padding" >
             <div className="pendingInterview_no" >
