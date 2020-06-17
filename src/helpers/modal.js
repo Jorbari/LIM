@@ -7,7 +7,7 @@ const modals = props => {
     <Modal
       onHide={props.onHide}
       show={props.show}
-      size="lg"
+      style={{zIndex: 2000000}}
     >
       
         <Modal.Header closeButton>

@@ -65,11 +65,6 @@ const Sidebar = props => {
       href: '/logout',
       icon: <ExitToAppIcon className="text-white" />
     },
-    // {
-    //   title: 'Settings',
-    //   href: '/admin/settings',
-    //   icon: <SettingsIcon />
-    // }
   ];
   const Large_screen_pages = [
     {
