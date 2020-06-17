@@ -382,7 +382,9 @@ const Dashboard = props => {
             <div className={clsx(classes.flexBtnRight)}>
               <button
                 className="flexBtnRight"
+                data-toggle="tooltip"
                 onClick={() => showFormSection()}
+                title="Add a new session"
               >Create New Session</button>
             </div>
 
@@ -423,7 +425,9 @@ const Dashboard = props => {
                             <TableCell>
                               <Button
                                 className="btn btn__less"
+                                data-toggle="tooltip"
                                 onClick={() => editSessionToggle(user)}
+                                title="Edit session"
                               >
                                 <i className="fa fa-pencil open_sideBar_icon" />
                               </Button>

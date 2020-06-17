@@ -51,7 +51,7 @@ const Sidebar = props => {
       icon: <PeopleIcon className="sidebarIconColour" />
     },
     {
-      title: 'Apllicants',
+      title: 'Applicants',
       href: '/admin/applicants',
       icon: <ImageIcon className="sidebarIconColour" />
     },
@@ -83,7 +83,7 @@ const Sidebar = props => {
       icon: <PeopleIcon className="sidebarIconColour" />
     },
     {
-      title: 'Apllicants',
+      title: 'Applicants',
       href: '/admin/applicants',
       icon: <ImageIcon className="sidebarIconColour" />
     },
@@ -92,11 +92,6 @@ const Sidebar = props => {
       href: '/admin/account',
       icon: <AccountBoxIcon className="sidebarIconColour" />
     },
-    // {
-    //   title: 'Settings',
-    //   href: '/admin/settings',
-    //   icon: <SettingsIcon />
-    // }
   ];
 
   return (

@@ -152,7 +152,7 @@ const UsersTable = props => {
                         <div className={classes.nameContainer}>
                           <Avatar
                             className={classes.spaceRight}
-                            src={user.avatarUrl}
+                            src={user.photo}
                           >
                             {getInitials(user.first_name)}
                           </Avatar>

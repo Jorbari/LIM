@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable no-useless-escape */
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 // import moment from 'moment';
@@ -28,12 +29,30 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(2)
   },
   uploadButton: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
+    backgroundColor: '#c0c3c5',
+    color: 'gray'
+  },
+  resendInterview: {
+    backgroundColor: '#222753'
   }
 }));
 
 const AccountProfile = props => {
   const { className, ...rest } = props;
+
+  const [interViewerEmail, SetInterviewerEmail] = useState('');
+
+  const validateEmail = (email) => {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    // return re.test(String(email).toLowerCase());
+    if(re.test(String(email).toLowerCase())) {
+      SetInterviewerEmail(email);
+    }
+    else{
+      SetInterviewerEmail('');
+    }
+}
 
   const classes = useStyles();
 
@@ -50,11 +69,15 @@ const AccountProfile = props => {
           </div>
         </div>
         <TextField
+          error = {interViewerEmail ? false : true}
           fullWidth
+          helperText = {interViewerEmail ? '' : 'Input correct email'}
           label="Email Address"
           margin="dense"
           name="email"
+          onChange={(event) => validateEmail(event.target.value)}
           required
+          type="email"
           variant="outlined"
         />
       </CardContent>
@@ -63,7 +86,7 @@ const AccountProfile = props => {
       <CardActions>
         
         <Button
-          className={classes.uploadButton}
+          className={interViewerEmail ? `${classes.resendInterview}` : `${classes.uploadButton}`}
           color="primary"
           variant="text"
         >
