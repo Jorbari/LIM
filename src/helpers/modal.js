@@ -2,12 +2,15 @@ import React from 'react';
 import { Modal } from 'react-bootstrap';
 
 const modals = props => {
+  const style = {
+    zIndex: 2000000
+  }
   return (
     
     <Modal
       onHide={props.onHide}
       show={props.show}
-      style={{zIndex: 2000000}}
+      style={style}
     >
       
         <Modal.Header closeButton>
@@ -16,20 +19,6 @@ const modals = props => {
         <Modal.Body>
           {props.children}
         </Modal.Body>
-        {/* <Modal.Footer>
-          <Button
-            onClick={props.onHide}
-            variant="secondary"
-          >
-            Close
-          </Button>
-          <Button
-            onClick={props.onHide}
-            variant="primary"
-          >
-            Save Changes
-          </Button>
-        </Modal.Footer> */}
       
     </Modal>
     
