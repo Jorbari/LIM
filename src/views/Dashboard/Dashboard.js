@@ -304,6 +304,7 @@ const Dashboard = props => {
         </Grid>
 
         { showForm &&
+          
           <form
             className="form addSectionForm"
             onSubmit={handFormSubmission}
@@ -359,11 +360,13 @@ const Dashboard = props => {
             {editSessionCreation ?
               <button
                 className={'btn ' + (startDate && endDate ? 'validBtn' : 'inValid')}
+                disabled={!endDate || !title}
                 type="submit"
               >Edit</button> 
               : 
               <button
                 className={'btn ' + (startDate && endDate && title ? 'validBtn' : 'inValid')}
+                disabled={!startDate || !endDate || !title}
                 type="submit"
               >Submit</button> 
             }
@@ -373,7 +376,8 @@ const Dashboard = props => {
               onClick={() => showFormSection()}
             >Cancel</button>
           </form>
-          }
+        
+        }
 
           { !showForm && <Divider style={{marginTop: '2rem', marginBottom: '2rem'}} />}
 
