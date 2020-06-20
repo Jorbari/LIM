@@ -75,6 +75,7 @@ class AddComment extends Component {
     API.post(`api/createComment/${id}`, payload).then(res => {
       if (res.data.status == 200) {
         this.getComments();
+        this.setState({commentTitle: '',comment: '', applicantId: '' });
         this.setState({ errorMsg: 'comment successfully added' });
         this.setState({ variant: 'success' });
         this.setState({ showError: true });
@@ -112,6 +113,7 @@ class AddComment extends Component {
               onChange={event =>
                 this.setState({ applicantId: event.target.value })
               }
+              value={this.state.applicantId}
             >
               <option defaultValue="Select an applicant">
                 Select an applicant
@@ -138,6 +140,7 @@ class AddComment extends Component {
               }
               placeholder="Title"
               type="text"
+              value={this.state.commentTitle}
             />
           </div>
 
@@ -148,6 +151,7 @@ class AddComment extends Component {
               id="from_"
               onChange={event => this.setState({ comment: event.target.value })}
               placeholder="Input comment"
+              value={this.state.comment}
             />
           </div>
           <button
