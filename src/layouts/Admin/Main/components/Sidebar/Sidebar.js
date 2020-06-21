@@ -8,6 +8,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import ImageIcon from '@material-ui/icons/Image';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import Icon from '@material-ui/core/Icon';
 
 import { Profile, SidebarNav } from './components';
 
@@ -61,6 +62,11 @@ const Sidebar = props => {
       icon: <AccountBoxIcon className="sidebarIconColour" />
     },
     {
+      title: 'Comments',
+      href: '/admin/comment',
+      icon: <Icon className="fa fa-pencil sidebarIconColour" />
+    },
+    {
       title: 'Logout',
       href: '/logout',
       icon: <ExitToAppIcon className="text-white" />
@@ -81,6 +87,11 @@ const Sidebar = props => {
       title: 'Applicants',
       href: '/admin/applicants',
       icon: <ImageIcon className="sidebarIconColour" />
+    },
+    {
+      title: 'Comments',
+      href: '/admin/comment',
+      icon: <Icon className="fa fa-pencil sidebarIconColour" />
     },
     {
       title: 'Account',

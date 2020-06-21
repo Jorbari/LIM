@@ -163,3 +163,35 @@ $bg_gold: #fea20b;
     }
     
 }
+.interviewerCommentor{
+    font-size: 12px;
+    font-weight: 200;
+    margin-left: 10px;
+}
+.admin_comment_section{
+    display: flex;
+    justify-content: space-between;
+
+    .flex__lg{
+        // flex: 0.9;
+        margin-right: 10px;
+        width: 100%;
+    }
+    .remove_comment{
+        height: 100%;
+        display: flex;
+        align-self: center;
+
+        button{
+            width: 32px;
+            height: 32px;
+            outline: none;
+            border: none;
+            border-radius: 50%;
+
+            i{
+                color: red;
+            }
+        }
+    }
+}

@@ -1,11 +1,20 @@
 /* eslint-disable react/no-set-state */
 import React, { Component } from 'react';
 import { Avatar } from '@material-ui/core';
+import { reactLocalStorage } from 'reactjs-localstorage';
 import API from '../../services/general';
 import { Card } from 'react-bootstrap';
+import Modals from '../../helpers/modal';
 import ErrorHandler from '../../helpers/error';
 
 class AddComment extends Component {
+
+  userProfile = reactLocalStorage.getObject('Profile', { role: 'sss' });
+  Auth = {
+    userRole: this.userProfile.RoleName,
+    id: this.userProfile.id
+  };
+
   constructor(props) {
     super(props);
 
@@ -17,12 +26,16 @@ class AddComment extends Component {
       commentTitle: '',
       comment: '',
       applicantId: 0,
-      commentsHolder: []
+      commentsHolder: [],
+      showDeleteCommentModal: false,
+      modalTitle: '',
+      deleteCommentID: '',
     };
   }
 
-  getComments = () => {
-    API.get(`api/InterviewerSeeAllComment/2`)
+  getCommentsSpecificInterviewerComments = () => {
+    console.log(this.Auth.id)
+    API.get(`api/InterviewerSeeAllComment/${this.Auth.id}`)
       .then(res => {
         if (res.data.status == 200) {
           this.setState({ commentsHolder: res.data.data });
@@ -33,9 +46,29 @@ class AddComment extends Component {
       });
   };
 
+  getAllComments = () => {
+    API.get(`api/AdminSeeAllComment`)
+      .then(res => {
+        if (res.data.status == 200) {
+          console.log(res)
+          this.setState({ commentsHolder: res.data.data });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   componentWillMount() {
-    this.getApprovedInterview();
-    this.getComments();
+    
+    if(this.Auth.userRole == 'Interviewer') {
+      this.getApprovedInterview();
+      this.getCommentsSpecificInterviewerComments();
+    }
+    else{
+      this.getAllComments();
+    }
+    
   }
 
   getApprovedInterview = () => {
@@ -74,7 +107,7 @@ class AddComment extends Component {
 
     API.post(`api/createComment/${id}`, payload).then(res => {
       if (res.data.status == 200) {
-        this.getComments();
+        this.getCommentsSpecificInterviewerComments();
         this.setState({commentTitle: '',comment: '', applicantId: '' });
         this.setState({ errorMsg: 'comment successfully added' });
         this.setState({ variant: 'success' });
@@ -91,6 +124,35 @@ class AddComment extends Component {
     this.setState({ showError: !this.state.showError });
   };
 
+  toggleDeleteComment = () => {
+    this.setState({showDeleteCommentModal: !this.state.showDeleteCommentModal});
+  }
+
+  showDeleteModal = (id) => {
+    this.setState({deleteCommentID: id});
+    this.toggleDeleteComment();
+
+  }
+
+  deleteComment = () => {
+    const id = this.state.deleteCommentID;
+    
+    API.delete(`api/deleteComment/${id}`, id).then(res => {
+      if (res.data.status == 200) {
+        this.getAllComments();
+        this.toggleDeleteComment()
+        this.setState({commentTitle: '',comment: '', applicantId: '' });
+        this.setState({ errorMsg: 'comment successfully deleted' });
+        this.setState({ variant: 'success' });
+        this.setState({ showError: true });
+      } else {
+        this.setState({ errorMsg: res.data.message.body[0] });
+        this.setState({ variant: 'danger' });
+        this.setState({ showError: true });
+      }
+    });
+  }
+
   render() {
     return (
       <div className="comment_wrapper_">
@@ -104,6 +166,9 @@ class AddComment extends Component {
         <form
           className="form addSectionForm"
           onSubmit={this.addComment}
+          style={{
+            display: this.Auth.userRole == 'Interviewer' ? 'flex' : 'none'
+          }}
         >
           <div className="form-group">
             <label htmlFor="title_">Select Applicant</label>
@@ -178,13 +243,18 @@ class AddComment extends Component {
               <p>No comments</p>
             ) 
           }
+
+
+
+
+
           {
             this.state.commentsHolder.map(
               comment => (
 
                 <Card key={comment?.id}>
-                  <Card.Body>
-                    <div className="user_icon_text">
+                  <Card.Body className={this.Auth.userRole == 'Administrator' ?  'admin_comment_section' : ''}>
+                    <div className={'user_icon_text ' + (this.Auth.userRole == 'Administrator' ?  'flex__lg' : '')}>
                       <div className="applicant_img_sec">
                         <Avatar
                           alt={comment?.title}
@@ -193,12 +263,36 @@ class AddComment extends Component {
                         />
                       </div>
                       <div>
-                        <h4> {comment?.title} </h4>
+                        <h4> {comment?.title} 
+                        {
+                          this.Auth.userRole == 'Administrator' && (
+                            <span className="interviewerCommentor">
+                              {this.Auth.userRole == 'Administrator' && (
+                                <span>
+                                  From: {comment?.interviewer?.first_name}-{comment?.interviewer?.last_name}
+                                </span>
+                              )}
+                            </span> 
+                          )
+                        }
+                            
+                        </h4>
                         <p>
                           {comment?.body}
                         </p>
                       </div>
                     </div>
+                    {
+                      this.Auth.userRole == 'Administrator' && (
+                        <div className="remove_comment">
+                          <button onClick={() => this.showDeleteModal(comment?.id)}>
+                            <i className="fa fa-close"  />
+                          </button>
+                        </div>
+                      )
+
+                    }
+                    
                   </Card.Body>
                 </Card>
 
@@ -207,6 +301,25 @@ class AddComment extends Component {
           }
           
         </div>
+
+        <Modals
+          onHide={this.toggleDeleteComment}
+          show={this.state.showDeleteCommentModal}
+          title="Delete Comment"
+        >
+        <div>
+          Are you sure you want to delete this comment?
+          <div className="Edit_user_" >
+             <button
+               className="btn btn-primary ml-auto"
+               onClick={this.deleteComment}
+             >Delete Comment
+          </button>
+          </div>
+         
+        </div>
+      </Modals>
+
       </div>
     );
   }

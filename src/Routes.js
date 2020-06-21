@@ -92,6 +92,12 @@ const Routes = () => {
                 path={`${url}/applicants`}
               />
               <RouteWithLayout
+                component={CommentsView}
+                exact
+                layout={AdminMainLayout}
+                path={`${url}/comment`}
+              />
+              <RouteWithLayout
                 component={AccountView}
                 exact
                 layout={AdminMainLayout}
