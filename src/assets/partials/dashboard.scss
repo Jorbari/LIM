@@ -165,3 +165,12 @@
   }
 
 }
+.dashboard_form .form-control{
+  height: 3rem !important;
+}
+
+@media (max-width: 1024px) {
+  .dashboard_form{
+    display: block !important;
+  }
+}

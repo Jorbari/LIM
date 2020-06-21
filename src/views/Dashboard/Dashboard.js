@@ -306,7 +306,7 @@ const Dashboard = props => {
         { showForm &&
           
           <form
-            className="form addSectionForm"
+            className="form addSectionForm dashboard_form"
             onSubmit={handFormSubmission}
           >
             <div className="form-group">

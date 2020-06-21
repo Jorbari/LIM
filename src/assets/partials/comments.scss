@@ -168,6 +168,19 @@ $bg_gold: #fea20b;
     font-weight: 200;
     margin-left: 10px;
 }
+
+@media (max-width: 1024px) {
+    .comment__form_section{
+        display: block;
+        .form-control{
+            height: 2rem;
+        }
+        textarea{
+            height: 5rem !important;
+        }
+    }
+}
+
 .admin_comment_section{
     display: flex;
     justify-content: space-between;

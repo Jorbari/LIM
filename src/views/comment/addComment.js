@@ -163,90 +163,89 @@ class AddComment extends Component {
           variant={this.state.variant}
         />
 
-        <form
-          className="form addSectionForm"
-          onSubmit={this.addComment}
-          style={{
-            display: this.Auth.userRole == 'Interviewer' ? 'flex' : 'none'
-          }}
-        >
-          <div className="form-group">
-            <label htmlFor="title_">Select Applicant</label>
-
-            <select
-              className="form-control"
-              onChange={event =>
-                this.setState({ applicantId: event.target.value })
-              }
-              value={this.state.applicantId}
+        {
+          this.Auth.userRole == 'Interviewer' && (
+            <form
+              className="form addSectionForm comment__form_section"
+              onSubmit={this.addComment}
             >
-              <option defaultValue="Select an applicant">
-                Select an applicant
-              </option>
-              {this.state.applicants.length > 0 &&
-                this.state.applicants.map(applicant => (
-                  <option
-                    key={applicant.id}
-                    value={applicant.id}
-                  >
-                    {applicant.first_name} {applicant.last_name}
-                  </option>
-                ))}
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="title_">Title</label>
-            <input
-              className="form-control"
-              id="title_"
-              onChange={event =>
-                this.setState({ commentTitle: event.target.value })
+            <div className="form-group">
+              <label htmlFor="title_">Select Applicant</label>
+  
+              <select
+                className="form-control"
+                onChange={event =>
+                  this.setState({ applicantId: event.target.value })
+                }
+                value={this.state.applicantId}
+              >
+                <option defaultValue="Select an applicant">
+                  Select an applicant
+                </option>
+                {this.state.applicants.length > 0 &&
+                  this.state.applicants.map(applicant => (
+                    <option
+                      key={applicant.id}
+                      value={applicant.id}
+                    >
+                      {applicant.first_name} {applicant.last_name}
+                    </option>
+                  ))}
+              </select>
+            </div>
+  
+            <div className="form-group">
+              <label htmlFor="title_">Title</label>
+              <input
+                className="form-control"
+                id="title_"
+                onChange={event =>
+                  this.setState({ commentTitle: event.target.value })
+                }
+                placeholder="Title"
+                type="text"
+                value={this.state.commentTitle}
+              />
+            </div>
+  
+            <div className="form-group u-2">
+              <label htmlFor="from_">Comment</label>
+              <textarea
+                className="form-control text_area"
+                id="from_"
+                onChange={event => this.setState({ comment: event.target.value })}
+                placeholder="Input comment"
+                value={this.state.comment}
+              />
+            </div>
+            <button
+              className={
+                'btn ' +
+                (this.state.commentTitle && this.state.comment
+                  ? 'validBtn'
+                  : 'inValid')
               }
-              placeholder="Title"
-              type="text"
-              value={this.state.commentTitle}
-            />
-          </div>
+              disabled={
+                !this.state.commentTitle ||
+                !this.state.comment ||
+                this.state.applicantId == 0
+              }
+              type="submit"
+            >
+              Add Comment
+            </button>
+          </form>
+  
+          )
+        }
 
-          <div className="form-group u-2">
-            <label htmlFor="from_">Comment</label>
-            <textarea
-              className="form-control text_area"
-              id="from_"
-              onChange={event => this.setState({ comment: event.target.value })}
-              placeholder="Input comment"
-              value={this.state.comment}
-            />
-          </div>
-          <button
-            className={
-              'btn ' +
-              (this.state.commentTitle && this.state.comment
-                ? 'validBtn'
-                : 'inValid')
-            }
-            disabled={
-              !this.state.commentTitle ||
-              !this.state.comment ||
-              this.state.applicantId == 0
-            }
-            type="submit"
-          >
-            Add Comment
-          </button>
-        </form>
-
+       
         <div className="blog_list">
           {
             this.state.commentsHolder.length == 0 && (
               <p>No comments</p>
             ) 
           }
-
-
-
-
 
           {
             this.state.commentsHolder.map(
