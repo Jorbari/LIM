@@ -121,58 +121,15 @@ const Dashboard = props => {
   const handFormSubmission = (event) => {
     event.preventDefault();
 
-    if(editSessionCreation) {
-      const dataPayload = {
-        from : startDate,
-        to : endDate,
-      }
+    if(new Date(startDate) > new Date() && new Date(endDate) > new Date() ) {
 
-      API.put(`api/update_sessions/${sessionId}`, dataPayload)
-      .then(
-        res => {
-
-          if(res.data.status == 200) {
-            console.log(res)
-            seterrorMsg(res.data.message);
-            setvariant('success');
-            setshow(true);
-
-            setStartDate('');
-            setEndDate('');
-            setTitle('');
-
-            getSessionList();
-
-            setshowForm(!showForm);
-            setEditSessionCreation(false)
-
-          }
-          else{
-            seterrorMsg(res.data.message);
-            setvariant('danger');
-            setshow(true);
-          }
-
-        }
-      )
-      .catch(
-        err => {
-          console.log('err >>>>>>>', err);
-          seterrorMsg('An error occured, please try again!!!');
-          setvariant('danger');
-          setshow(true);
-        }
-      )
-    }
-    else{
-      if(startDate && endDate && title) {
+      if(editSessionCreation) {
         const dataPayload = {
           from : startDate,
           to : endDate,
-          title : title
         }
   
-        API.post('api/create_sessions', dataPayload)
+        API.put(`api/update_sessions/${sessionId}`, dataPayload)
         .then(
           res => {
   
@@ -189,6 +146,7 @@ const Dashboard = props => {
               getSessionList();
   
               setshowForm(!showForm);
+              setEditSessionCreation(false)
   
             }
             else{
@@ -208,8 +166,61 @@ const Dashboard = props => {
           }
         )
       }
-
+      else{
+        if(startDate && endDate && title) {
+          const dataPayload = {
+            from : startDate,
+            to : endDate,
+            title : title
+          }
+    
+          API.post('api/create_sessions', dataPayload)
+          .then(
+            res => {
+    
+              if(res.data.status == 200) {
+                console.log(res)
+                seterrorMsg(res.data.message);
+                setvariant('success');
+                setshow(true);
+    
+                setStartDate('');
+                setEndDate('');
+                setTitle('');
+    
+                getSessionList();
+    
+                setshowForm(!showForm);
+    
+              }
+              else{
+                seterrorMsg(res.data.message);
+                setvariant('danger');
+                setshow(true);
+              }
+    
+            }
+          )
+          .catch(
+            err => {
+              console.log('err >>>>>>>', err);
+              seterrorMsg('An error occured, please try again!!!');
+              setvariant('danger');
+              setshow(true);
+            }
+          )
+        }
+  
+      }
+      
     }
+    else{
+      seterrorMsg(`Can't select a previous date!!!...`);
+      setvariant('danger');
+      setshow(true);
+    }
+
+    
 
     
   }
@@ -359,13 +370,13 @@ const Dashboard = props => {
 
             {editSessionCreation ?
               <button
-                className={'btn ' + (startDate && endDate ? 'validBtn' : 'inValid')}
+                className={'btn ' + (startDate && endDate ? 'validSeesionButton' : 'invalidSeesionButton')}
                 disabled={!endDate || !title}
                 type="submit"
               >Edit</button> 
               : 
               <button
-                className={'btn ' + (startDate && endDate && title ? 'validBtn' : 'inValid')}
+                className={'btn ' + (startDate && endDate && title ? 'validSeesionButton' : 'invalidSeesionButton')}
                 disabled={!startDate || !endDate || !title}
                 type="submit"
               >Submit</button> 

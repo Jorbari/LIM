@@ -24,8 +24,6 @@ const Footer = props => {
         &copy;{' '}
         <Link
           component="a"
-          href="https://devias.io/"
-          target="_blank"
         >
           LIM
         </Link>
