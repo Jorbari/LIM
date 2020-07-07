@@ -157,7 +157,7 @@ const UsersToolbar = props => {
                 </option>
               ))}
             </select>
-            <h1>{sessionId}</h1>
+            {/* <h1>{sessionId}</h1> */}
             {!sessionId && (
               <p className="err_sm_">Field cannot be left blank</p>
             )}

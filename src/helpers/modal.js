@@ -16,7 +16,7 @@ const modals = props => {
         <Modal.Header closeButton>
           <Modal.Title>{props.title}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body style={{overflowY: 'scroll'}}>
           {props.children}
         </Modal.Body>
       

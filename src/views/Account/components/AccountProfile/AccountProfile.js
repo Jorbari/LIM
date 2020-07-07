@@ -82,6 +82,7 @@ const resendEmailInvitation = () => {
     API.get(`api/sendInvite`, {params: {email: interViewerEmail}})
     .then(
       res => {
+        console.log(res);
         SetInterviewerEmail('');
         setNotifierMessage(res.data.message);
       }
@@ -132,7 +133,6 @@ const resendEmailInvitation = () => {
           onChange={(event) => validateEmail(event.target.value)}
           required
           type="email"
-          value={interViewerEmail}
           variant="outlined"
         />
       </CardContent>
