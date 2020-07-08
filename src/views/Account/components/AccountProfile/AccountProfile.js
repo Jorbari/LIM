@@ -79,7 +79,7 @@ const AccountProfile = props => {
 const resendEmailInvitation = () => {
   setIsLoading(true);
   if(interViewerEmail.length > 1) {
-    API.get(`api/sendInvite`, {params: {email: interViewerEmail}})
+    API.get(`api/sendInvite`, {params: {email: interViewerEmail.toLowerCase()}})
     .then(
       res => {
         console.log(res);

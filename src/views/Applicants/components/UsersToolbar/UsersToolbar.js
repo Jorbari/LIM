@@ -68,7 +68,7 @@ const UsersToolbar = props => {
     const accountModel = {
       first_name:firstName,
       last_name:lastName,
-      email: email,
+      email: email.toLowerCase(),
       password:password,
       programme: programme
     }
