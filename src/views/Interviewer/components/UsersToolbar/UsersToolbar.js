@@ -147,6 +147,9 @@ const UsersToolbar = props => {
               className="form-control"
               onChange={optionClicked}
             >
+              <option
+                defaultValue="Select a session"
+              >Select a session</option>
               {sessionList.map(session => (
                 <option
                   key={session.id}
