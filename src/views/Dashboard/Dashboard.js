@@ -19,6 +19,7 @@ import {
 import Button from '@material-ui/core/Button';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import moment from 'moment';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 import { Budget, TotalUsers, TasksProgress, TotalProfit } from './components';
 import { getInitials } from 'helpers';
@@ -65,6 +66,7 @@ const Dashboard = props => {
   const classes = useStyles();
 
   const [sessionList, setSessionList] = useState([]);
+  const [showSpinnerLoader, setshowSpinnerLoader] = useState(true);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
   const [showForm, setshowForm] = useState(false);
@@ -106,6 +108,7 @@ const Dashboard = props => {
     API.get('api/return_all_sessions').then(
       res => {
         if(res.data.status == 200) {
+          setshowSpinnerLoader(false);
           console.log(res)
           setSessionList(res.data.data)
         }
@@ -114,6 +117,7 @@ const Dashboard = props => {
     )
     .catch(
       err => {
+        setshowSpinnerLoader(false);
         console.log(err)
       }
     )
@@ -258,6 +262,7 @@ const Dashboard = props => {
 
   return (
     <div>
+
 
       <ErrorHandler
         close={showError}
@@ -471,13 +476,27 @@ const Dashboard = props => {
             }
 
             {
-              sessionList.length < 1 && 
+              sessionList.length < 1 && !showSpinnerLoader && 
               <p style={noData.noData}>No Data</p>
              }
             
           </Card>
+          {
+            showSpinnerLoader && (
+
+              <div className={classes.root}>
+                <Skeleton />
+                <Skeleton animation={false} />
+                <Skeleton animation="wave" />
+              </div>
+            )
+          }
+         
+
         </div>
       </div>
+
+
 
       <div
         className="interviewer-dashboard"
